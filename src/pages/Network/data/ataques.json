@@ -1,0 +1,112 @@
+{
+    "radarChart": {
+        "title": "PROTOCOLOS VS SEGURIDAD",
+        "labels": [
+            "Telnet",
+            "FTP",
+            "HTTP",
+            "SNMPv1",
+            "DNS",
+            "IMAP/POP3"
+        ],
+        "datasets": [
+            {
+                "label": "Vulnerabilidad a Sniffing",
+                "data": [
+                    10,
+                    10,
+                    8,
+                    9,
+                    6,
+                    9
+                ],
+                "color": "error"
+            },
+            {
+                "label": "Nivel de Cifrado (Seguridad)",
+                "data": [
+                    0,
+                    1,
+                    2,
+                    0,
+                    1,
+                    4
+                ],
+                "color": "secondary"
+            }
+        ]
+    },
+    "sniffing": {
+        "title": "Escuchas de red (Sniffing)",
+        "description": "El **Sniffing** es el equivalente digital a \"pinchar\" una línea telefónica. En una red, los datos viajan en paquetes. Un atacante configura su tarjeta de red en <span class=\"text-(--color-warning) font-(--font-mono)\">Modo Promiscuo</span>, obligándola a leer *todo* el tráfico que pasa por el cable, no solo el destinado a ella.",
+        "dangerTitle": "Peligro: Texto plano",
+        "dangerDesc": "Protocolos antiguos (Telnet, FTP, HTTP) envían credenciales sin cifrar. Cualquiera con Wireshark en la misma red puede leer tu contraseña simplemente mirando los bytes del paquete."
+    },
+    "arpSpoofing": {
+        "title": "Anatomía de un ataque MITM (ARP Spoofing)",
+        "steps": [
+            {
+                "title": "1. La confianza ciega",
+                "desc": "El protocolo ARP (Address Resolution Protocol) no tiene autenticación. Si alguien dice \"Soy la IP 192.168.1.1\", el resto de la red le cree.",
+                "borderColor": "text-tertiary",
+                "code": "Victima -> ¿Quién tiene 192.168.1.1?",
+                "codeColor": "success"
+            },
+            {
+                "title": "2. El envenenamiento",
+                "desc": "El atacante envía miles de respuestas ARP falsas (Gratuitous ARP) a la víctima y al Router.",
+                "borderColor": "warning",
+                "badge": "ATAQUE",
+                "codeLines": [
+                    "Atacante -> ¡Soy 192.168.1.1! (Al PC)",
+                    "Atacante -> ¡Soy 192.168.1.50! (Al Router)"
+                ],
+                "codeColor": "error"
+            },
+            {
+                "title": "3. Interceptación total",
+                "desc": "Todo el tráfico pasa ahora por el atacante. Puede leerlo (sniffing), modificarlo o bloquearlo (DoS) antes de reenviarlo.",
+                "borderColor": "error",
+                "diagram": true
+            }
+        ]
+    },
+    "fragmentation": {
+        "title": "Fragmentación IP maliciosa",
+        "description": "Los routers fragmentan paquetes grandes para que pasen por enlaces con MTU pequeña. Los atacantes abusan de esto:",
+        "attacks": [
+            {
+                "name": "Ataque Teardrop",
+                "desc": "Envía fragmentos con \"offsets\" superpuestos. Cuando el sistema operativo intenta reensamblarlos, se confunde, sobrescribe memoria y crashea (Pantalla Azul).",
+                "color": "info"
+            },
+            {
+                "name": "Evasión de IDS/Firewall",
+                "desc": "Divide la firma del ataque (ej. un payload malicioso) en fragmentos tan pequeños que el Firewall no puede reconocer el patrón hasta que es demasiado tarde.",
+                "color": "accent"
+            }
+        ]
+    },
+    "protection": {
+        "title": "Cómo protegerse",
+        "subtitle": "La defensa contra estos ataques requiere higiene de red.",
+        "tips": [
+            {
+                "text": "Usar HTTPS/SSH/VPN siempre (Cifrado).",
+                "icon": "Unlock"
+            },
+            {
+                "text": "Activar Dynamic ARP Inspection en Switches.",
+                "icon": "Shield"
+            },
+            {
+                "text": "Segmentar la red con VLANs.",
+                "icon": "Monitor"
+            }
+        ]
+    },
+    "quote": {
+        "text": "El cifrado es la única línea de defensa cuando el medio de transporte ha sido comprometido. Nunca asumas que el cable es seguro.",
+        "author": "IsaBosDev"
+    }
+}

@@ -1,0 +1,63 @@
+{
+    "header": {
+        "title": "Estrategia de defensa",
+        "description": "La mitigación efectiva requiere capas de seguridad en profundidad, desde el código hasta la infraestructura. La defensa moderna no es reactiva, es proactiva y adaptativa."
+    },
+    "quote": {
+        "text": "La mejor defensa no es un muro más alto, sino un sistema que aprende, se adapta y responde en tiempo real a las amenazas emergentes.",
+        "author": "Bruce Schneier"
+    },
+    "hardening": {
+        "title": "Hardening contra ataques ciegos",
+        "icon": "Shield",
+        "variant": "error",
+        "measures": [
+            {
+                "title": "Error masking",
+                "description": "Desactivar logs técnicos (verbose) en el cliente para evitar fugas de información sobre la estructura de la BD."
+            },
+            {
+                "title": "Input whitelisting",
+                "description": "Validación estricta. Solo permitir caracteres esperados (ej. alfanuméricos) y rechazar el resto."
+            },
+            {
+                "title": "Type enforcement",
+                "description": "Forzar tipos de datos (casting a int/string) en el backend, especialmente en NoSQL para anular inyecciones de objetos."
+            },
+            {
+                "title": "Rate limiting",
+                "description": "Bloquear IPs que realicen ráfagas de consultas anómalas (patrón típico de ataques blind SQLi basados en tiempo)."
+            }
+        ]
+    },
+    "strategies": [
+        {
+            "id": "rasp",
+            "title": "1. RASP (Runtime Application Self-Protection)",
+            "icon": "Shield",
+            "variant": "primary",
+            "content": "Más allá del WAF. RASP se ejecuta dentro de la aplicación e inspecciona las consultas SQL antes de que lleguen a la base de datos, bloqueando ataques en tiempo real, incluso si el tráfico parece legítimo."
+        },
+        {
+            "id": "backups",
+            "title": "2. Backups inmutables y air-gapped",
+            "icon": "Database",
+            "variant": "secondary",
+            "content": "El ransomware moderno busca y destruye backups online. La solución es usar almacenamiento WORM (Write Once Read Many) y mantener copias desconectadas físicamente (air-gapped)."
+        },
+        {
+            "id": "zero-trust",
+            "title": "3. Zero trust en base de datos",
+            "icon": "Lock",
+            "variant": "accent",
+            "content": "La base de datos no debe confiar ciegamente en la red interna. Se debe implementar autenticación fuerte (MFA) y mTLS (Mutual TLS) para validar cada conexión, no solo el perímetro."
+        },
+        {
+            "id": "cspm",
+            "title": "4. CSPM (Cloud Security Posture Management)",
+            "icon": "Cloud",
+            "variant": "success",
+            "content": "Herramientas automatizadas que escanean continuamente la nube (AWS, Azure) para detectar malas configuraciones, como buckets S3 públicos o grupos de seguridad demasiado permisivos, antes de que sean explotados."
+        }
+    ]
+}

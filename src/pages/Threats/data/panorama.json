@@ -1,0 +1,98 @@
+{
+    "header": {
+        "title": "Inteligencia de amenazas",
+        "description": "Este informe interactivo fusiona el conocimiento de ataques a servidores de datos con las últimas tendencias de ciberseguridad. Desde la persistencia de la inyección SQL hasta la sofisticación de la triple extorsión en Ransomware y los riesgos emergentes en Cloud y APIs."
+    },
+    "stats": [
+        {
+            "title": "Vector clásico",
+            "description": "SQLi sigue siendo el 10% de vulnerabilidades críticas en código cerrado.",
+            "colorVariant": "primary"
+        },
+        {
+            "title": "Vector moderno",
+            "description": "Ransomware as a Service (RaaS) y ataques a la cadena de suministro.",
+            "colorVariant": "secondary"
+        },
+        {
+            "title": "Vector futuro",
+            "description": "Inyecciones impulsadas por IA, ataques BOLA en APIs y SSRF en Nube.",
+            "colorVariant": "success"
+        }
+    ],
+    "evolutionChart": {
+        "title": "Evolución de amenazas",
+        "subtitle": "Tendencia histórica",
+        "labels": [
+            "2013",
+            "2017",
+            "2020",
+            "2024",
+            "2025+"
+        ],
+        "datasets": [
+            {
+                "label": "Complejidad de ataques",
+                "data": [
+                    20,
+                    50,
+                    70,
+                    90,
+                    100
+                ]
+            },
+            {
+                "label": "Impacto financiero",
+                "data": [
+                    10,
+                    60,
+                    80,
+                    95,
+                    100
+                ]
+            }
+        ]
+    },
+    "concepts": {
+        "title": "Conceptos clave",
+        "subtitle": "Terminología y vectores actuales",
+        "items": [
+            {
+                "label": "Triple extorsión",
+                "text": "Cifrado + Robo + Ataque DDoS/Acoso a clientes."
+            },
+            {
+                "label": "OOB SQLi",
+                "text": "Extracción de datos vía canales alternativos (DNS/HTTP) cuando no hay respuesta visual."
+            },
+            {
+                "label": "BOLA (API)",
+                "text": "Acceso a objetos de otros usuarios manipulando IDs en APIs REST."
+            },
+            {
+                "label": "Second-Order SQLi",
+                "text": "El payload se guarda durmiente y se ejecuta en una consulta futura."
+            }
+        ]
+    },
+    "auditChart": {
+        "title": "Eficiencia de auditoría por vector",
+        "labels": [
+            "Error-Based",
+            "UNION-Based",
+            "Boolean Blind",
+            "NoSQL Bypass"
+        ],
+        "data": [
+            15,
+            5,
+            80,
+            2
+        ],
+        "footer": "*Representación del tiempo relativo de exfiltración. Las técnicas \"Blind\" requieren un mayor número de peticiones al servidor."
+    },
+    "quote": {
+        "text": "Solo hay dos tipos de compañías: las que han sido hackeadas y las que lo serán de nuevo.",
+        "author": "Robert Mueller"
+    }
+}

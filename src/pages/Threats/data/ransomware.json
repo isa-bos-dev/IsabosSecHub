@@ -1,0 +1,54 @@
+{
+    "header": {
+        "title": "Evolución del ransomware",
+        "description": "Del cifrado simple a la extorsión psicológica. Los grupos de ransomware modernos operan como multinacionales del crimen (RaaS - Ransomware as a Service)."
+    },
+    "quote": {
+        "text": "El ransomware no es solo un ataque técnico, es un asalto psicológico diseñado para explotar el miedo y la urgencia de las organizaciones.",
+        "author": "Kevin Mitnick"
+    },
+    "phases": [
+        {
+            "id": 1,
+            "period": "2013-2017",
+            "title": "Cifrado masivo",
+            "description": "CryptoLocker, WannaCry. Objetivo: bloquear sistemas.",
+            "variant": "secondary"
+        },
+        {
+            "id": 2,
+            "period": "2019+",
+            "title": "Doble extorsión",
+            "description": "Maze, REvil. Antes de cifrar, roban los datos y amenazan con publicarlos.",
+            "variant": "primary"
+        },
+        {
+            "id": 3,
+            "period": "2024+",
+            "title": "Triple extorsión",
+            "description": "BlackCat, LockBit. Cifrado + robo + DDoS a la víctima o llamadas a sus clientes.",
+            "variant": "error",
+            "highlight": "DDoS"
+        }
+    ],
+    "cases": [
+        {
+            "title": "Oficina de desempleo de Washington",
+            "description": "1.6 millones de registros robados mediante una inyección SQL en un componente legado (Accellion). Demuestra la vigencia de SQLi.",
+            "date": "2021",
+            "type": "Exfiltración de datos",
+            "author": "Grupo Clop (ransomware)",
+            "impact": "Exposición de 1.6 millones de registros de ciudadanos, incluyendo nombres, números de seguro social, información bancaria y datos médicos. El ataque provocó una crisis de confianza pública y múltiples demandas colectivas contra el estado.",
+            "tech": "Explotación de una vulnerabilidad de inyección SQL (CVE-2021-27101) en Accellion FTA, un sistema de transferencia de archivos legacy. Los atacantes usaron SQLi para extraer credenciales de administrador, luego instalaron web shells para persistencia y exfiltraron bases de datos completas."
+        },
+        {
+            "title": "NotPetya",
+            "description": "Ciberarma disfrazada de ransomware. Usó el exploit EternalBlue (SMB) y Mimikatz para destruir infraestructuras globales.",
+            "date": "27 de junio de 2017",
+            "type": "Ciberarma / Wiper",
+            "author": "Atribuido a Sandworm (APT ruso)",
+            "impact": "Pérdidas económicas estimadas en $10 mil millones USD. Afectó a Maersk (logística), Merck (farmacéutica), FedEx/TNT Express, y el sistema de monitoreo de radiación de Chernóbyl. No era ransomware real: destruía permanentemente el Master Boot Record (MBR).",
+            "tech": "Propagación inicial vía actualización comprometida del software de contabilidad ucraniano M.E.Doc. Usó EternalBlue (MS17-010) para propagación lateral vía SMB, Mimikatz para robo de credenciales, y PsExec/WMIC para ejecución remota. El payload final sobrescribía el MBR, haciendo imposible la recuperación."
+        }
+    ]
+}

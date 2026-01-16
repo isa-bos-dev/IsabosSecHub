@@ -1,0 +1,95 @@
+{
+    "portStates": {
+        "title": "Estados de puerto (La verdad de Nmap)",
+        "description": "Nmap no solo dice 'abierto' o 'cerrado'. Entender los matices es vital para evadir firewalls.",
+        "states": [
+            {
+                "name": "Open (Abierto)",
+                "desc": "Una aplicación acepta conexiones TCP o paquetes UDP. Es la puerta de entrada para el exploit.",
+                "color": "success"
+            },
+            {
+                "name": "Closed (Cerrado)",
+                "desc": "El puerto responde (generalmente con RST), pero no hay aplicación escuchando. Útil para verificar que el host está activo (Host Discovery).",
+                "color": "error"
+            },
+            {
+                "name": "Filtered (Filtrado)",
+                "desc": "Nmap no recibe respuesta (timeout) o recibe un error ICMP inalcanzable. Un firewall está bloqueando el paquete. El estado más frustrante para un atacante.",
+                "color": "warning"
+            }
+        ]
+    },
+    "terminal": {
+        "title": "Terminal de mando",
+        "command": "nmap -sS -T4 -A 192.168.1.50",
+        "output": [
+            "Starting Nmap 7.94...",
+            "Nmap scan report for target-server (192.168.1.50)",
+            "Host is up (0.0023s latency)."
+        ],
+        "ports": [
+            {
+                "port": "22/tcp",
+                "state": "open",
+                "service": "ssh (OpenSSH 8.2p1)",
+                "color": "success"
+            },
+            {
+                "port": "80/tcp",
+                "state": "open",
+                "service": "http (Apache 2.4.41)",
+                "color": "success"
+            },
+            {
+                "port": "443/tcp",
+                "state": "filtered",
+                "service": "https",
+                "color": "warning"
+            }
+        ],
+        "analysis": "El escaneo -sS (Stealth SYN) revela SSH y HTTP abiertos. HTTPS está filtrado, sugiriendo una regla de firewall activa."
+    },
+    "scanTypes": [
+        {
+            "name": "TCP Connect (-sT)",
+            "badge": "Handshake completo",
+            "desc": "El método por defecto para usuarios sin privilegios. Realiza el saludo de 3 vías completo (SYN → SYN/ACK → ACK).",
+            "warning": "⚠️ Muy ruidoso. Aparece en los logs del sistema objetivo inmediatamente.",
+            "color": "primary"
+        },
+        {
+            "name": "SYN Stealth (-sS)",
+            "badge": "Medio abierto (Half-Open)",
+            "desc": "Envía SYN. Si recibe SYN/ACK, sabe que está abierto, pero envía RST inmediatamente para no completar la conexión.",
+            "note": "🛡️ Estándar de oro. Rápido y a menudo invisible para logs de aplicaciones básicos.",
+            "color": "success"
+        },
+        {
+            "name": "UDP Scan (-sU)",
+            "badge": "Sin conexión",
+            "desc": "Envía paquetes UDP vacíos. Si recibe 'Port Unreachable', está cerrado. Si no recibe nada, asume 'Open|Filtered'.",
+            "warning": "🐌 Lento y difícil. Crucial para servicios como DNS, SNMP y DHCP.",
+            "color": "warning"
+        }
+    ],
+    "evasion": {
+        "title": "Técnicas de evasión de firewalls",
+        "description": "Cuando un firewall bloquea los escaneos estándar, Nmap utiliza la fragmentación y la manipulación de flags TCP para colarse.",
+        "techniques": [
+            {
+                "name": "Fragmentación (-f)",
+                "desc": "Divide el paquete en trozos diminutos para evadir la inspección de paquetes."
+            },
+            {
+                "name": "Decoy (-D)",
+                "desc": "Envía paquetes desde múltiples IPs falsas para ocultar la tuya entre el ruido."
+            },
+            {
+                "name": "Idle Zombie Scan (-sI)",
+                "desc": "El ataque 'invisible' definitivo usando un host zombie inactivo."
+            }
+        ],
+        "codeBlock": "# Xmas Scan (luces de navidad)\n# Enciende flags FIN, URG, PSH. \n# Sistemas Windows los ignoran, Unix responde si cerrado.\nroot@kali:~$ nmap -sX -v 192.168.1.10\nScanning...\nDiscovered open port 53/tcp on 192.168.1.10\nDiscovered open port 139/tcp on 192.168.1.10\n"
+    }
+}

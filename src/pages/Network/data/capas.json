@@ -1,0 +1,127 @@
+{
+    "layers": [
+        {
+            "id": "aplicacion",
+            "name": "Capa de aplicación",
+            "desc": "Interfaz con el usuario y servicios de red.",
+            "details": "La capa superior donde residen los protocolos que utilizamos a diario. Es el objetivo principal de ataques modernos debido a la complejidad del software y la interacción humana.",
+            "protocols": [
+                "HTTP/HTTPS",
+                "DNS",
+                "SMTP",
+                "FTP",
+                "SSH"
+            ],
+            "attacks": [
+                {
+                    "name": "SQL Injection",
+                    "desc": "Inyección de código en bases de datos a través de inputs mal saneados."
+                },
+                {
+                    "name": "XSS (Cross-Site Scripting)",
+                    "desc": "Ejecución de scripts maliciosos en navegadores de víctimas."
+                },
+                {
+                    "name": "DNS Spoofing",
+                    "desc": "Redirección de tráfico mediante respuestas DNS falsas."
+                },
+                {
+                    "name": "Phishing",
+                    "desc": "Ingeniería social para robar credenciales."
+                }
+            ],
+            "colorClass": "secondary",
+            "iconName": "Monitor"
+        },
+        {
+            "id": "transporte",
+            "name": "Capa de transporte",
+            "desc": "Comunicación host-a-host y fiabilidad.",
+            "details": "Gestiona la conexión lógica, control de flujo y corrección de errores. Aquí se define si la comunicación es fiable (TCP) o rápida (UDP).",
+            "protocols": [
+                "TCP",
+                "UDP",
+                "SCTP"
+            ],
+            "attacks": [
+                {
+                    "name": "SYN Flood",
+                    "desc": "Agotamiento de recursos enviando miles de solicitudes de conexión incompletas."
+                },
+                {
+                    "name": "Port Scanning",
+                    "desc": "Reconocimiento de puertos abiertos para identificar servicios vulnerables."
+                },
+                {
+                    "name": "Session Hijacking",
+                    "desc": "Robo de cookies o tokens para secuestrar una sesión TCP válida."
+                }
+            ],
+            "colorClass": "primary",
+            "iconName": "Box"
+        },
+        {
+            "id": "internet",
+            "name": "Capa de internet",
+            "desc": "Direccionamiento y enrutamiento de paquetes.",
+            "details": "Responsable de llevar los paquetes desde el origen hasta el destino a través de múltiples redes. IP es el protocolo rey aquí. No garantiza la entrega, solo el \"mejor esfuerzo\".",
+            "protocols": [
+                "IPv4/IPv6",
+                "ICMP",
+                "IPsec",
+                "ARP (Límite L2/L3)"
+            ],
+            "attacks": [
+                {
+                    "name": "IP Spoofing",
+                    "desc": "Falsificación de la IP de origen para ocultar identidad o impersonar."
+                },
+                {
+                    "name": "Ping of Death",
+                    "desc": "Envío de paquetes ICMP malformados o gigantes para crashear sistemas."
+                },
+                {
+                    "name": "Man-in-the-Middle",
+                    "desc": "Intercepción de tráfico enrutado maliciosamente."
+                }
+            ],
+            "colorClass": "success",
+            "iconName": "Globe"
+        },
+        {
+            "id": "acceso",
+            "name": "Capa de acceso a red",
+            "desc": "Transmisión física y direccionamiento MAC.",
+            "details": "El nivel más bajo que maneja tramas y señales eléctricas/ópticas. Aquí la seguridad física y el control de acceso al medio son vitales.",
+            "protocols": [
+                "Ethernet",
+                "Wi-Fi (802.11)",
+                "MAC"
+            ],
+            "attacks": [
+                {
+                    "name": "ARP Spoofing",
+                    "desc": "Asociación falsa de IP a MAC del atacante en la red local."
+                },
+                {
+                    "name": "Sniffing",
+                    "desc": "Captura de tramas en modo promiscuo (Wireshark)."
+                },
+                {
+                    "name": "MAC Flooding",
+                    "desc": "Saturación de la tabla CAM del switch para convertirlo en un Hub."
+                },
+                {
+                    "name": "Evil Twin",
+                    "desc": "Punto de acceso Wi-Fi falso que imita a uno legítimo."
+                }
+            ],
+            "colorClass": "warning",
+            "iconName": "Wifi"
+        }
+    ],
+    "quote": {
+        "text": "Cualquier problema en las ciencias de la computación puede ser resuelto con otra capa de indirección, excepto el problema de tener demasiadas capas.",
+        "author": "David Wheeler"
+    }
+}

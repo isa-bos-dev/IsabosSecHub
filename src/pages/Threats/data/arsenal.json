@@ -1,0 +1,114 @@
+{
+    "header": {
+        "title": "Arsenal ofensivo de auditoría",
+        "description": "Herramientas estándar utilizadas por auditores y atacantes para identificar vulnerabilidades. El conocimiento de estas herramientas es esencial para entender cómo se realizan los ataques y cómo defenderse."
+    },
+    "quote": {
+        "text": "Las mejores defensas se construyen entendiendo las herramientas del atacante. Conoce tu arsenal, conoce tus debilidades.",
+        "author": "OWASP Foundation"
+    },
+    "tools": [
+        {
+            "id": "sqlmap",
+            "name": "SQLmap",
+            "icon": "Terminal",
+            "description": "El estándar de la industria. Detecta, explota y puede tomar control del sistema operativo.",
+            "tags": [
+                {
+                    "label": "Python",
+                    "type": "language"
+                },
+                {
+                    "label": "Automated",
+                    "type": "feature"
+                }
+            ],
+            "variant": "primary"
+        },
+        {
+            "id": "bbqsql",
+            "name": "BBQSQL",
+            "icon": "Database",
+            "description": "Framework Python para blind SQLi. Agnóstico a la base de datos y altamente configurable.",
+            "tags": [
+                {
+                    "label": "Python",
+                    "type": "language"
+                },
+                {
+                    "label": "Blind optimized",
+                    "type": "feature"
+                }
+            ],
+            "variant": "secondary"
+        },
+        {
+            "id": "nosqlmap",
+            "name": "NoSQLMap",
+            "icon": "Hash",
+            "description": "Automatización de ataques a MongoDB y CouchDB. Detecta configuraciones por defecto.",
+            "tags": [
+                {
+                    "label": "Python",
+                    "type": "language"
+                },
+                {
+                    "label": "NoSQL",
+                    "type": "feature"
+                }
+            ],
+            "variant": "success"
+        },
+        {
+            "id": "jsql",
+            "name": "jSQL Injection",
+            "icon": "Code",
+            "description": "Interfaz gráfica Java. Ligera y soporta 33 motores de base de datos diferentes.",
+            "tags": [
+                {
+                    "label": "Java",
+                    "type": "language"
+                },
+                {
+                    "label": "GUI",
+                    "type": "feature"
+                }
+            ],
+            "variant": "accent"
+        },
+        {
+            "id": "sqlsus",
+            "name": "SQLSus",
+            "icon": "Cpu",
+            "description": "Herramienta Perl optimizada para MySQL. Permite clonar la estructura de la BD e inyectar.",
+            "tags": [
+                {
+                    "label": "Perl",
+                    "type": "language"
+                },
+                {
+                    "label": "MySQL",
+                    "type": "feature"
+                }
+            ],
+            "variant": "warning"
+        },
+        {
+            "id": "dsss",
+            "name": "DSSS",
+            "icon": "ShieldAlert",
+            "description": "\"Damn Small SQLi Scanner\". Script minimalista (<100 líneas) para detección rápida.",
+            "tags": [
+                {
+                    "label": "Python",
+                    "type": "language"
+                },
+                {
+                    "label": "Minimalist",
+                    "type": "feature"
+                }
+            ],
+            "variant": "error"
+        }
+    ]
+}

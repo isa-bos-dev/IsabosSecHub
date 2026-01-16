@@ -1,0 +1,113 @@
+{
+    "header": {
+        "title": "Denegación de servicio (DoS & DDoS)",
+        "description": "El arte de la saturación. Desde inundar una tubería con agua (Volumétrico) hasta bloquear la caja del supermercado con un cliente lento (Capa 7)."
+    },
+    "quote": {
+        "text": "La asimetría es el arma definitiva del ataque DDoS: cuesta centavos lanzarlo, pero defenderse requiere una inversión masiva en infraestructura y ancho de banda.",
+        "author": "Principio de Ciberseguridad"
+    },
+    "amplificationChart": {
+        "title": "Potencia de amplificación",
+        "labels": [
+            "DNS",
+            "NTP",
+            "SNMP",
+            "Memcached",
+            "CharGen"
+        ],
+        "datasetLabel": "Factor de Amplificación (x veces)",
+        "data": [
+            50,
+            556,
+            650,
+            51000,
+            358
+        ]
+    },
+    "vectorsChart": {
+        "title": "Tipos de ataque global",
+        "labels": [
+            "Volumétrico (UDP/ICMP)",
+            "Agotamiento TCP (SYN Flood)",
+            "Capa de Aplicación (HTTP)"
+        ],
+        "data": [
+            65,
+            20,
+            15
+        ]
+    },
+    "amplificationInfo": {
+        "title": "Amplificación: El multiplicador de fuerza",
+        "howItWorks": {
+            "label": "¿Cómo funciona?",
+            "text": "El atacante envía una consulta pequeña (60 bytes) a un servidor mal configurado (ej. Memcached) falsificando la IP de la víctima."
+        },
+        "result": {
+            "label": "El resultado:",
+            "text": "El servidor responde a la víctima con una respuesta masiva (hasta 51,000 veces más grande).",
+            "stat": "1 Mbps de ataque → 51 Gbps de basura."
+        }
+    },
+    "attackTypes": [
+        {
+            "id": "volumetric",
+            "title": "1. Volumétrico (Fuerza bruta)",
+            "description": "Su objetivo es saturar el ancho de banda. UDP Floods y Reflection attacks son los reyes. Se miden en <strong>Gbps/Tbps</strong>.",
+            "extra": {
+                "label": "Ejemplo",
+                "text": "\"Tirar\" internet entero de un país pequeño saturando sus cables submarinos."
+            },
+            "icon": "Activity",
+            "color": "primary"
+        },
+        {
+            "id": "protocol",
+            "title": "2. Agotamiento de protocolo",
+            "description": "Ataca firewalls y balanceadores. SYN Flood abusa del handshake TCP, dejando conexiones \"colgadas\" hasta que el servidor no acepta más.",
+            "extra": {
+                "label": "Mitigación",
+                "text": "SYN Cookies (el servidor no guarda estado hasta que se completa la conexión)."
+            },
+            "icon": "Server",
+            "color": "warning"
+        },
+        {
+            "id": "app_layer",
+            "title": "3. Capa de aplicación (L7)",
+            "description": "Lento y bajo (Low & Slow). Slowloris envía cabeceras HTTP muy lento. HTTP Flood mimetiza usuarios reales pulsando F5.",
+            "extra": {
+                "label": "Detección",
+                "text": "Difícil de detectar porque parece tráfico legítimo. Requiere Challenge-Response (JS/Captcha)."
+            },
+            "icon": "Globe",
+            "color": "success"
+        }
+    ],
+    "botnet": {
+        "title": "La anatomía de una botnet",
+        "description": "Los ataques modernos no vienen de un solo hacker, sino de millones de dispositivos IoT (cámaras, neveras, routers) hackeados y controlados remotamente.",
+        "stages": [
+            {
+                "emoji": "😈",
+                "name": "Bot Herder",
+                "connector": "Comandos"
+            },
+            {
+                "emoji": "📡",
+                "name": "C&C Server",
+                "connector": "Control"
+            },
+            {
+                "emoji": "🤖🧟",
+                "name": "Zombies",
+                "connector": "¡ATAQUE!"
+            },
+            {
+                "emoji": "🎯",
+                "name": "Víctima"
+            }
+        ]
+    }
+}

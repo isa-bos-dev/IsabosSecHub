@@ -1,0 +1,46 @@
+{
+    "header": {
+        "title": "Vectores cloud y API",
+        "description": "La nube elimina perímetros físicos. La identidad es el nuevo firewall. Las APIs son la superficie de ataque más grande de la infraestructura moderna."
+    },
+    "quote": {
+        "text": "En la nube, la mala configuración es más peligrosa que la explotación. Un bucket S3 mal configurado puede exponer millones de registros en segundos.",
+        "author": "Troy Hunt"
+    },
+    "threats": [
+        {
+            "id": "ssrf",
+            "title": "SSRF en cloud",
+            "icon": "ServerCog",
+            "description": "Engañar al servidor para acceder a la API de metadatos interna.",
+            "code": "http://169.254.169.254/latest/meta-data/",
+            "impact": "Devuelve credenciales temporales (IAM Roles) para robar la cuenta AWS.",
+            "variant": "secondary"
+        },
+        {
+            "id": "buckets",
+            "title": "Buckets públicos",
+            "icon": "Box",
+            "description": "Configuraciones erróneas en S3/Azure Blob.",
+            "impact": "Permitir lectura a 'Authenticated Users' (cualquier usuario de AWS) causa fugas masivas de datos sensibles.",
+            "variant": "warning"
+        },
+        {
+            "id": "bola",
+            "title": "API: BOLA",
+            "icon": "Globe",
+            "description": "Broken Object Level Authorization (IDOR en APIs).",
+            "examples": [
+                {
+                    "code": "GET /api/user/100 (Mío)",
+                    "variant": "success"
+                },
+                {
+                    "code": "GET /api/user/101 (Tuyo)",
+                    "variant": "error"
+                }
+            ],
+            "variant": "error"
+        }
+    ]
+}

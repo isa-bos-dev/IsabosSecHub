@@ -1,0 +1,114 @@
+{
+    "header": {
+        "title": "NoSQL y amenazas web modernas",
+        "description": "Explorando vulnerabilidades en arquitecturas modernas: bases de datos documentales, cachés en memoria y APIs."
+    },
+    "quote": {
+        "text": "La flexibilidad de esquema en NoSQL a menudo se traduce en flexibilidad para los atacantes. Sin validación estricta, la estructura dinámica es tu peor enemigo.",
+        "author": "Security Researcher"
+    },
+    "tabs": [
+        {
+            "id": "nosql-mongo",
+            "label": "Inyección MongoDB",
+            "variant": "success"
+        },
+        {
+            "id": "nosql-redis-graphql",
+            "label": "Redis y GraphQL",
+            "variant": "error"
+        },
+        {
+            "id": "nosql-traversal",
+            "label": "Path traversal",
+            "variant": "warning"
+        },
+        {
+            "id": "nosql-lab",
+            "label": "Laboratorio práctico",
+            "variant": "primary"
+        }
+    ],
+    "content": {
+        "nosql-mongo": {
+            "title": "Inyección MongoDB",
+            "icon": "Database",
+            "description": "MongoDB es vulnerable cuando las entradas del usuario se pasan directamente a las consultas sin saneamiento, permitiendo el uso de operadores especiales.",
+            "cards": [
+                {
+                    "title": "Bypass de login (PHP)",
+                    "description": "PHP convierte arrays en objetos JSON de consulta automáticamente.",
+                    "code": "user=admin&pass[$ne]=1",
+                    "footer": "Consulta: password 'NOT EQUAL' 1 -> TRUE.",
+                    "borderColor": "success"
+                },
+                {
+                    "title": "Inyección JavaScript ($where)",
+                    "description": "Ejecución de código arbitrario en el servidor de base de datos.",
+                    "code": "'; while(1); //",
+                    "footer": "Ataque de denegación de servicio (DoS) o extracción ciega.",
+                    "borderColor": "success"
+                }
+            ]
+        },
+        "nosql-redis-graphql": {
+            "title": "Redis y GraphQL",
+            "icon": "Server",
+            "description": "Vulnerabilidades en tecnologías de backend modernas y APIs.",
+            "cards": [
+                {
+                    "title": "Inyección Redis",
+                    "description": "Redis a menudo corre como root sin contraseña. Inyectar saltos de línea (CRLF) permite ejecutar comandos internos.",
+                    "code": "SET backup_file /root/.ssh/authorized_keys",
+                    "badge": "RCE",
+                    "borderColor": "error"
+                },
+                {
+                    "title": "GraphQL",
+                    "description": "El lenguaje de consulta para APIs también tiene sus riesgos únicos.",
+                    "list": [
+                        {
+                            "label": "Introspection",
+                            "text": "Consultar __schema revela toda la estructura interna de la API."
+                        },
+                        {
+                            "label": "Batching",
+                            "text": "Enviar 1000 consultas en una sola petición para DoS o fuerza bruta."
+                        }
+                    ],
+                    "borderColor": "error"
+                }
+            ]
+        },
+        "nosql-traversal": {
+            "title": "Path traversal",
+            "icon": "FolderOpen",
+            "description": "Acceso no autorizado a archivos y directorios fuera de la raíz web.",
+            "examples": [
+                {
+                    "label": "Acceso básico",
+                    "input": "http://app.com/file?name=report.pdf",
+                    "output": "http://app.com/file?name=../../../../etc/passwd",
+                    "description": "El uso de ../ permite escalar directorios hasta la raíz del sistema."
+                }
+            ]
+        },
+        "nosql-lab": {
+            "title": "Laboratorio: Bypass de autenticación",
+            "icon": "FlaskConical",
+            "description": "Caso de estudio real de un bypass de autenticación en una aplicación documental.",
+            "scenarios": [
+                {
+                    "title": "Entrada maliciosa (JSON)",
+                    "code": "{\n    \"user\": \"admin\",\n    \"pass\": { \"$ne\": \"null\" }\n}"
+                },
+                {
+                    "title": "Análisis del pentester",
+                    "description": "El motor procesa la consulta de la siguiente manera:",
+                    "code": "db.users.find({ user: \"admin\", pass: { $ne: \"null\" } })",
+                    "conclusion": "Al ser la contraseña real distinta a 'null', la base de datos devuelve el objeto de usuario, concediendo acceso total sin saber la contraseña."
+                }
+            ]
+        }
+    }
+}

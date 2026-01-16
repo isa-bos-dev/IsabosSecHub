@@ -1,0 +1,70 @@
+{
+    "header": {
+        "title": "Infraestructura física y de red",
+        "description": "Antes de la nube, estos eran los vectores principales. Siguen siendo críticos en entornos híbridos y on-premise. La identidad es el nuevo perímetro."
+    },
+    "quote": {
+        "text": "El Active Directory es el corazón de la red corporativa. Comprometer el Domain Controller es Game Over. Todo lo demás es ruido.",
+        "author": "Sean Metcalf"
+    },
+    "physicalThreats": [
+        {
+            "id": "physical-access",
+            "title": "Acceso y seguridad física",
+            "icon": "HardDrive",
+            "description": "Si un atacante accede físicamente al servidor, puede robar discos duros o instalar keyloggers. El robo de cintas de backup es también un riesgo crítico.",
+            "mitigation": "Cifrado de datos en reposo (TDE), controles biométricos y vigilancia.",
+            "variant": "primary"
+        },
+        {
+            "id": "sniffing",
+            "title": "Datos en tránsito (sniffing)",
+            "icon": "Network",
+            "description": "Intercepción de tráfico de base de datos no cifrado. Un atacante en la red interna puede capturar consultas SQL y resultados en texto plano.",
+            "mitigation": "Uso forzoso de TLS/SSL para todas las conexiones a la base de datos.",
+            "variant": "success"
+        },
+        {
+            "id": "insecure-defaults",
+            "title": "Configuraciones inseguras por defecto",
+            "icon": "Settings",
+            "description": "Muchos sistemas (MongoDB, ElasticSearch) vienen con puertos abiertos (27017, 9200) y sin contraseña por defecto.",
+            "risk": "Indexación automática por motores como Shodan y secuestro inmediato de datos.",
+            "variant": "error"
+        }
+    ],
+    "identityThreats": [
+        {
+            "id": "active-directory",
+            "title": "Active Directory (AD)",
+            "icon": "Lock",
+            "description": "El cerebro de la red Windows. Utiliza Kerberos para autenticación mediante tickets (TGT, TGS). Comprometer el 'Domain Controller' (DC) es el objetivo final ('Game Over').",
+            "variant": "primary"
+        },
+        {
+            "id": "kerberoasting",
+            "title": "Kerberoasting",
+            "icon": "Key",
+            "description": "Cualquier usuario autenticado puede solicitar un ticket de servicio (TGS) para un SPN y crackearlo offline para obtener la contraseña de servicio.",
+            "code": "GetUserSPNs.py -request -dc-ip 10.10.10.10 domain/user",
+            "variant": "warning"
+        },
+        {
+            "id": "zerologon",
+            "title": "Zerologon (CVE-2020-1472)",
+            "icon": "ShieldAlert",
+            "description": "Vulnerabilidad crítica en el protocolo Netlogon. Debido a un fallo en AES-CFB8, enviar inputs de ceros permite cambiar la contraseña del DC a una cadena vacía.",
+            "variant": "error"
+        }
+    ],
+    "defenses": [
+        {
+            "title": "VLANs / DMZ",
+            "description": "Aislar servidores críticos de la red de usuarios."
+        },
+        {
+            "title": "PAW (Privileged Access Workstations)",
+            "description": "Admins solo loguean desde equipos seguros."
+        }
+    ]
+}

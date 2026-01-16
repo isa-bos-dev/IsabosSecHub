@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap');
+@import "tailwindcss";
+
+/* ============================================
+   CONFIGURACIÓN DE TEMA TAILWIND
+   ============================================ */
+@theme {
+  /* 1. Colores de Marca */
+  --color-primary: #00B0F0;
+  --color-primary-alpha-10: rgba(0, 176, 240, 0.1);
+  --color-secondary: #D86ECC;
+  --color-secondary-alpha-10: rgba(216, 110, 204, 0.1);
+  --color-accent: #F2CFEE;
+
+  /* 2. Colores de Estado */
+  --color-success: #4ade80;
+  --color-warning: #facc15;
+  --color-error: #fc3131;
+  --color-error-alpha-10: rgba(252, 49, 49, 0.1);
+
+  /* 3. Colores de Fondo */
+  --bg-primary: #101620;
+  --bg-secondary: #1A2230;
+  --bg-tertiary: #252e3e;
+  --bg-hover: #2d3748;
+  --bg-code: #000000;
+  --bg-glass: rgba(30, 41, 59, 0.7);
+
+  /* 4. Colores de Texto */
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #475569;
+  --white-color: #ffffff;
+
+  /* 5. Tipografía */
+  --font-primary: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-serif: 'Merriweather', 'Georgia', serif;
+
+  /* 6. Efectos */
+  --shadow-card: 0 4px 30px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.2);
+
+  /* 7. Animaciones */
+  --animate-fade-in: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* ============================================
+   ESTILOS BASE
+   ============================================ */
+body {
+  font-family: var(--font-primary);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  /* Patrón de fondo sutil estilo 'grid' */
+  background-image: radial-gradient(rgba(0, 176, 240, 0.03) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+code,
+pre {
+  font-family: var(--font-mono);
+}
+
+/* ============================================
+   BARRA DE DESPLAZAMIENTO
+   ============================================ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+
+/* ============================================
+   CLASES DE UTILIDAD
+   ============================================ */
+.glass-card {
+  background: var(--bg-glass);
+  border: 1px solid var(--text-tertiary);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-card);
+}
+
+.nav-item {
+  position: relative;
+  color: var(--text-secondary);
+  transition: color 0.3s;
+}
+
+.nav-item:hover {
+  color: var(--text-primary);
+}
+
+.nav-item.active {
+  color: var(--nav-active-color, var(--color-primary));
+}
+
+.nav-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--nav-active-color, var(--color-primary));
+  box-shadow: 0 0 10px var(--nav-active-color, var(--color-primary));
+}
+
+/* ============================================
+   BARRA DE DESPLAZAMIENTO PERSONALIZADA
+   ============================================ */
+/* Navegadores Webkit (Chrome, Safari, Edge) */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-color, var(--text-tertiary));
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-color, var(--text-secondary));
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-color, var(--text-tertiary)) var(--bg-tertiary);
+}
+
+/* Utilidad para ocultar barra de desplazamiento */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
