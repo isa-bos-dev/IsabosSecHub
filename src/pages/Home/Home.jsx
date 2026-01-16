@@ -30,7 +30,7 @@ const Home = () => {
                             <Lock className="w-8 h-8 text-secondary absolute bottom-0 right-0" />
                         </div>
                     </div>
-                    <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 bg-clip-text text-transparent bg-linear-to-r from-primary via-blue-500 to-secondary">
+                    <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 bg-clip-text text-transparent bg-linear-to-r from-primary via-blue-500 to-secondary leading-tight pb-2">
                         IsabosSecurity Hub
                     </h1>
                     <p className="text-xl text-(--text-secondary) font-light leading-relaxed max-w-2xl mx-auto">
