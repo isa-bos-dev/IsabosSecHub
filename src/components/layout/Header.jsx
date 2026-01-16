@@ -26,7 +26,7 @@ const Header = ({
 
                     {/* Site Title with Logo */}
                     <div className="flex items-center gap-3 mb-3 xl:mb-0">
-                        <img src="/favicon.svg" alt="IsaBosDev Logo" className="w-8 h-8" />
+                        <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="IsaBosDev Logo" className="w-8 h-8" />
                         <Link to="/" className="no-underline">
                             <div>
                                 <h1 className="text-lg font-bold tracking-tight leading-none" style={{ color: 'var(--text-primary)' }}>
