@@ -6,7 +6,7 @@
   "homepage": "https://isa-bos-dev.github.io/IsabosSecHub/",
   "scripts": {
     "dev": "vite",
-    "predeploy": "npm run build",
+    "predeploy": "pnpm run build",
     "deploy": "gh-pages -d dist",
     "build": "vite build",
     "lint": "eslint .",
