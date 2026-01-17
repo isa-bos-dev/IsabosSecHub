@@ -27,6 +27,8 @@ const Capas = () => {
             <PageHeader
                 title="Modelo TCP/IP: Anatomía de la vulnerabilidad"
                 description="Cada capa del modelo TCP/IP ofrece servicios esenciales, pero también expone vectores de ataque únicos. Haz clic en una capa para descubrir sus secretos."
+                gradientFrom="primary"
+                gradientTo="primary-alpha-10"
             />
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-[600px]">

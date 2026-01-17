@@ -99,6 +99,8 @@ const DoS = () => {
             <PageHeader
                 title={data.header.title}
                 description={data.header.description}
+                gradientFrom="primary"
+                gradientTo="primary-alpha-10"
             />
 
             {/* Entendiendo los vectores */}

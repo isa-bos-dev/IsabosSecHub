@@ -41,6 +41,8 @@ const Panorama = () => {
             <PageHeader
                 title="Evolución de las ciberamenazas"
                 description="Desde los primeros virus de disquete hasta la guerra cibernética moderna impulsada por IA. Comprender la historia es vital para predecir el futuro de la seguridad."
+                gradientFrom="primary"
+                gradientTo="primary-alpha-10"
             />
 
             {/* Grid de Contenido Principal */}

@@ -13,6 +13,8 @@ const Ataques = () => {
             <PageHeader
                 title="Ataques de red: Interceptación y manipulación"
                 description="La red es un entorno hostil. Descubre cómo los atacantes usan la física de los protocolos para robar información (Sniffing) y redirigir tráfico (Spoofing)."
+                gradientFrom="primary"
+                gradientTo="primary-alpha-10"
             />
 
             {/* Sección 1: Sniffing y Radar */}

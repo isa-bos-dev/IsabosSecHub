@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Shield, Network, Globe, Lock, Cpu, Server } from 'lucide-react';
+import { Shield, Network, Globe, Lock, Cpu, Server, Key } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Footer from '../../components/layout/Footer';
 import Card from '../../components/ui/Card';
@@ -39,7 +39,7 @@ const Home = () => {
                     </p>
                 </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl mx-auto mb-20">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-7xl mx-auto mb-20">
 
                     {/* Card 1: Network Research */}
                     <Link to="/network" className="block h-full">
@@ -48,7 +48,7 @@ const Home = () => {
                             hoverShadow="0 20px 40px rgba(0, 176, 240, 0.2)"
                             hoverBorderColor="var(--color-primary)"
                         >
-                            <div className="mb-6 p-4 bg-primary/20 rounded-full group-hover:bg-primary/20 transition-colors">
+                            <div className="mb-6 p-4 bg-primary/10 rounded-full group-hover:bg-primary/20 transition-colors">
                                 <Network className="w-12 h-12 text-primary" />
                             </div>
                             <Title level={3} className="text-(--text-primary) mb-3">Network & TCP/IP</Title>
@@ -68,7 +68,7 @@ const Home = () => {
                             hoverShadow="0 20px 40px rgba(216, 110, 204, 0.2)"
                             hoverBorderColor="var(--color-secondary)"
                         >
-                            <div className="mb-6 p-4 bg-secondary/20 rounded-full group-hover:bg-secondary/20 transition-colors">
+                            <div className="mb-6 p-4 bg-secondary/10 rounded-full group-hover:bg-secondary/20 transition-colors">
                                 <Server className="w-12 h-12 text-secondary" />
                             </div>
                             <Title level={3} className="text-(--text-primary) mb-3">Threat Intelligence</Title>
@@ -77,6 +77,26 @@ const Home = () => {
                             </p>
                             <div className="mt-auto flex items-center text-secondary text-sm font-bold uppercase tracking-widest">
                                 Acceder <Cpu className="ml-2 w-4 h-4" />
+                            </div>
+                        </Card>
+                    </Link>
+
+                    {/* Card 3: Cryptography */}
+                    <Link to="/cryptography" className="block h-full">
+                        <Card
+                            className="h-full flex flex-col items-center text-center p-8 transition-all duration-300"
+                            hoverShadow="0 20px 40px rgba(74, 222, 128, 0.2)"
+                            hoverBorderColor="var(--color-success)"
+                        >
+                            <div className="mb-6 p-4 bg-success/10 rounded-full group-hover:bg-success/20 transition-colors">
+                                <Key className="w-12 h-12 text-success" />
+                            </div>
+                            <Title level={3} className="text-(--text-primary) mb-3">Cryptography</Title>
+                            <p className="text-sm text-(--text-secondary) leading-relaxed mb-6">
+                                Fundamentos matemáticos, cifrado simétrico/asimétrico, hashing y protocolos.
+                            </p>
+                            <div className="mt-auto flex items-center text-sm font-bold uppercase tracking-widest text-success">
+                                Acceder <Key className="ml-2 w-4 h-4" />
                             </div>
                         </Card>
                     </Link>

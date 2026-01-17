@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { getCSSVariable } from '../../utils/colors';
 
+
 /**
  * Componente Timeline reutilizable con tarjetas animadas y marcadores de icono
  * @param {Array} items - Ítems del timeline con estructura:
@@ -75,10 +76,42 @@ const Timeline = ({ items, onExampleClick }) => {
                             {item.title}
                         </h3>
 
+
+
+
                         {/* Descripción de Tarjeta */}
-                        <p className="text-(--text-secondary) leading-relaxed mb-4">
-                            {item.desc}
-                        </p>
+                        <div className="mb-4">
+                            {Array.isArray(item.desc) ? (
+                                item.desc.map((block, i) => {
+                                    if (typeof block === 'string') {
+                                        return (
+                                            <p key={i} className="text-(--text-secondary) leading-relaxed mb-2 text-justify">
+                                                {block.split(/(\*\*.*?\*\*)/g).map((part, j) =>
+                                                    part.startsWith('**') && part.endsWith('**')
+                                                        ? <strong key={j} className="text-primary font-semibold">{part.slice(2, -2)}</strong>
+                                                        : part
+                                                )}
+                                            </p>
+                                        );
+                                    }
+                                    if (block.type === 'etymology') {
+                                        return (
+                                            <div key={i} className="bg-primary/5 border-l-4 border-primary p-4 my-4 rounded-r">
+                                                <span className="text-xs font-bold text-primary uppercase tracking-wider block mb-1">Etimología</span>
+                                                <p className="text-sm text-(--text-secondary) italic">
+                                                    {block.text}
+                                                </p>
+                                            </div>
+                                        );
+                                    }
+                                    return null;
+                                })
+                            ) : (
+                                <p className="text-(--text-secondary) leading-relaxed mb-4">
+                                    {item.desc}
+                                </p>
+                            )}
+                        </div>
 
                         {/* Sección de Ejemplos */}
                         {item.examples && item.examples.length > 0 && (

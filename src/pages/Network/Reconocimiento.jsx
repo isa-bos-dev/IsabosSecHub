@@ -22,6 +22,8 @@ const Reconocimiento = () => {
             <PageHeader
                 title="Reconocimiento y escaneo (Nmap)"
                 description="La fase de reconocimiento es el cimiento de cualquier prueba de penetración exitosa. Antes de lanzar un solo exploit, es crucial mapear la superficie de ataque, identificar servicios activos y comprender la topología de la red objetivo. En esta sección, desglosamos las técnicas de escaneo de puertos, la interpretación de estados y las estrategias de evasión utilizando Nmap, la herramienta estándar de la industria."
+                gradientFrom="primary"
+                gradientTo="primary-alpha-10"
             />
 
             {/* Bloques de Contenido */}

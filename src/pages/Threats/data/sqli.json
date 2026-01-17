@@ -1,6 +1,6 @@
 {
     "header": {
-        "title": "SQL Injection Masterclass",
+        "title": "SQL Injection",
         "description": "Dominando la vulnerabilidad más crítica de la web. Desde inyecciones básicas hasta técnicas ciegas avanzadas y evasión de WAF."
     },
     "quote": {

@@ -9,6 +9,8 @@ const Quiz = () => {
             <PageHeader
                 title="Cuestionario de Evaluación TCP/IP"
                 description="Sección en construcción. Próximamente disponible."
+                gradientFrom="primary"
+                gradientTo="primary-alpha-10"
             />
 
             {/* Tarjeta de Encabezado */}

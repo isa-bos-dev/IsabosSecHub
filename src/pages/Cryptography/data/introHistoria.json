@@ -1,0 +1,413 @@
+{
+    "header": {
+        "title": "Fundamentos y evolución de la criptografía",
+        "description": "De la escritura secreta a la ciencia de la información: Un recorrido desde los jeroglíficos hasta la criptografía cuántica."
+    },
+    "timeline": [
+        {
+            "gen": "Origen",
+            "eras": "1900 a. C.",
+            "title": "El despertar de la criptología",
+            "desc": [
+                "La pulsión humana por salvaguardar el conocimiento y restringir el acceso a la información es tan antigua como la civilización misma.",
+                "Si retrocedemos al año **1900 a.C.**, en la tumba de **Jnumhotep II** en el Antiguo Egipto, hallamos los primeros vestigios de una transformación deliberada de la escritura. Aunque inicialmente el uso de jeroglíficos inusuales buscaba 'dignificar' el texto antes que ocultarlo, pronto se originó una transición hacia el misterio y la magia.",
+                {
+                    "type": "etymology",
+                    "text": "El término criptografía deriva del griego kryptós ('secreto') y graphein ('escritura'), definiéndose clásicamente como la ciencia que estudia la escritura de secretos para ocultar el contenido de un mensaje."
+                }
+            ],
+            "icon": "Scroll",
+            "color": "text-success",
+            "bg": "bg-success/10",
+            "border": "border-success",
+            "examples": [
+                "Jeroglíficos atípicos"
+            ]
+        },
+        {
+            "gen": "Transposición",
+            "eras": "Siglo V a. C.",
+            "title": "La escítala espartana",
+            "desc": [
+                "El **cifrado de transposición** se distingue radicalmente de la sustitución: no cambia la identidad de los símbolos (una 'A' sigue siendo una 'A'), sino que altera su **posición** en la secuencia. Es, matemáticamente, una permutación.",
+                "La **escítala** es el primer dispositivo criptográfico militar documentado. Utilizado por los éforos espartanos, permitía la comunicación segura con los generales en campaña mediante una clave física geométrica: el diámetro de un bastón de madera."
+            ],
+            "icon": "Columns",
+            "color": "text-warning",
+            "bg": "bg-warning/10",
+            "border": "border-warning",
+            "examples": [
+                "Mecánica de la escítala"
+            ]
+        },
+        {
+            "gen": "Sustitución",
+            "eras": "Siglo I a. C.",
+            "title": "El cifrado César",
+            "desc": [
+                "La **sustitución monoalfabética** establece una correspondencia fija: cada carácter del mensaje original se reemplaza por otro según una regla constante.",
+                "El historiador Suetonio detalla cómo **Julio César** cifraba sus comunicados militares desplazando cada letra tres posiciones en el alfabeto. Aunque trivial para los estándares modernos (solo hay 25 claves posibles), resultó efectivo en una época de analfabetismo generalizado."
+            ],
+            "icon": "Replace",
+            "color": "text-primary",
+            "bg": "bg-primary/10",
+            "border": "border-primary",
+            "examples": [
+                "Cifrado César paso a paso"
+            ]
+        },
+        {
+            "gen": "Fundamentos",
+            "eras": "Siglo IX d. C.",
+            "title": "Taxonomía del secreto",
+            "desc": [
+                "Durante la Edad de Oro islámica, el polímata **Al-Kindi** revolucionó el campo al darse cuenta de que los idiomas tienen una 'huella digital' estadística.",
+                "En su **Manuscrito sobre el descifrado de mensajes criptográficos**, estableció que si conocemos la frecuencia promedio de aparición de cada letra en un idioma, podemos romper cualquier cifrado de sustitución monoalfabética simplemente contando caracteres. Había nacido el **criptoanálisis**."
+            ],
+            "icon": "BarChart",
+            "color": "text-error",
+            "bg": "bg-error/10",
+            "border": "border-error",
+            "examples": [
+                "Ramas de la criptología"
+            ]
+        },
+        {
+            "gen": "Polialfabético",
+            "eras": "1553",
+            "title": "La cifra indescifrable",
+            "desc": [
+                "Para vencer al análisis de frecuencias, era necesario que una misma letra (ej. 'e') no se cifrara siempre igual. **Blaise de Vigenère** popularizó un método que utilizaba una **palabra clave** para alternar entre múltiples alfabetos de César.",
+                "Durante tres siglos, este sistema fue considerado **'Le Chiffre Indéchiffrable'**. No fue hasta mediados del siglo XIX cuando Charles Babbage y Friedrich Kasiski desarrollaron métodos matemáticos para romperlo, buscando patrones repetidos en el texto cifrado."
+            ],
+            "icon": "RefreshCw",
+            "color": "text-success",
+            "bg": "bg-success/10",
+            "border": "border-success",
+            "examples": [
+                "Tabula recta de Vigenère"
+            ]
+        },
+        {
+            "gen": "Enigma",
+            "eras": "1820",
+            "title": "Criptogramas de Beale",
+            "desc": [
+                "Antes de la mecanización, se intentaron métodos manuales extremos para aplanar la curva estadística de las letras. El **cifrado homofónico** asigna múltiples símbolos a las letras más frecuentes (como la 'e' o la 'a') en proporción a su uso.",
+                "Los famosos Criptogramas de Beale, que supuestamente revelan la ubicación de un tesoro enterrado en Virginia, son el ejemplo más notorio (y controvertido) de esta técnica llevada al límite mediante códigos de libro."
+            ],
+            "icon": "FileText",
+            "color": "text-secondary",
+            "bg": "bg-secondary/10",
+            "border": "border-secondary",
+            "examples": [
+                "El tesoro de Beale"
+            ]
+        },
+        {
+            "gen": "Teórico",
+            "eras": "1883",
+            "title": "La filosofía de la seguridad",
+            "desc": [
+                "En el siglo XIX, **Auguste Kerckhoffs** formuló los principios que separan la criptografía profesional del amateurismo.",
+                "Su segundo principio es el pilar de la seguridad moderna: **la seguridad no debe depender del secreto del diseño**. Un sistema es seguro solo si, aun conociendo el atacante todo el mecanismo (el algoritmo), no puede descifrar el mensaje sin la clave específica."
+            ],
+            "icon": "ShieldAlert",
+            "color": "text-warning",
+            "bg": "bg-warning/10",
+            "border": "border-warning",
+            "examples": [
+                "Principio #2 de Kerckhoffs"
+            ]
+        },
+        {
+            "gen": "Científico",
+            "eras": "1949",
+            "title": "El secreto perfecto",
+            "desc": [
+                "En 1949, **Claude Shannon** transformó la criptografía de arte a ciencia con su teoría de la información. Demostró matemáticamente que el **secreto perfecto** es posible, pero impone condiciones severas.",
+                "El sistema, conocido como **One-Time Pad** (Libreta de un solo uso), requiere una clave totalmente aleatoria, tan larga como el mensaje y usada una sola vez. Es invulnerable a cualquier poder de computación, presente o futuro."
+            ],
+            "icon": "Binary",
+            "color": "text-primary",
+            "bg": "bg-primary/10",
+            "border": "border-primary",
+            "examples": [
+                "Lógica XOR del One-Time Pad"
+            ]
+        },
+        {
+            "gen": "Simétrico",
+            "eras": "1970s",
+            "title": "El elenco de la comunicación",
+            "desc": [
+                "Para modelar protocolos de seguridad, los criptógrafos utilizan un elenco estándar de personajes que representan roles y amenazas.",
+                "Esta abstracción permite analizar flujos de información sin ambigüedad. **Alice** y **Bob** intentan comunicarse, mientras actores maliciosos como **Eve** (espía pasiva) o **Mallory** (atacante activa) intentan comprometer el canal."
+            ],
+            "icon": "User",
+            "color": "text-success",
+            "bg": "bg-success/10",
+            "border": "border-success",
+            "examples": [
+                "Actores estándar"
+            ]
+        },
+        {
+            "gen": "Moderna",
+            "eras": "Actualidad",
+            "title": "Pilares y ataques modernos",
+            "desc": [
+                "La criptografía moderna ya no solo cifra mensajes. Es la infraestructura que garantiza la **autenticidad**, **integridad** y el **no repudio** en todas las transacciones digitales.",
+                "Paralelamente, los ataques han evolucionado. Ya no solo se ataca la matemática (criptoanálisis clásico), sino la física del dispositivo: consumo de energía, radiación electromagnética y tiempos de respuesta (**canales laterales**)."
+            ],
+            "icon": "Globe",
+            "color": "text-error",
+            "bg": "bg-error/10",
+            "border": "border-error",
+            "examples": [
+                "Triada CID"
+            ]
+        }
+    ],
+    "exampleDetails": {
+        "Jeroglíficos atípicos": {
+            "title": "Inscripciones de Jnumhotep II",
+            "date": "1900 a. C.",
+            "type": "Detalle arqueológico",
+            "footerQuote": "\"Los códigos son un rompecabezas. Un juego, como cualquier otro juego.\" — Alan Turing",
+            "fullContent": [
+                "La tumba de Jnumhotep II (BH3) en Beni Hassan es famosa no solo por sus vívidos murales, sino por sus inscripciones criptográficas, consideradas las más antiguas documentadas.",
+                "**Contexto técnico:**",
+                "El escriba sustituyó jeroglíficos estándares por otros inusuales o arcaicos en la cámara principal.",
+                {
+                    "type": "list",
+                    "items": [
+                        "**Sustitución simbólica:** El sistema no era un cifrado militar, sino **litúrgico**. Por ejemplo, en lugar de usar el símbolo común para 'río' (agua ondulada), usaba una imagen arcaica del dios Hapi (dios del río).",
+                        "**Propósito de dignidad:** Esto forzaba al lector a detenerse y pensar, elevando la importancia del texto. Es el antepasado conceptual de la 'sustitución': cambiar un símbolo (texto plano) por otro (símbolo cifrado) preservando el significado.",
+                        "**Importancia:** Demuestra que la criptografía nació vinculada al lenguaje y al prestigio, antes que a la guerra."
+                    ]
+                }
+            ]
+        },
+        "Mecánica de la escítala": {
+            "title": "Mecánica de la escítala",
+            "date": "Siglo V a. C.",
+            "type": "Dispositivo físico",
+            "footerQuote": "\"Toda guerra se basa en el engaño.\" — Sun Tzu",
+            "fullContent": [
+                "La escítala ejemplifica un **cifrado de transposición** (cambiar orden). La seguridad reside en el grosor del bastón **(clave)**.",
+                "**Algoritmo paso a paso:**",
+                "1. Se enrolla una cinta de papiro o cuero en un bastón.\n2. Se escribe el mensaje a lo largo del bastón (longitudinalmente).\n3. Al desenrollar, las letras quedan mezcladas.",
+                "**Ejemplo visual:**",
+                "Mensaje: **ATACARALAMANECER**\nBastón: Permite 4 letras a lo largo antes de dar la vuelta.",
+                {
+                    "type": "scytale",
+                    "grid": [
+                        [
+                            "A",
+                            "T",
+                            "A",
+                            "C"
+                        ],
+                        [
+                            "A",
+                            "R",
+                            "A",
+                            "L"
+                        ],
+                        [
+                            "A",
+                            "M",
+                            "A",
+                            "N"
+                        ],
+                        [
+                            "E",
+                            "C",
+                            "E",
+                            "R"
+                        ]
+                    ]
+                },
+                "**Lectura cifrada (desenrollado):**\nAl quitar la cinta del bastón, leemos columna por columna (verticalmente):",
+                "**1ª Columna:** A - A - A - E\n**2ª Columna:** T - R - M - C\n**3ª Columna:** A - A - A - E\n**4ª Columna:** C - L - N - R",
+                "Mensaje final enviado: **AAAE TRMC AAAE CLNR**.",
+                "El enemigo ve letras sin sentido. Solo quien tenga un bastón del mismo grosor puede volver a enrollar la cinta para leer **ATACAR...** en horizontal."
+            ]
+        },
+        "Cifrado César paso a paso": {
+            "title": "Matemática del cifrado César",
+            "date": "Siglo I a. C.",
+            "type": "Algoritmo matemático",
+            "footerQuote": "\"Si tenía algo confidencial que decir, lo escribía en cifrado.\" — Suetonio",
+            "fullContent": [
+                "El cifrado César es una sustitución simple basada en el alfabeto.",
+                "**Conceptos clave:**",
+                {
+                    "type": "list",
+                    "items": [
+                        "**Texto plano ($x$):** El mensaje original.",
+                        "**Clave ($k$):** El número de posiciones a desplazar.",
+                        "**Módulo 26:** Operamos en un círculo (A..Z). Si nos pasamos de la Z, empezamos de nuevo en A."
+                    ]
+                },
+                "**Fórmulas:**",
+                "Cifrar: **$Letra + k$**\nDescifrar: **$Letra - k$**",
+                "**Ejemplo práctico:** Cifrar **HOLA** con clave **3**.",
+                {
+                    "type": "ordered-list",
+                    "items": [
+                        "**Paso 1 (numérico):**\n   H(7), O(14), L(11), A(0).",
+                        "**Paso 2 (suma 3):**\n   H: 7 + 3 = 10\n   O: 14 + 3 = 17\n   L: 11 + 3 = 14\n   A: 0 + 3 = 3",
+                        "**Paso 3 (resultado):**\n   10 es **K**\n   17 es **R**\n   14 es **O**\n   3 es **D**"
+                    ]
+                },
+                "Resultado cifrado: **KROD**.",
+                "**Operación inversa (descifrado):**",
+                "Recibimos **KROD**. Restamos 3:\nK(10) - 3 = 7 (**H**)\nR(17) - 3 = 14 (**O**)...\nY así recuperamos el mensaje."
+            ]
+        },
+        "Ramas de la criptología": {
+            "title": "Las tres ramas del estudio",
+            "date": "Siglo IX d. C.",
+            "type": "Taxonomía académica",
+            "footerQuote": "\"El hambre por la escritura secreta es tan antigua como la civilización.\" — David Kahn",
+            "fullContent": [
+                "Es vital distinguir los tres dominios que componen esta ciencia:",
+                {
+                    "type": "ordered-list",
+                    "items": [
+                        "**1. Criptografía (defensa):**\nEl arte de *proteger*. Su objetivo es crear sistemas seguros.\nEjemplo: Diseñar un candado digital para tu WhatsApp.",
+                        "**2. Criptoanálisis (ataque):**\nEl arte de *romper*. Su objetivo es encontrar fallos en los sistemas.\nEjemplo: Intentar abrir ese candado sin tener la llave.",
+                        "**3. Criptología (ciencia):**\nLa suma de ambas. No puedes hacer buenos candados si no sabes cómo se fuerzan.\nUn criptólogo estudia tanto la defensa como el ataque."
+                    ]
+                }
+            ]
+        },
+        "Tabula recta de Vigenère": {
+            "title": "El funcionamiento de Vigenère",
+            "date": "1553",
+            "type": "Herramienta polialfabética",
+            "footerQuote": "\"Le chiffre indéchiffrable.\" — Título histórico del siglo XVI",
+            "fullContent": [
+                "Vigenère usa una palabra clave para cambiar la regla de sustitución en cada letra. Esto confunde a quien intente contar letras frecuentes.",
+                "**Ejemplo práctico paso a paso:**",
+                "Mensaje: **ATACAR**\nClave: **SOL**",
+                {
+                    "type": "ordered-list",
+                    "items": [
+                        "**Paso 1: Alinear.**\nEscribimos la clave repetida bajo el mensaje:\nMensaje: **A T A C A R**\nClave:    **S O L S O L**",
+                        "**Paso 2: Sumar (cifrado).**\nUsamos los valores numéricos (A=0 ... Z=25).\n\n1. **A + S** = 0 + 18 = 18 -> **S**\n2. **T + O** = 19 + 14 = 33. \n   (Como 33 pasa de 25, restamos 26: 33 - 26 = 7) -> **H**\n3. **A + L** = 0 + 11 = 11 -> **L**\n4. **C + S** = 2 + 18 = 20 -> **U**\n5. **A + O** = 0 + 14 = 14 -> **O**\n6. **R + L** = 17 + 11 = 28. (28 - 26 = 2) -> **C**"
+                    ]
+                },
+                "**Resultado final:** **SHLUOC**",
+                "**¿La clave del éxito?**\nFíjate en las letras 'A' del mensaje original (posiciones 1, 3 y 5). En el resultado cifrado se han convertido en **S**, **L** y **O**. ¡Misma letra de entrada, diferente letra de salida! Esto hace que el análisis de frecuencias clásico falle."
+            ]
+        },
+        "El tesoro de Beale": {
+            "title": "Cifrado de libro (Book Cipher)",
+            "date": "1885",
+            "type": "Cifrado de libro",
+            "footerQuote": "\"Puede dudarse que el ingenio humano pueda crear un enigma... que el ingenio humano no pueda resolver.\" — Edgar Allan Poe",
+            "fullContent": [
+                "Este método usa un libro o texto común como 'diccionario de coordenadas'.",
+                "**Ejemplo simplificado:**",
+                "Imagina que usamos este mismo texto que estás leyendo como clave. Numeramos las palabras:\n1:Este 2:método 3:usa 4:un 5:libro...",
+                "**El código:**",
+                "Para enviar la palabra **'LUZ'**, busco palabras en el texto que empiecen por L, U y Z.",
+                {
+                    "type": "list",
+                    "items": [
+                        "**L:** Palabra 5 ('libro') empieza por L. -> Código **5**\n*(También valdría 'leyendo' si apareciera luego)*.",
+                        "**U:** Palabra 3 ('usa') empieza por U. -> Código **3**.",
+                        "**Z:** (Supongamos que la palabra 100 es 'zona'). -> Código **100**."
+                    ]
+                },
+                "Mensaje cifrado: **5 - 3 - 100**.",
+                "El receptor busca esas palabras en su copia del libro y anota las iniciales: **L U Z**."
+            ]
+        },
+        "Principio #2 de Kerckhoffs": {
+            "title": "El segundo principio de Kerckhoffs",
+            "date": "1883",
+            "type": "Axioma de seguridad",
+            "footerQuote": "\"Cada secreto crea un punto potencial de fallo.\" — Bruce Schneier",
+            "fullContent": [
+                "Este es el concepto más importante en la seguridad moderna.",
+                {
+                    "type": "quote",
+                    "text": "La seguridad debe residir en la clave, no en el diseño del sistema.",
+                    "author": "Auguste Kerckhoffs"
+                },
+                "**Analogía del candado:**",
+                {
+                    "type": "list",
+                    "items": [
+                        "**Mal diseño (seguridad por oscuridad):** Un candado que se abre golpeándolo en un punto secreto. Si alguien descubre el punto, abre TODOS los candados de esa marca.",
+                        "**Buen diseño (Kerckhoffs):** Un candado normal. Todo el mundo sabe cómo funciona (pines, cilindro). Puedes comprar uno y desmontarlo para estudiarlo. Pero, aun sabiendo cómo funciona, no puedes abrir el del vecino si no tienes su **llave** específica."
+                    ]
+                },
+                "Por eso usamos algoritmos públicos (AES, RSA). Son seguros porque han sido probados por todos, no porque sean secretos."
+            ]
+        },
+        "Lógica XOR del One-Time Pad": {
+            "title": "La lógica del secreto perfecto",
+            "date": "1917 / 1949",
+            "type": "Teoría de la información",
+            "footerQuote": "\"El enemigo conoce el sistema.\" — Claude Shannon",
+            "fullContent": [
+                "El **One-Time Pad** es matemáticamente indecifrable. Utiliza la operación binaria **XOR** (⊕).",
+                "**Regla del XOR:**",
+                "Si los bits son iguales -> 0\nSi los bits son distintos -> 1",
+                "**Ejemplo paso a paso (1 bit):**",
+                "Supongamos que el bit a enviar es **1** (Verdadero).",
+                {
+                    "type": "list",
+                    "items": [
+                        "Si la clave aleatoria es **0**:\n1 ⊕ 0 = **1** (cifrado).",
+                        "Si la clave aleatoria es **1**:\n1 ⊕ 1 = **0** (cifrado)."
+                    ]
+                },
+                "¿Qué ve el atacante? Un **1** o un **0**. Como la clave es aleatoria (50% probabilidad de ser 0 o 1), el resultado cifrado también es 50% aleatorio.",
+                "No hay patrón. Ver un '0' cifrado no le dice si el original era 0 o 1, porque depende de una clave que desconoce totalmente.",
+                "Al extender esto a todo el mensaje, el texto cifrado es aleatorio pura y no contiene información útil sin la clave."
+            ]
+        },
+        "Actores estándar": {
+            "title": "Dramatis Personae",
+            "date": "1978",
+            "type": "Modelado de protocolos",
+            "footerQuote": "\"Si crees que la criptografía es la respuesta, entonces no conoces tu problema.\" — Peter G. Neumann",
+            "fullContent": [
+                "Para explicar situaciones de seguridad, usamos un reparto de actores fijos:",
+                {
+                    "type": "list",
+                    "items": [
+                        "**Alice y Bob:** Los buenos. Quieren hablar en privado.",
+                        "**Eve (espía):** La cotilla. Escucha la línea telefónica. Puede oír lo que dicen, pero no puede hablar. (Ataca la **confidencialidad**).",
+                        "**Mallory (malicioso):** El criminal. Se mete en medio de la línea. Puede hacerse pasar por Alice ante Bob. (Ataca la **integridad** y **autenticidad**)."
+                    ]
+                },
+                "**Escenario de ejemplo:**",
+                "1. Alice envía un mensaje a Bob: 'Transfiere 100€ a mi cuenta'.\n2. **Eve** solo vería ruido cifrado 'XJ8$L!', no se entera de nada.\n3. **Mallory**, si el sistema es malo, podría interceptar el mensaje y cambiarlo por: 'Transfiere 1000€ a la cuenta de Mallory'.\n\nPor eso necesitamos autenticidad e integridad, no solo cifrado."
+            ]
+        },
+        "Triada CID": {
+            "title": "La tríada CID (CIA Triad)",
+            "date": "Estándar actual",
+            "type": "Seguridad de la información",
+            "footerQuote": "\"La seguridad es un estado, no un destino.\" — Anónimo",
+            "fullContent": [
+                "Todo sistema seguro debe garantizar tres cosas. Si falta una, no es seguro.",
+                {
+                    "type": "ordered-list",
+                    "items": [
+                        "**C - Confidencialidad:**\nQue nadie más lo lea. (Ej: Tus chats de WhatsApp están cifrados de extremo a extremo).",
+                        "**I - Integridad:**\nQue nadie lo haya cambiado. (Ej: El precinto de garantía en una botella de agua. Si está roto, sabes que alguien la abrió).",
+                        "**D - Disponibilidad:**\nQue pueda usarse. (Ej: Si los servidores de Netflix se caen por un ataque, no hay seguridad que valga, el servicio no existe)."
+                    ]
+                }
+            ]
+        }
+    }
+}

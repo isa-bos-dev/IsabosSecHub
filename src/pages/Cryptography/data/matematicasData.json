@@ -1,0 +1,250 @@
+{
+    "header": {
+        "title": "Fundamentos matemáticos",
+        "description": "El lenguaje secreto de la confianza digital: una exploración de la aritmética modular y la complejidad computacional."
+    },
+    "intro": "En nuestra praxis cotidiana, dependemos de transacciones digitales seguras en cada segundo de existencia: desde la validación de un pago con tarjeta hasta el intercambio de mensajería cifrada de extremo a extremo. No obstante, nos enfrentamos a una paradoja fascinante: la sociedad confía plenamente en una infraestructura cuya maquinaria invisible ignora casi por completo. Como académicos, debemos entender que la criptografía no es un mero 'arte' de ocultación, sino una disciplina matemática rigurosa que permite medir con precisión la entropía de la información y la calidad técnica de un sistema de cifrado.",
+    "question": "¿Sobre qué escenario algebraico se construye la invulnerabilidad de nuestros datos? Exploraremos cómo la aritmética modular y la teoría de números no son solo abstracciones, sino los muros de contención que garantizan la privacidad global frente al asalto computacional.",
+    "sections": [
+        {
+            "id": "estructuras",
+            "title": "Estructuras algebraicas",
+            "iconName": "Layers",
+            "content": [
+                {
+                    "type": "text",
+                    "value": "Para comprender la arquitectura de la seguridad digital, es imperativo definir las estructuras donde operamos. La computación moderna no puede trabajar con la infinitud de los números reales; requiere conjuntos finitos para evitar errores de representación y desbordamiento de memoria."
+                },
+                {
+                    "type": "definition",
+                    "term": "Grupo",
+                    "meaning": "Un conjunto con una operación que cumple la propiedad asociativa, posee un elemento neutro (como el 0 en la suma) y, crucialmente, cada elemento tiene un inverso. Por ello, (ℤ, +) es un grupo, pero los naturales (ℕ, +) no lo son, pues carecen de elementos negativos (inversos).",
+                    "example": "Ejemplo (ℤ, +):\nNeutro: 0\nOperación: 5 + (-5) = 0\nAsociativa: (2+3)+4 = 2+(3+4)"
+                },
+                {
+                    "type": "definition",
+                    "term": "Anillo",
+                    "meaning": "Estructura con dos operaciones (+ y ·). La primera forma un grupo conmutativo y la segunda es asociativa. Si el anillo posee un neutro para el producto, hablamos de un Anillo con unidad.",
+                    "example": "Ejemplo (ℤ, +, ·):\nGrupo en suma: 3 + (-3) = 0\nAsociativa producto: (2·3)·4 = 24\nDistributiva: 2·(3+4) = 14"
+                },
+                {
+                    "type": "definition",
+                    "term": "Elemento invertible",
+                    "meaning": "En un anillo con unidad, un elemento 'a' es invertible si existe un 'b' tal que a · b = b · a = 1. Sin este concepto, no hay puente hacia la división modular.",
+                    "example": "En ℤ, solo 1 y -1 son invertibles.\nEn ℚ (racionales), todo x ≠ 0 tiene inverso (1/x)."
+                },
+                {
+                    "type": "definition",
+                    "term": "Cuerpo (field)",
+                    "meaning": "Es la estructura definitiva para la criptografía. Se trata de un anillo con unidad donde todo elemento (excepto el neutro de la suma) es invertible. Esto permite que operaciones como la división sean consistentes.",
+                    "example": "Ejemplo (ℝ, ℤp con p primo):\nEn ℤ5: El inverso de 3 es 2, pues 3·2 = 6 ≡ 1 (mod 5)."
+                },
+                {
+                    "type": "highlight",
+                    "value": "La elección de conjuntos finitos no es accidental. Al trabajar en ℤn (enteros módulo n), transformamos problemas de análisis continuo en problemas de álgebra discreta, donde la 'dificultad' puede ser calibrada matemáticamente."
+                }
+            ]
+        },
+        {
+            "id": "divisibilidad",
+            "title": "Divisibilidad y algoritmo de Euclides",
+            "iconName": "Divide",
+            "content": [
+                {
+                    "type": "text",
+                    "value": "La divisibilidad es la piedra angular del diseño algorítmico. Decimos que b divide a a (b|a) si existe un cociente exacto q tal que a = b · q. En criptografía, el cálculo del Máximo Común Divisor (mcd) es vital, pero la factorización tradicional es un suicidio computacional para números grandes."
+                },
+                {
+                    "type": "highlight",
+                    "value": "Teorema de Euclides: Para cualquier par de enteros a y b, mcd(a, b) = mcd(b, r), donde r es el resto de dividir a entre b (a = bq + r). Este principio recursivo reduce drásticamente la complejidad del cálculo."
+                },
+                {
+                    "type": "terminal-example",
+                    "title": "Algoritmo de Euclides: mcd(2756, 2621)",
+                    "content": "$ mcd(2756, 2621)\n> 2756 = 2621 * 1 + 135\n> 2621 = 135 * 19 + 56\n> 135  = 56 * 2 + 23\n> 56   = 23 * 2 + 10\n> 23   = 10 * 2 + 3\n> 10   = 3 * 3 + 1\n> 3    = 1 * 3 + 0\n\n// El último resto no nulo es 1.\n// Resultado: Son coprimos (mcd = 1)."
+                },
+                {
+                    "type": "text",
+                    "value": "La Identidad de Bézout es el siguiente paso lógico: establece que existen enteros λ y μ tales que λa + μb = mcd(a, b). Si el mcd es 1, entonces λa + μb = 1, lo que en aritmética modular significa que λa ≡ 1 (mod b). Esto convierte a λ en el inverso multiplicativo de a."
+                },
+                {
+                    "type": "terminal-example",
+                    "title": "Cálculo del inverso modular (Euclides Extendido)",
+                    "content": "$ inverso(2621, 2756)\n// Buscamos x tal que 2621*x ≡ 1 (mod 2756)\n\n> Ejecutando Euclides Extendido...\n> Coeficientes Bézout: 1 = 2621*(837) + 2756*(-796)\n\n> Inverso encontrado: 837\n> Verificación: (2621 * 837) mod 2756 = 1"
+                }
+            ]
+        },
+        {
+            "id": "modular",
+            "title": "Aritmética modular",
+            "iconName": "Hash",
+            "content": [
+                {
+                    "type": "text",
+                    "value": "La aritmética modular actúa como una función de reducción que 'ajusta' cualquier entero al rango {0, 1, ..., n-1}. Es la matemática del reloj, donde 13 horas son equivalentes a 1 hora."
+                },
+                {
+                    "type": "note",
+                    "value": "La aritmética modular es una parte de la matemática que permite definir tanto este tipo de conjuntos con un número finito de elementos, así como las operaciones que permiten operar con ellos, asegurando que la operación de dos elementos del conjunto continuará proporcionando otro elemento del conjunto (clausura)."
+                },
+                {
+                    "type": "text",
+                    "value": "Un resultado fundamental es que (ℤp, +, ·) es un cuerpo si y solo si p es primo. En este escenario, todo elemento no nulo tiene garantizado un inverso, eliminando la ambigüedad en la división. Además, introducimos el concepto de Elemento primitivo (Generador): un valor g cuyas potencias recorren todo el conjunto, base del intercambio de claves Diffie-Hellman."
+                }
+            ]
+        },
+        {
+            "id": "euler",
+            "title": "Teorema de Euler",
+            "iconName": "Sigma",
+            "content": [
+                {
+                    "type": "definition",
+                    "term": "Teorema de Euler",
+                    "meaning": "Si mcd(x, n) = 1, entonces x^φ(n) ≡ 1 (mod n). Este teorema permite 'deshacer' exponentes en aritmética modular, siendo el corazón del descifrado RSA."
+                },
+                {
+                    "type": "text",
+                    "value": "La función φ(n) (phi de Euler) mide la cantidad de números menores que n que son coprimos con él. Es el 'combustible' de los criptosistemas de clave pública (como RSA)."
+                },
+                {
+                    "type": "list",
+                    "items": [
+                        "Si p es primo: φ(p) = p - 1 (todos los anteriores son coprimos).",
+                        "Si n = p · q (producto de primos): φ(n) = (p-1)(q-1)."
+                    ]
+                },
+                {
+                    "type": "terminal-example",
+                    "title": "Cálculo de Phi de Euler",
+                    "content": "$ phi(10)\n> Factores primos de 10: 2, 5\n> Coprimos menores que 10: {1, 3, 7, 9}\n> Cantidad: 4\n\n$ phi(17) // 17 es primo\n> Resultado: 16\n\n$ phi(77) // 77 = 7 * 11\n> Resultado: (7-1)*(11-1) = 6 * 10 = 60"
+                }
+            ]
+        },
+        {
+            "id": "primos",
+            "title": "Números primos",
+            "iconName": "Key",
+            "content": [
+                {
+                    "type": "text",
+                    "value": "La seguridad de RSA y otros protocolos reside en la dificultad de factorizar, pero paradójicamente, necesitamos generar primos de miles de bits rápidamente. Como no existe una fórmula generatriz eficiente, usamos tests probabilísticos."
+                },
+                {
+                    "type": "definition",
+                    "term": "Test de primalidad de Fermat",
+                    "meaning": "Se basa en el Pequeño Teorema de Fermat: si p es primo, para cualquier a coprimo con p, se cumple a^(p-1) ≡ 1 (mod p)."
+                },
+                {
+                    "type": "text",
+                    "value": "Si un número falla esta prueba, es compuesto (con certeza 100%). Si la pasa, es 'probablemente' primo. Sin embargo, existen los 'Impostores' o Números de Carmichael (como 561): compuestos que engañan al test de Fermat y siempre dan 1, lo que los hace peligrosos."
+                },
+                {
+                    "type": "definition",
+                    "term": "Test de Miller-Rabin",
+                    "meaning": "El estándar industrial (NIST). Refina a Fermat buscando 'raíces cuadradas no triviales' de 1. En un cuerpo ℤp, x² ≡ 1 solo tiene soluciones x = 1 y x = -1."
+                },
+                {
+                    "type": "text",
+                    "value": "Si Miller-Rabin encuentra otra raíz, el número es compuesto. Su probabilidad de error es de apenas (1/4)^k, haciéndolo extremadamente robusto tras pocas iteraciones."
+                },
+                {
+                    "type": "code",
+                    "language": "python",
+                    "title": "Implementación conceptual del Test de Fermat (SAGE)",
+                    "code": "def Fermat_test(n, k):\n    \"\"\"\n    n: Número a testear\n    k: Número de intentos (aumenta la fiabilidad)\n    \"\"\"\n    if n <= 3:\n        return str(n) + ' is prime'\n        \n    for e in range(k):\n        # Elegimos un 'testigo' aleatorio 'a'\n        a = randint(2, n - 2)\n        \n        # Verificamos Teorema de Fermat: a^(n-1) mod n\n        if (a^(n-1)) % n != 1:\n            # Si no da 1, NO es primo (certeza 100%)\n            return str(n) + ' is composite'\n            \n    # Si pasa k veces, es probablemente primo\n    probability = numerical_approx(1 - (1/2)^k)\n    return f\"{n} is prime with probability {probability}\""
+                }
+            ]
+        },
+        {
+            "id": "problemas",
+            "title": "Problemas complejos",
+            "iconName": "AlertTriangle",
+            "content": [
+                {
+                    "type": "text",
+                    "value": "La criptografía moderna no busca seguridad absoluta (imposible), sino seguridad computacional. Basamos nuestros candados en problemas que son fáciles de crear pero imposibles de revertir sin la clave."
+                },
+                {
+                    "type": "table",
+                    "title": "Clases de complejidad algorítmica",
+                    "headers": [
+                        "Clase",
+                        "Complejidad",
+                        "Ops (n=10¹²)",
+                        "Tiempo est."
+                    ],
+                    "rows": [
+                        [
+                            "Constante",
+                            "O(1)",
+                            "1",
+                            "~ns"
+                        ],
+                        [
+                            "Lineal",
+                            "O(n)",
+                            "10¹²",
+                            "1 seg"
+                        ],
+                        [
+                            "Cuadrática",
+                            "O(n²)",
+                            "10²⁴",
+                            "31 mil años"
+                        ],
+                        [
+                            "Cúbica",
+                            "O(n³)",
+                            "10³⁶",
+                            "3·10¹⁶ años"
+                        ],
+                        [
+                            "Exponencial",
+                            "O(2^n)",
+                            "Inmensa",
+                            "Eternidad"
+                        ]
+                    ]
+                },
+                {
+                    "type": "list",
+                    "title": "Los pilares de la asimetría (One-Way Functions)",
+                    "items": [
+                        "Factorización: Multiplicar primos es O(1) relativo, factorizar el resultado es sub-exponencial.",
+                        "Logaritmo discreto: Calcular potencias modulares es rápido; hallar el exponente es intratable hoy día.",
+                        "Raíces modulares: Extraer raíces cuadradas módulo n (compuesto) es equivalente a factorizar n."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "polinomios",
+            "title": "Polinomios modulares (avanzado)",
+            "iconName": "Database",
+            "content": [
+                {
+                    "type": "text",
+                    "value": "En cifrados de bloque como AES, no operamos con números, sino con polinomios sobre Cuerpos de Galois (GF). Un byte se ve como un polinomio de grado 7."
+                },
+                {
+                    "type": "terminal-example",
+                    "title": "Reducción modular en GF(2³)",
+                    "content": "$ Contexto: Cuerpo ℤ2[x] / (x³ + x + 1)\n\n> Operación: Reducir (x³ + 1)\n> Polinomio irreducible (módulo): x³ + x + 1\n\n> Cálculo (en binario XOR):\n  (x³ + 0x² + 0x + 1)\n- (x³ + 0x² + 1x + 1)\n--------------------\n              -x\n\n> En GF(2), -x = x.\n> Resultado final: x"
+                },
+                {
+                    "type": "highlight",
+                    "value": "Esta aritmética de polinomios permite que los procesadores modernos ejecuten cifrado AES por hardware a velocidades increíbles, ya que las operaciones son simples manipulaciones de bits (XOR, shifts)."
+                }
+            ]
+        }
+    ],
+    "conclusion": {
+        "title": "Conclusión",
+        "text": "Hemos transitado desde las estructuras algebraicas básicas hasta el muro de complejidad que protege nuestra civilización digital. La integridad financiera y la privacidad individual hoy dependen de la brecha entre potenciar y calcular un logaritmo. Comprender estos fundamentos nos permite no solo usar la criptografía, sino confiar matemáticamente en ella."
+    },
+    "quote": {
+        "text": "La matemática es la reina de las ciencias y la teoría de números es la reina de las matemáticas.",
+        "author": "Carl Friedrich Gauss"
+    }
+}

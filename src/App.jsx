@@ -5,7 +5,7 @@ import Home from './pages/Home/Home';
 
 // Componentes del Proyecto Threats
 import ThreatsPanorama from './pages/Threats/Panorama';
-import SQLiMaster from './pages/Threats/SQLiMaster';
+import SQLiMaster from './pages/Threats/SQLi';
 import NoSQLModern from './pages/Threats/NoSQLModern';
 import Ransomware from './pages/Threats/Ransomware';
 import CloudAPI from './pages/Threats/CloudAPI';
@@ -13,6 +13,17 @@ import Infra from './pages/Threats/Infra';
 import Arsenal from './pages/Threats/Arsenal';
 import Defense from './pages/Threats/Defense';
 import Quiz from './pages/Threats/Quiz';
+
+// Componentes del Proyecto Cryptography
+import CryptoPanorama from './pages/Cryptography/Panorama';
+import IntroHistoria from './pages/Cryptography/IntroHistoria';
+import Matematicas from './pages/Cryptography/Matematicas';
+import Simetrica from './pages/Cryptography/Simetrica';
+import HashFunctions from './pages/Cryptography/HashFunctions';
+import Asimetrica from './pages/Cryptography/Asimetrica';
+import PKI from './pages/Cryptography/PKI';
+import Protocolos from './pages/Cryptography/Protocolos';
+import CryptoQuiz from './pages/Cryptography/Quiz';
 
 // Componentes de la App Network
 import ProjectLayout from './components/layout/ProjectLayout';
@@ -60,6 +71,36 @@ const App = () => {
           <Route path="herramientas" element={<Arsenal />} />
           <Route path="mitigacion" element={<Defense />} />
           <Route path="cuestionario" element={<Quiz />} />
+        </Route>
+
+        {/* Rutas del Proyecto Cryptography */}
+        <Route path="/cryptography" element={
+          <ProjectLayout
+            title="Cryptography"
+            subtitle="The Art of Secret Communication"
+            titleColor="success"
+            links={[
+              { to: "/cryptography", label: "Panorama", end: true },
+              { to: "/cryptography/intro", label: "Intro & Historia" },
+              { to: "/cryptography/matematicas", label: "Matemáticas" },
+              { to: "/cryptography/simetrica", label: "Cifrado Simétrico" },
+              { to: "/cryptography/hash", label: "Hash" },
+              { to: "/cryptography/asimetrica", label: "Clave Pública" },
+              { to: "/cryptography/pki", label: "PKI" },
+              { to: "/cryptography/protocolos", label: "Protocolos" },
+              { to: "/cryptography/cuestionario", label: "Cuestionario" }
+            ]}
+          />
+        }>
+          <Route index element={<CryptoPanorama />} />
+          <Route path="intro" element={<IntroHistoria />} />
+          <Route path="matematicas" element={<Matematicas />} />
+          <Route path="simetrica" element={<Simetrica />} />
+          <Route path="hash" element={<HashFunctions />} />
+          <Route path="asimetrica" element={<Asimetrica />} />
+          <Route path="pki" element={<PKI />} />
+          <Route path="protocolos" element={<Protocolos />} />
+          <Route path="cuestionario" element={<CryptoQuiz />} />
         </Route>
 
         {/* Rutas del Proyecto Network */}

@@ -1,0 +1,260 @@
+{
+    "header": {
+        "title": "Fundamentos y Aplicaciones de la Criptografía de Clave Pública",
+        "description": "Una Perspectiva Técnica y Educativa sobre la infraestructura matemática que permite la confianza en un mundo digital deslocalizado."
+    },
+    "quote": {
+        "text": "Las decisiones que tomamos hoy sobre la seguridad de las comunicaciones determinarán el tipo de sociedad en la que viviremos mañana.",
+        "author": "Whitfield Diffie (Co-creador de la Criptografía de Clave Pública)"
+    },
+    "menu": [
+        {
+            "id": "intro",
+            "label": "Introducción y dilema"
+        },
+        {
+            "id": "origins",
+            "label": "Origen y limitaciones"
+        },
+        {
+            "id": "dhke",
+            "label": "Diffie-Hellman (DHKE)"
+        },
+        {
+            "id": "rsa",
+            "label": "Criptosistema RSA"
+        },
+        {
+            "id": "elgamal",
+            "label": "ElGamal y probabilidad"
+        },
+        {
+            "id": "digital-signature",
+            "label": "Firmas digitales"
+        },
+        {
+            "id": "vulnerabilities",
+            "label": "Vulnerabilidades"
+        },
+        {
+            "id": "optimization",
+            "label": "Optimización real"
+        },
+        {
+            "id": "post-quantum",
+            "label": "Criptografía poscuántica"
+        },
+        {
+            "id": "conclusion",
+            "label": "Futuro"
+        }
+    ],
+    "content": {
+        "intro": {
+            "title": "El dilema de la confianza",
+            "subtitle": "Un cambio de paradigma conceptual",
+            "description": "En la historia de la criptografía, la seguridad dependió por milenios de un secreto compartido (simetría). Esto planteaba un problema ontológico: ¿cómo establecer un secreto sin un encuentro previo seguro? La criptografía asimétrica rompió esta barrera al separar las capacidades de cifrar y descifrar, permitiendo transacciones seguras sin contacto físico previo.\n\nLa criptografía de clave pública o asimétrica no fue solo una innovación técnica, sino un cambio de paradigma conceptual. Al separar la capacidad de cifrar de la de descifrar, permitimos que la confianza se construya sobre canales inseguros. Esta arquitectura es la que permite que hoy podamos confiar en una transacción bancaria o en un mensaje privado con alguien que se encuentra en el otro extremo del planeta, sin haber mediado contacto físico alguno.",
+            "analysis": "La esencia de la criptografía asimétrica reside en su capacidad para resolver la paradoja de la presencia. No es simplemente una mejora algorítmica; es la infraestructura matemática que permite que la identidad y la privacidad existan en un entorno inherentemente hostil y deslocalizado como es el ciberespacio.",
+            "icon": "Network"
+        },
+        "origins": {
+            "title": "Origen y limitaciones simétricas",
+            "description": "La criptografía simétrica se enfrenta a muros infranqueables para escalar en la sociedad de la información. La asimétrica resuelve esto mediante una arquitectura de dos claves por usuario.",
+            "description2": "La criptografía asimétrica resuelve esto mediante el uso de un par de claves por usuario, permitiendo un crecimiento lineal del sistema: para n usuarios, solo se necesitan n pares de claves.",
+            "problems": [
+                {
+                    "title": "Distribución de claves",
+                    "desc": "La necesidad de un canal seguro preexistente para intercambiar la clave secreta."
+                },
+                {
+                    "title": "Gestión de claves",
+                    "desc": "En un sistema de n usuarios, si cada par requiere una clave única, el número de claves crece de forma cuadrática: ",
+                    "math": "n(n - 1) / 2",
+                    "analysis": "Para seis usuarios requerimos 15 claves; para un millón, la infraestructura es inmanejable."
+                },
+                {
+                    "title": "Falta de no repudio",
+                    "desc": "Al compartir la clave, cualquiera puede haber cifrado el mensaje, impidiendo demostrar autoría."
+                }
+            ],
+            "history": {
+                "text": "Aunque el artículo New Directions in Cryptography (1976) de Whitfield Diffie y Martin Hellman es el hito fundacional público, la historia oficial tiene matices fascinantes. En 1997, documentos desclasificados del GCHQ británico revelaron que James Ellis, Clifford Cocks y Graham Williamson ya habían descubierto estos principios años antes que sus contrapartes estadounidenses. Este hallazgo permaneció oculto por razones de seguridad nacional, recordándonos que la ciencia de la ocultación a menudo oculta sus propios descubrimientos.",
+                "analysis": "La transición de una complejidad cuadrática a una lineal es el pilar que sostiene el internet moderno. Sin esta eficiencia en la gestión de claves, la jerarquía de confianza digital colapsaría bajo su propio peso, haciendo imposible cualquier sistema de comunicación masivo y seguro."
+            },
+            "icon": "History"
+        },
+        "dhke": {
+            "title": "El protocolo Diffie-Hellman (DHKE)",
+            "subtitle": "El primer salto cuántico (1976)",
+            "description": "Permite derivar un secreto compartido a través de un canal inseguro basándose en la intratabilidad del Problema del Logaritmo Discreto.",
+            "steps": [
+                "1. Inicialización: Se seleccionan un primo p y un entero α ∈ [2, ..., p-2] primitivo en ℤ<sup>*</sup><sub>p</sub>. Ambos son públicos.",
+                "2. Generación de Claves:\n• Alice elige un secreto a y calcula k<sub>pubA</sub> ≡ α<sup>a</sup> (mod p).\n• Bob elige un secreto b y calcula k<sub>pubB</sub> ≡ α<sup>b</sup> (mod p).",
+                "3. Derivación: Alice calcula (k<sub>pubB</sub>)<sup>a</sup> (mod p) y Bob calcula (k<sub>pubA</sub>)<sup>b</sup> (mod p). Ambos obtienen k<sub>AB</sub> ≡ α<sup>ab</sup> (mod p)."
+            ],
+            "analysis": "DHKE es una obra maestra de la elegancia matemática, pero nos enseña una lección vital: un secreto sin identidad es una fortaleza con la puerta abierta. La autenticación debe ser siempre el compañero inseparable del intercambio de claves.",
+            "example": {
+                "params": "p = 508107251, α = 5203822",
+                "alice": "a = 385641303 → k_pubA = 421539355",
+                "bob": "b = 467804164 → k_pubB = 230346411",
+                "result": "Clave Compartida k_AB = 45453571"
+            },
+            "warning": "Vulnerable a Man-in-the-Middle (MiM) por falta de autenticación. Garantiza secreto, pero no identidad.",
+            "icon": "Shuffle"
+        },
+        "rsa": {
+            "title": "Criptosistema RSA",
+            "subtitle": "La fortaleza de la factorización (1977)",
+            "description": "El primer sistema completo de clave pública. Su seguridad reside en la dificultad de factorizar el producto de dos primos grandes (n = p·q).",
+            "steps": [
+                "1.- Elegir primos grandes p, q. Calcular n = p·q.",
+                "2.- Calcular φ(n) = (p-1)(q-1).",
+                "3.- Elegir 'e' (público) coprimo con φ(n) tal que mcd(e,ϕ(n))=1.",
+                "4.- Calcular 'd' (privado) tal que d ≡ e⁻¹ (mod φ(n))."
+            ],
+            "math": {
+                "cifrado": "c ≡ m^e (mod n)",
+                "descifrado": "m ≡ c^d (mod n)"
+            },
+            "example": {
+                "params": "p=5879, q=484487 → n=2848299073",
+                "calc": "φ(n)=2847808708. Si e=1535231195 → d=1437751395"
+            },
+            "analysis": "La robustez reside en la asimetría computacional. Multiplicar es trivial; factorizar n es computacionalmente inviable con claves grandes (2048+ bits).",
+            "warning": "Es imperativo comprender que para mantener la seguridad, los valores ϕ(n), p, q y d deben ser estrictamente secretos, conocidos únicamente por el propietario de la clave.",
+            "icon": "Key"
+        },
+        "elgamal": {
+            "title": "Criptosistema ElGamal",
+            "subtitle": "Probabilidad y logaritmos discretos (1985)",
+            "description": "Traslada el logaritmo discreto al cifrado. Introduce el cifrado probabilístico y la expansión del mensaje.",
+            "features": [
+                {
+                    "title": "Cifrado probabilístico",
+                    "desc": "Para un mismo mensaje y clave, se generan diferentes textos cifrados usando un valor aleatorio 'v'. Evita análisis de patrones."
+                },
+                {
+                    "title": "Expansión",
+                    "desc": "El texto cifrado es el doble de grande que el mensaje original, presentándose como un par(c1, c2)"
+                }
+            ],
+            "math": "c₁ ≡ α^v (mod p), c₂ ≡ m · β^v (mod p)",
+            "analysis": "El paso de sistemas deterministas a probabilísticos marca una evolución en la filosofía criptográfica. Aceptamos la 'expansión' del mensaje como un tributo necesario a cambio de una seguridad superior que oculta no solo el contenido, sino también los patrones de comunicación.",
+            "icon": "Dices"
+        },
+        "digital-signature": {
+            "title": "Firmas digitales",
+            "subtitle": "Integridad, autenticidad y no repudio",
+            "description": "Vincula matemáticamente la identidad del emisor con el contenido. Es el 'contrato social' digital. La firma digital trasciende la rúbrica manuscrita al vincular matemáticamente la identidad del emisor con el contenido del mensaje.",
+            "note": "La propiedad de no repudio se consigue cuando un usuario que realiza una acción no puede negar posteriormente que la acción ha sido realizada por él.",
+            "dsa": {
+                "title": "Algoritmo DSA (Estándar basado en logaritmos discretos)",
+                "steps": [
+                    "Verificar que s ≠ 0, r ≠ 0",
+                    " Calcular el inverso de la firma: w ≡ s⁻¹ (mod q)",
+                    "Calcular los componentes de validación: u1 ≡ m·w, u2 ≡ r·w (mod q)",
+                    "Calcular la firma: v ≡ (g^u1 · y^u2 mod p) mod q",
+                    "Validar si v ≡ r (mod q)"
+                ]
+            },
+            "quote": "La firma digital es el 'contrato social' del entorno digital. Sin ella, la validez legal de un documento electrónico o la integridad de una actualización de software serían inexistentes",
+            "icon": "PenTool"
+        },
+        "vulnerabilities": {
+            "title": "Vulnerabilidades y ataques",
+            "subtitle": "El lado oscuro del algoritmo",
+            "description": "Incluso la elegancia matemática sucumbe ante una implementación deficiente.",
+            "types": [
+                {
+                    "name": "Clasificación de Falsificaciones",
+                    "desc": "Tipos de ataques contra esquemas de firma digital:",
+                    "subitems": [
+                        "<strong>Existencial:</strong> Crear una firma válida para un mensaje aleatorio sin sentido.",
+                        "<strong>Selectiva:</strong> Crear una firma para un mensaje específico elegido por el atacante.",
+                        "<strong>Universal:</strong> La capacidad de firmar cualquier mensaje a voluntad."
+                    ]
+                },
+                {
+                    "name": "La vulnerabilidad del valor h (ElGamal)",
+                    "desc": "En ElGamal, la reutilización del valor aleatorio h para dos firmas distintas permite recuperar la clave privada d mediante la relación:",
+                    "math": "d ≡ (m₁ - h · s₁) · r⁻¹ (mod p-1)",
+                    "note": "Esto demuestra que la aleatoriedad no es solo una opción, sino un requisito de seguridad crítico."
+                },
+                {
+                    "name": "Ataques de Canal Lateral",
+                    "desc": "Métodos que extraen claves analizando el consumo energético, tiempos de ejecución o campos electromagnéticos del hardware."
+                }
+            ],
+            "analysis": "Un algoritmo puede ser matemáticamente perfecto, pero físicamente vulnerable. La seguridad criptográfica no termina en la fórmula; debe extenderse a la protección de su ejecución en el mundo físico.",
+            "icon": "ShieldAlert"
+        },
+        "optimization": {
+            "title": "Optimización e Implementación en el Mundo Real",
+            "subtitle": "Ingeniería Criptográfica: El arte del compromiso",
+            "description": "La carga computacional de la clave pública exige técnicas de optimización para su uso práctico:",
+            "techniques": [
+                {
+                    "name": "Exponentes Públicos Pequeños",
+                    "desc": "En RSA se suelen usar primos de Fermat como e = 65537 (2<sup>16</sup>+1). Su bajo peso de Hamming acelera drásticamente el cifrado y la validación."
+                },
+                {
+                    "name": "Teorema Chino del Residuo (CRT)",
+                    "desc": "Para acelerar el descifrado RSA, se almacenan tres valores auxiliares: dp ≡ d (mod p-1), dq ≡ d (mod q-1) y qinv ≡ q<sup>-1</sup> (mod p). Esto permite operar con módulos más pequeños (p y q), reduciendo el tiempo de cálculo."
+                },
+                {
+                    "name": "Cifrado Híbrido (Sobre Digital)",
+                    "desc": "Se utiliza la clave pública para cifrar una clave simétrica aleatoria k, y luego se emplea k (con AES) para cifrar los datos masivos, combinando eficiencia y gestión."
+                }
+            ],
+            "securityTable": {
+                "headers": [
+                    "Nivel (Bits)",
+                    "AES",
+                    "RSA/DSA"
+                ],
+                "rows": [
+                    [
+                        "80",
+                        "80",
+                        "1024"
+                    ],
+                    [
+                        "128",
+                        "128",
+                        "3072"
+                    ],
+                    [
+                        "192",
+                        "192",
+                        "7680"
+                    ],
+                    [
+                        "256",
+                        "256",
+                        "15360"
+                    ]
+                ]
+            },
+            "analysis": "La ingeniería criptográfica es el arte del compromiso. El 'Sobre Digital' es la respuesta pragmática a la eterna lucha entre la seguridad absoluta y la latencia del sistema.",
+            "icon": "Zap"
+        },
+        "post-quantum": {
+            "title": "El Horizonte de la Criptografía Poscuántica",
+            "subtitle": "La amenaza existencial del Algoritmo de Shor",
+            "description": "La computación cuántica representa una amenaza existencial. El Algoritmo de Shor es capaz de resolver la factorización de enteros y el logaritmo discreto en tiempo polinomial. Esto implicaría el colapso inmediato de RSA, ElGamal y DHKE.\n\nEstamos ante la búsqueda de esquemas resistentes a ataques cuánticos, tales como:",
+            "solutions": [
+                "Criptografía basada en retículos (lattices).",
+                "Sistemas multivariados (ecuaciones cuadráticas).",
+                "Códigos correctores de errores (como el criptosistema McEliece).",
+                "Árboles de Hash (esquema de Merkle)."
+            ],
+            "analysis": "Estamos en una carrera contra el tiempo. La transición hacia algoritmos poscuánticos es compleja no solo por la matemática implicada, sino por la falta de madurez y estandarización global. El colapso del logaritmo discreto no es una posibilidad teórica lejana; es un evento para el cual nuestra infraestructura actual no está preparada.",
+            "icon": "Cpu"
+        },
+        "conclusion": {
+            "title": "Un futuro en cifras",
+            "content": "La criptografía de clave pública es el guardián de nuestra privacidad y la base de la autenticidad en el tejido digital. Desde los descubrimientos silenciados del GCHQ hasta los estándares actuales del NIST, hemos construido un mundo sobre la dureza de ciertos problemas matemáticos.<br/><br/>Sin embargo, la ciencia no es estática. Al concluir esta lección, debemos plantearnos: <span class='text-blue-400 font-bold'>¿Estamos preparados para la transición hacia una infraestructura de clave pública resistente a la computación cuántica, o estamos confiando ciegamente en la longevidad de los primos actuales?</span> La respuesta a esta pregunta definirá la integridad de nuestra civilización digital en las próximas décadas.",
+            "icon": "Globe"
+        }
+    }
+}

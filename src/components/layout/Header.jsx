@@ -11,7 +11,14 @@ const Header = ({
 }) => {
 
     // Determinar color del span del título
-    const titleSpanColor = titleColor === 'secondary' ? 'var(--color-secondary)' : 'var(--color-primary)';
+    const colorMap = {
+        primary: 'var(--color-primary)',
+        secondary: 'var(--color-secondary)',
+        success: 'var(--color-success)',
+        warning: 'var(--color-warning)',
+        error: 'var(--color-error)'
+    };
+    const titleSpanColor = colorMap[titleColor] || 'var(--color-primary)';
 
     return (
         <nav

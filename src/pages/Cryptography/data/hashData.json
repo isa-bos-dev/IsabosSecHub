@@ -1,0 +1,212 @@
+{
+  "header": {
+    "title": "Fundamentos y mecánica de las funciones hash",
+    "description": "La robustez de las funciones hash es el cimiento invisible de nuestra infraestructura digital. La evolución desde diseños rudimentarios hacia la complejidad no lineal de SHA-256 responde a la necesidad de blindar la integridad frente a una capacidad de cómputo en constante expansión."
+  },
+  "intro": {
+    "title": "Introducción: El oráculo determinista en un mundo de datos",
+    "content": "En la arquitectura de la seguridad informática contemporánea, nos enfrentamos a una paradoja fundamental: la necesidad de garantizar la integridad de volúmenes masivos de información mediante fragmentos de datos ínfimos. Bienvenidos a esta sesión avanzada sobre funciones hash, donde analizaremos cómo estas construcciones no son meras \"huellas digitales\", sino proyecciones matemáticas sobre un espacio finito que preservan la unicidad con una probabilidad extremadamente alta.",
+    "subcontent": "Una función hash actúa como un oráculo determinista. Es el pilar sobre el cual se construye la confianza en sistemas de blockchain, la protección de credenciales y la validez legal de las firmas digitales. Como expertos, debemos entender que si la robustez de la función hash se ve comprometida, toda la estructura de seguridad que sustenta —sea una criptomoneda o un sistema de autenticación estatal— colapsará irremediablemente."
+  },
+  "definition": {
+    "title": "Definición y anatomía de una función hash criptográfica",
+    "content": "Formalmente, una función hash de tamaño %n% se define como una aplicación que mapea un mensaje de entrada de longitud arbitraria a una cadena de salida de longitud fija %n%. Para ser considerada válida en nuestro campo, debe poseer dos rasgos operativos esenciales: eficiencia computacional (su cálculo debe ser rápido incluso para entradas masivas) y determinismo (una entrada idéntica debe producir, sin excepción, la misma salida).",
+    "comparison": {
+      "badExample": {
+        "title": "Ejemplo de Hash no seguro",
+        "formula": "h(x) = x (mod 1000)",
+        "example1": "h(8472937003) = 003",
+        "example2": "h(1003) = 003",
+        "desc": "Este algoritmo cumple la definición básica (salida fija de 3 dígitos), pero es inútil para la seguridad. Observe cómo dos entradas diferentes producen la misma salida (colisión trivial).",
+        "analysis": "Una función criptográfica real debe ser un 'camino de un solo sentido'."
+      },
+      "requirements": [
+        {
+          "name": "Resistencia a preimagen (Unidireccionalidad)",
+          "desc": "Dado un valor de salida **y**, debe ser computacionalmente inviable encontrar la entrada **x** tal que **h(x) = y**. Es decir, es fácil generar el hash, pero imposible revertirlo."
+        },
+        {
+          "name": "Resistencia a segundas preimágenes (Colisiones débiles)",
+          "desc": "Dado un valor **x** específico, es matemáticamente imposible encontrar un **x' ≠ x** tal que **h(x) = h(x')**. Esto asegura que no puedas sustituir un documento legítimo por otro malicioso con el mismo hash."
+        },
+        {
+          "name": "Resistencia a colisiones (Colisiones fuertes)",
+          "desc": "No debe ser posible encontrar dos valores cualesquiera **x₁** y **x₂** diferentes (donde el atacante elige ambos) tales que compartan el mismo hash. Esta es la propiedad más difícil de satisfacer."
+        }
+      ]
+    },
+    "note": "Una vulnerabilidad en una función hash implicaría una vulnerabilidad en todos los sistemas criptográficos que la utilizan, afectando desde la autenticidad de la información hasta la validez de las pruebas de trabajo."
+  },
+  "birthdayParadox": {
+    "title": "La paradoja del cumpleaños y la seguridad probabilística",
+    "content": "Matemáticamente, las colisiones son inevitables debido a la exhaustividad: el conjunto de entradas es infinito, mientras que el espacio de salida está limitado por 2^n (principio del palomar). La seguridad, por tanto, no reside en la inexistencia de colisiones, sino en la imposibilidad práctica de hallarlas.",
+    "analogy": "En criptografía, encontrar una colisión fuerte (dos personas cualesquiera que compartan cumpleaños) es órdenes de magnitud más sencillo que encontrar una colisión débil (alguien que comparta cumpleaños con una persona específica).",
+    "formula": "t \\approx 2^{(n+1)/2} \\sqrt{\\ln(1/(1-\\lambda))}",
+    "formulaDesc": "Donde **t** es el número de mensajes necesarios para encontrar una colisión con una probabilidad **λ**.",
+    "implication": "Basándonos en esta realidad probabilística, se deduce que para alcanzar un nivel de seguridad de **x** bits frente a colisiones, el tamaño del hash debe ser al menos **2x**.",
+    "complexityTable": {
+      "headers": [
+        "Tamaño del hash (n)",
+        "Probabilidad (λ = 0,5)",
+        "Probabilidad (λ = 0,9)"
+      ],
+      "rows": [
+        [
+          "128 bits",
+          "2^65 mensajes",
+          "2^67 mensajes"
+        ],
+        [
+          "160 bits",
+          "2^81 mensajes",
+          "2^82 mensajes"
+        ],
+        [
+          "256 bits",
+          "2^129 mensajes",
+          "2^130 mensajes"
+        ],
+        [
+          "384 bits",
+          "2^193 mensajes",
+          "2^194 mensajes"
+        ],
+        [
+          "512 bits",
+          "2^257 mensajes",
+          "2^258 mensajes"
+        ]
+      ]
+    }
+  },
+  "architecture": {
+    "title": "Arquitectura y Construcción",
+    "content": "Las funciones hash modernas no procesan el mensaje como un todo, sino que lo segmentan en bloques. Un diseño fundamental es el **esquema Matyas-Meyer-Oseas**, que utiliza un criptosistema de bloque (como el estándar AES) para iterar sobre el mensaje.",
+    "formula": "hᵢ = E_{g(hᵢ₋₁)}(mᵢ) ⊕ hᵢ₋₁",
+    "variables": [
+      {
+        "symbol": "E",
+        "desc": "Función de cifrado de bloque subyacente"
+      },
+      {
+        "symbol": "mᵢ",
+        "desc": "Bloque de mensaje actual a procesar"
+      },
+      {
+        "symbol": "hᵢ₋₁",
+        "desc": "Valor de hash acumulado de la ronda anterior (estado)"
+      },
+      {
+        "symbol": "g",
+        "desc": "Función de adaptación de clave"
+      }
+    ],
+    "explanation": "Este esquema demuestra cómo construir una función unidireccional utilizando componentes reversibles (cifrado) mediante la realimentación y la operación XOR, que destruye la información estructural y hace el proceso irreversible.",
+    "history": "Históricamente, hemos transitado desde diseños ahora vulnerables como MD4 y MD5 (128 bits), plagados de colisiones detectables en segundos, hacia la familia SHA (Secure Hash Algorithms). Mientras que SHA-1 (160 bits) está en desuso por debilidades estructurales, los estándares SHA-2 (que incluye SHA-256) y el innovador SHA-3 (basado en KECCAK) representan el estado del arte."
+  },
+  "sha256": {
+    "title": "Inmersión técnica: El estándar SHA-256 al detalle",
+    "intro": "SHA-256 es una estructura iterativa que procesa bloques de 512 bits y mantiene un estado interno de 256 bits, repartido en ocho registros de 32 bits (A-H). Analicemos su funcionamiento interno paso a paso.",
+    "steps": [
+      {
+        "title": "1. Proceso de Padding (Relleno)",
+        "desc": "Para que el mensaje sea procesable, su longitud debe ser múltiplo de 512 bits. Si el mensaje 'l' no lo es, se debe completar.",
+        "details": "1. Se añade un bit '1' al final del mensaje.\n2. Se añaden 'k' ceros, tal que l + 1 + k ≡ 448 (mod 512).\n3. Se añade la longitud original 'l' codificada como un entero de 64 bits al final.",
+        "code": "// Ejemplo: Mensaje 'abc' (l=24 bits)\nAñadir '1' -> ...1\nAñadir ceros -> 423 ceros de relleno\nAñadir longitud -> 00...0011000 (24 en binario)\nBloque final = 512 bits exactos"
+      },
+      {
+        "title": "2. Expansión y Estado Inicial",
+        "desc": "El oráculo comienza con un buffer de inicialización (IV) basado en constantes matemáticas puras para evitar 'puertas traseras'.",
+        "details": "Los valores iniciales H0-H7 provienen de la parte fraccionaria de las raíces cuadradas de los primeros 8 números primos. Además, cada bloque de 512 bits se expande matemáticamente en 64 palabras de 32 bits (Wt) para la ronda de mezcla.",
+        "code": "H0 = 0x6a09e667 (Raíz de 2)\nH1 = 0xbb67ae85 (Raíz de 3)\n...\nH7 = 0x5be0cd19 (Raíz de 19)"
+      },
+      {
+        "title": "3. Función de Compresión y Efecto Avalancha",
+        "desc": "A lo largo de 64 rondas, SHA-256 aplica funciones lógicas bit a bit que garantizan la difusión (un cambio afecta a todo) y confusión.",
+        "details": "Se utilizan operaciones ROTR (Rotación Derecha), SHR (Desplazamiento) y XOR para mezclar los bits de manera no lineal.",
+        "code": "Ch(e,f,g) = (e & f) ^ (~e & g)  \n// Elección\nMaj(a,b,c) = (a & b) ^ (a & c) ^ (b & c) \n// Mayoría\nΣ0 = ROTR(2,a) ^ ROTR(13,a) ^ ROTR(22,a) \n// Difusión"
+      }
+    ]
+  },
+  "applications": {
+    "title": "Aplicaciones prácticas: Los cuatro pilares",
+    "items": [
+      {
+        "title": "HMAC y Prefijo Secreto",
+        "desc": "Los códigos de autenticación de mensajes (MAC) aseguran integridad y origen. Aunque el esquema h(k || m) parece robusto, es vulnerable a ataques de 'extensión de longitud'. HMAC soluciona esto mediante un doble hash anidado.",
+        "icon": "ShieldCheck",
+        "variant": "primary",
+        "tags": [
+          {
+            "label": "Integridad"
+          },
+          {
+            "label": "API Security"
+          }
+        ],
+        "details": {
+          "useCase": "En la autenticación de APIs (como AWS S3), el cliente no envía su contraseña. En su lugar, crea una firma HMAC de la petición completa (Verbo, URI, Headers, Timestamp) usando su Secret Key. El servidor recibe la petición, busca la clave del usuario y recalcula independientemente el HMAC. Si coincide byte a byte, el servidor tiene certeza matemática de que: 1) El remitente posee la clave (Autenticidad) y 2) Ni un solo bit de la petición fue modificado en tránsito (Integridad).",
+          "codeExample": "HMAC(Key, Message) = H((Key' ⊕ opad) || H((Key' ⊕ ipad) || Message))"
+        }
+      },
+      {
+        "title": "Almacenamiento de Contraseñas",
+        "desc": "Las contraseñas jamás deben cifrarse (reversible), sino hashearse (irreversible). Para evitar Rainbow Tables, se añade un 'Salt' único por usuario, garantizando hashes distintos para claves iguales.",
+        "icon": "Lock",
+        "variant": "secondary",
+        "tags": [
+          {
+            "label": "Storage"
+          },
+          {
+            "label": "Salting"
+          }
+        ],
+        "details": {
+          "useCase": "Flujo de Alta y Login: Al registrarse, el sistema genera 16 bytes aleatorios (Salt) y calcula Hash = SHA256(Pass + Salt). Guarda ambos: 'User | Salt | Hash'. Al hacer login, el sistema recupera el Salt de ese usuario específico, lo combina con la contraseña ingresada y compara el resultado. Esto hace que las Rainbow Tables sean inútiles, ya que el atacante tendría que recalcular todas las tablas para CADA Salt único.",
+          "codeExample": "Hash = SHA-256(Password + Salt_Aleatorio_32_bytes)"
+        }
+      },
+      {
+        "title": "Derivación de Claves (PBKDF2)",
+        "desc": "Transforma contraseñas humanas en claves criptográficas robustas. Utiliza miles de iteraciones de una función pseudoaleatoria (PRF) sobre el hash para hacer computacionalmente costosos los ataques de fuerza bruta.",
+        "icon": "Key",
+        "variant": "success",
+        "tags": [
+          {
+            "label": "KDF"
+          },
+          {
+            "label": "Hardening"
+          }
+        ],
+        "details": {
+          "useCase": "Defensa contra fuerza bruta offline: Las funciones hash normales son demasiado rápidas (millones/seg). PBKDF2 aplica el hash dentro de un bucle miles de veces (ej. iteraciones = 600,000). Esto obliga a la CPU a realizar un trabajo intensivo. Para un usuario legítimo, 0.5 segundos de espera es aceptable; para un atacante que quiere probar 100 millones de contraseñas, el coste de tiempo se vuelve de siglos.",
+          "codeExample": "DK = PBKDF2(PRF, Password, Salt, c, dkLen)"
+        }
+      },
+      {
+        "title": "Prueba de Trabajo (PoW)",
+        "desc": "Base de Bitcoin. Requiere encontrar un 'nonce' tal que el hash del bloque comience con N ceros. La dificultad se ajusta estadísticamente exigiendo más ceros, aprovechando la imprevisibilidad del hash.",
+        "icon": "Cpu",
+        "variant": "warning",
+        "tags": [
+          {
+            "label": "Blockchain"
+          },
+          {
+            "label": "Anti-DDoS"
+          }
+        ],
+        "details": {
+          "useCase": "La lotería de la minería: Para añadir un bloque, el minero debe encontrar un número aleatorio 'Nonce' tal que el hash del bloque entero sea menor que un 'Target' muy bajo (comenzar con muchos ceros). No hay atajos matemáticos; la única forma es probar trillones de Nonces por segundo. Este coste energético es lo que garantiza que reescribir el historial de transacciones sea económicamente prohibitivo.",
+          "codeExample": "while (SHA256(Block + Nonce) > Target) {\n  Nonce++\n}"
+        }
+      }
+    ]
+  },
+  "conclusion": {
+    "content": "La criptografía es tan fuerte como su eslabón más débil. En el mundo digital, las funciones hash son el acero que forja ese eslabón, permitiéndonos confiar en datos que viajan por redes hostiles sin ser corrompidos.",
+    "author": "Bruce Schneier (Experto en Ciberseguridad y Criptógrafo)"
+  }
+}

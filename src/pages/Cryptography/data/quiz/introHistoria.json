@@ -1,0 +1,683 @@
+{
+    "levels": {
+        "easy": [
+            {
+                "id": "intro_easy_001",
+                "question": "¿Cuál es el significado etimológico de la palabra 'criptografía'?",
+                "hint": "Considera las raíces griegas 'kryptós' y 'graphein'.",
+                "options": [
+                    {
+                        "text": "Ciencia de claves",
+                        "isCorrect": false,
+                        "feedback": "Las claves son una herramienta fundamental en la criptografía moderna, pero la palabra original no hace referencia a ellas."
+                    },
+                    {
+                        "text": "Mensaje oculto",
+                        "isCorrect": false,
+                        "feedback": "Ocultar un mensaje es el fin de la criptografía, pero la etimología se refiere al acto de 'escribir en secreto'."
+                    },
+                    {
+                        "text": "Código seguro",
+                        "isCorrect": false,
+                        "feedback": "Aunque el objetivo es crear códigos seguros, esta no es la traducción literal de las raíces griegas que componen la palabra."
+                    },
+                    {
+                        "text": "Escritura secreta",
+                        "isCorrect": true,
+                        "feedback": "La palabra proviene de las raíces griegas 'kryptós' (secreto) y 'graphein' (escritura), que juntas significan literalmente escritura secreta."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_002",
+                "question": "¿Cuál es la función de la disciplina llamada 'criptoanálisis'?",
+                "hint": "Piensa en esta disciplina como el 'control de calidad' que pone a prueba la fortaleza de los cifrados.",
+                "options": [
+                    {
+                        "text": "Gestionar las claves secretas",
+                        "isCorrect": false,
+                        "feedback": "La gestión de claves es una parte importante de la aplicación de la criptografía, pero no es el objetivo del criptoanálisis."
+                    },
+                    {
+                        "text": "Ocultar la existencia de un mensaje",
+                        "isCorrect": false,
+                        "feedback": "La técnica de ocultar la existencia de un mensaje se conoce como esteganografía."
+                    },
+                    {
+                        "text": "Diseñar algoritmos de cifrado",
+                        "isCorrect": false,
+                        "feedback": "El diseño de algoritmos de cifrado es tarea de la criptografía, no del criptoanálisis."
+                    },
+                    {
+                        "text": "Romper las técnicas criptográficas",
+                        "isCorrect": true,
+                        "feedback": "El criptoanálisis es la ciencia que se enfoca en analizar y romper los sistemas de cifrado para encontrar debilidades o descifrar mensajes."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_003",
+                "question": "¿Qué propiedad de la seguridad garantiza que la información no ha sido modificada durante su transmisión?",
+                "hint": "Esta propiedad se enfoca en la inalterabilidad del mensaje, no en quién lo lee o quién lo envía.",
+                "options": [
+                    {
+                        "text": "Confidencialidad",
+                        "isCorrect": false,
+                        "feedback": "La confidencialidad asegura que solo el receptor autorizado pueda leer el mensaje, no que este no haya sido alterado."
+                    },
+                    {
+                        "text": "Integridad",
+                        "isCorrect": true,
+                        "feedback": "La integridad es la propiedad que asegura que el mensaje recibido es exactamente el mismo que el enviado, sin alteraciones."
+                    },
+                    {
+                        "text": "Autenticación",
+                        "isCorrect": false,
+                        "feedback": "La autenticación verifica la identidad del emisor o receptor, pero no se centra directamente en la inalterabilidad del mensaje."
+                    },
+                    {
+                        "text": "No repudio",
+                        "isCorrect": false,
+                        "feedback": "El no repudio impide que el emisor niegue haber enviado el mensaje, lo cual es diferente a protegerlo de alteraciones."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_004",
+                "question": "Según el Principio de Kerckhoffs, la seguridad de un sistema criptográfico debe depender exclusivamente de:",
+                "hint": "Este principio asume que tu enemigo conoce perfectamente cómo funciona tu sistema",
+                "options": [
+                    {
+                        "text": "El secreto de la clave",
+                        "isCorrect": true,
+                        "feedback": "Este principio fundamental establece que un sistema debe ser seguro incluso si todo sobre él, excepto la clave, es de dominio público."
+                    },
+                    {
+                        "text": "La velocidad del ordenador del atacante",
+                        "isCorrect": false,
+                        "feedback": "Un buen sistema criptográfico debe ser seguro asumiendo que el atacante tiene una capacidad computacional considerable."
+                    },
+                    {
+                        "text": "La longitud del mensaje a cifrar",
+                        "isCorrect": false,
+                        "feedback": "Aunque la longitud del mensaje puede influir en ciertos ataques, el principio se centra en dónde debe residir la fortaleza del diseño."
+                    },
+                    {
+                        "text": "El secreto del algoritmo",
+                        "isCorrect": false,
+                        "feedback": "Esto se conoce como 'seguridad por ofuscación' y es precisamente lo que el principio de Kerckhoffs desaconseja, ya que los algoritmos suelen acabar filtrándose."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_005",
+                "question": "El cifrado César, que desplaza cada letra un número fijo de posiciones en el alfabeto, es un ejemplo clásico de:",
+                "hint": "Analiza si se cambia el orden de las letras o si se reemplazan por otras, y si la regla de reemplazo es siempre la misma.",
+                "options": [
+                    {
+                        "text": "Esteganografía",
+                        "isCorrect": false,
+                        "feedback": "La esteganografía oculta la existencia de un mensaje, mientras que el cifrado César lo hace visible."
+                    },
+                    {
+                        "text": "Cifrado por sustitución monoalfabética",
+                        "isCorrect": true,
+                        "feedback": "Utiliza un único alfabeto de sustitución, donde cada letra del original se reemplaza siempre por la misma letra cifrada"
+                    },
+                    {
+                        "text": "Cifrado por sustitución polialfabética",
+                        "isCorrect": false,
+                        "feedback": "Un cifrado polialfabético usa varios alfabetos de sustitución, por lo que una misma letra puede cifrarse de formas diferentes, a diferencia del César."
+                    },
+                    {
+                        "text": "Cifrado de transposición",
+                        "isCorrect": false,
+                        "feedback": "La transposición cambia el orden de las letras, pero no las sustituye por otras diferentes, como sí hace el cifrado César."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_006",
+                "question": "¿Cuál es la principal diferencia entre criptografía y esteganografía?",
+                "hint": "Piensa en el ejemplo de tatuar un mensaje en la cabeza rapada de un esclavo. ¿Se busca hacer el mensaje ilegible o que nadie lo vea?",
+                "options": [
+                    {
+                        "text": "La criptografía es moderna y la esteganografía es antigua.",
+                        "isCorrect": false,
+                        "feedback": "Ambas prácticas tienen miles de años de historia y siguen siendo relevantes hoy en día."
+                    },
+                    {
+                        "text": "La criptografía usa claves y la esteganografía no.",
+                        "isCorrect": false,
+                        "feedback": "Ambas disciplinas pueden usar claves o secretos compartidos; la diferencia radica en su objetivo principal."
+                    },
+                    {
+                        "text": "La criptografía es para texto y la esteganografía para imágenes.",
+                        "isCorrect": false,
+                        "feedback": "La esteganografía puede aplicarse a cualquier tipo de datos, no solo a imágenes."
+                    },
+                    {
+                        "text": "La criptografía hace un mensaje ilegible, mientras que la esteganografía oculta su existencia.",
+                        "isCorrect": true,
+                        "feedback": "El objetivo de la criptografía es la confidencialidad del contenido, mientras que la esteganografía busca que nadie se percate de que se está produciendo una comunicación."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_007",
+                "question": "En los escenarios criptográficos, los personajes Alice y Bob suelen representar a:",
+                "hint": "Son los 'buenos' de la historia que intentan comunicarse de forma segura.",
+                "options": [
+                    {
+                        "text": "El inventor del algoritmo y el criptoanalista.",
+                        "isCorrect": false,
+                        "feedback": "Estos personajes ficticios se usan para describir la interacción en un protocolo, no para representar a figuras históricas."
+                    },
+                    {
+                        "text": "Una autoridad de certificación y un usuario.",
+                        "isCorrect": false,
+                        "feedback": "Aunque podrían jugar esos roles en un escenario más complejo, su papel fundamental es el de emisor y receptor."
+                    },
+                    {
+                        "text": "Dos atacantes que colaboran.",
+                        "isCorrect": false,
+                        "feedback": "Los atacantes suelen tener nombres como Eve (pasiva) o Mallory (activo), no Alice y Bob."
+                    },
+                    {
+                        "text": "El emisor y el receptor legítimos de un mensaje.",
+                        "isCorrect": true,
+                        "feedback": "Por convención, Alice es quien quiere enviar un mensaje secreto a Bob de forma segura."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_008",
+                "question": "La escítala espartana es considerada el primer dispositivo criptográfico conocido y es un ejemplo de:",
+                "hint": "Piensa en si las letras del mensaje original se mantienen pero en un orden diferente.",
+                "options": [
+                    {
+                        "text": "Cifrado de transposición",
+                        "isCorrect": true,
+                        "feedback": "Al enrollar la tira de cuero en el bastón y escribir, y luego desenrollarla, lo que se consigue es cambiar el orden (transponer) de las letras."
+                    },
+                    {
+                        "text": "Cifrado de clave pública",
+                        "isCorrect": false,
+                        "feedback": "El cifrado de clave pública es una invención del siglo XX, mientras que la escítala es de la antigua Grecia."
+                    },
+                    {
+                        "text": "Cifrado de flujo",
+                        "isCorrect": false,
+                        "feedback": "El cifrado de flujo es una técnica que utiliza un flujo de bits para cifrar un mensaje, lo que lo hace más difícil de descifrar."
+                    },
+                    {
+                        "text": "Cifrado de sustitución",
+                        "isCorrect": false,
+                        "feedback": "El cifrado de sustitución es una técnica que reemplaza cada letra del mensaje original por otra diferente, lo que lo hace más difícil de descifrar."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_009",
+                "question": "¿Qué es el 'análisis de frecuencias' en el contexto del criptoanálisis?",
+                "hint": "Recuerda que en español, las letras 'E' y 'A' son mucho más comunes que la 'W' o la 'K'.",
+                "options": [
+                    {
+                        "text": "Un método para medir la velocidad de un algoritmo de cifrado.",
+                        "isCorrect": false,
+                        "feedback": "La medición del rendimiento de un algoritmo es una tarea de evaluación, no un ataque criptoanalítico."
+                    },
+                    {
+                        "text": "Un ataque que consiste en probar todas las claves posibles.",
+                        "isCorrect": false,
+                        "feedback": "El ataque de fuerza bruta es un método de ataque que intenta todas las posibles combinaciones de claves hasta encontrar la correcta."
+                    },
+                    {
+                        "text": "Un ataque que explota que en un idioma unas letras aparecen más que otras.",
+                        "isCorrect": true,
+                        "feedback": "Este ataque se basa en que, si un cifrado no oculta las estadísticas del lenguaje, la frecuencia de las letras en el texto cifrado puede revelar información sobre el texto original."
+                    },
+                    {
+                        "text": "Un ataque que requiere conocer el texto en claro original.",
+                        "isCorrect": false,
+                        "feedback": "El ataque de descifrado por fuerza bruta requiere conocer el texto en claro original."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_010",
+                "question": "El personaje 'Eve' en criptografía representa a un atacante que:",
+                "hint": "Su nombre en inglés, 'eavesdropper', da una pista sobre su comportamiento.",
+                "options": [
+                    {
+                        "text": "Solo puede escuchar la comunicación (atacante pasivo).",
+                        "isCorrect": true,
+                        "feedback": "Eve viene del término inglés 'eavesdropper' (fisgón), y su rol es interceptar y leer los mensajes sin alterarlos."
+                    },
+                    {
+                        "text": "Puede modificar los mensajes entre Alice y Bob.",
+                        "isCorrect": false,
+                        "feedback": "El atacante que puede modificar activamente los mensajes es Mallory."
+                    },
+                    {
+                        "text": "Ayuda a Alice y Bob a comunicarse.",
+                        "isCorrect": false,
+                        "feedback": "Eve es siempre la adversaria, nunca una colaboradora en la comunicación segura."
+                    },
+                    {
+                        "text": "Conoce la clave secreta de Alice y Bob.",
+                        "isCorrect": false,
+                        "feedback": "Si un atacante conoce la clave, el sistema está comprometido independientemente de si es pasivo o activo. Eve se define por su comportamiento (escuchar), no necesariamente por tener la clave."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_011",
+                "question": "¿Qué término se utiliza para describir el conjunto de la criptografía (crear códigos) y el criptoanálisis (romperlos)?",
+                "hint": "Este término engloba las dos caras de la misma moneda: la construcción y la deconstrucción de secretos.",
+                "options": [
+                    {
+                        "text": "Criptosistema",
+                        "isCorrect": false,
+                        "feedback": "Un criptosistema es un conjunto específico de algoritmos para cifrar y descifrar, no el estudio global."
+                    },
+                    {
+                        "text": "Esteganografía",
+                        "isCorrect": false,
+                        "feedback": "La esteganografía es la técnica de ocultar información dentro de otro medio, como imágenes o audio, no el estudio de la seguridad de los sistemas criptográficos."
+                    },
+                    {
+                        "text": "Ciberseguridad",
+                        "isCorrect": false,
+                        "feedback": "La ciberseguridad se refiere a la protección de sistemas informáticos y redes contra amenazas, no el estudio de la seguridad de los sistemas criptográficos."
+                    },
+                    {
+                        "text": "Criptología",
+                        "isCorrect": true,
+                        "feedback": "La criptología es el campo que engloba tanto el diseño de sistemas criptográficos como el análisis de su seguridad."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_012",
+                "question": "¿Cuál era la principal debilidad de los cifrados de sustitución simple como el de César?",
+                "hint": "Piensa en cómo un criptoanalista como Al-Kindi podía romper estos códigos sin probar todas las claves.",
+                "options": [
+                    {
+                        "text": "Solo funcionaban con el alfabeto latino.",
+                        "isCorrect": false,
+                        "feedback": "El principio de sustitución simple se puede aplicar a cualquier alfabeto o conjunto de símbolos."
+                    },
+                    {
+                        "text": "Requerían claves demasiado largas.",
+                        "isCorrect": false,
+                        "feedback": "El descifrado de sustitución simple requiere calcular todas las posibles combinaciones de sustitución, lo que es prácticamente imposible para claves de más de 26 caracteres."
+                    },
+                    {
+                        "text": "No ocultaban las frecuencias de las letras del idioma original.",
+                        "isCorrect": true,
+                        "feedback": "Al sustituir siempre una letra por la misma, las estadísticas del lenguaje se preservan en el texto cifrado, haciéndolos vulnerables al análisis de frecuencias."
+                    },
+                    {
+                        "text": "Eran muy lentos de calcular a mano.",
+                        "isCorrect": false,
+                        "feedback": "El descifrado de sustitución simple requiere calcular todas las posibles combinaciones de sustitución, lo que es prácticamente imposible para claves de más de 26 caracteres."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_013",
+                "question": "¿Qué innovación introdujeron los cifrados polialfabéticos como el de Vigenère para combatir el análisis de frecuencias?",
+                "hint": "El prefijo 'poli-' significa 'muchos'. ¿Qué había de 'muchos' en este tipo de cifrado?",
+                "options": [
+                    {
+                        "text": "Requerían dos claves diferentes, una para cifrar y otra para descifrar.",
+                        "isCorrect": false,
+                        "feedback": "Esta es la base de la criptografía asimétrica o de clave pública, una invención mucho más moderna."
+                    },
+                    {
+                        "text": "Usaban varios alfabetos de sustitución, haciendo que la misma letra se cifrara de formas diferentes.",
+                        "isCorrect": true,
+                        "feedback": "Al usar una palabra clave para cambiar de alfabeto, se 'aplanan' las frecuencias estadísticas del lenguaje, dificultando el análisis."
+                    },
+                    {
+                        "text": "Cambiaban el orden de las letras en lugar de sustituirlas.",
+                        "isCorrect": false,
+                        "feedback": "Siguen siendo cifrados de sustitución, pero con una regla más compleja."
+                    },
+                    {
+                        "text": "Ocultaban el mensaje dentro de una imagen o un sonido.",
+                        "isCorrect": false,
+                        "feedback": "Esto es la definición de esteganografía, no de cifrado Vigenère."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_014",
+                "question": "El cifrado 'One-Time Pad' (OTP) o de Vernam es teóricamente irrompible si se cumplen ciertas condiciones. ¿Cuál de las siguientes NO es una de ellas?",
+                "hint": "Una de las opciones contradice la idea fundamental de una clave secreta.",
+                "options": [
+                    {
+                        "text": "La clave debe ser tan larga como el mensaje.",
+                        "isCorrect": false,
+                        "feedback": "Esta es una condición crucial para el secreto perfecto; la clave debe tener la misma longitud que el texto en claro."
+                    },
+                    {
+                        "text": "La clave no debe reutilizarse nunca.",
+                        "isCorrect": false,
+                        "feedback": "Reutilizar la misma clave para cifrar múltiples mensajes compromete el secreto perfecto."
+                    },
+                    {
+                        "text": "La clave debe ser completamente aleatoria.",
+                        "isCorrect": false,
+                        "feedback": "La clave debe ser completamente aleatoria para que el atacante no pueda predecir sus patrones."
+                    },
+                    {
+                        "text": "La clave debe ser pública y conocida por todos.",
+                        "isCorrect": true,
+                        "feedback": "La clave del OTP debe ser un secreto compartido únicamente entre emisor y receptor; si fuera pública, cualquiera podría descifrar el mensaje."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_015",
+                "question": "En el modelo básico de comunicación criptográfica, el mensaje original antes de ser cifrado se denomina:",
+                "hint": "Es el estado del mensaje cuando es perfectamente legible.",
+                "options": [
+                    {
+                        "text": "Texto en claro",
+                        "isCorrect": true,
+                        "feedback": "El texto en claro (o plaintext) es el mensaje legible y comprensible antes de que se le aplique cualquier proceso de cifrado."
+                    },
+                    {
+                        "text": "Texto cifrado",
+                        "isCorrect": false,
+                        "feedback": "El texto cifrado (o criptograma) es el resultado de aplicar el algoritmo de cifrado al mensaje original."
+                    },
+                    {
+                        "text": "Algoritmo",
+                        "isCorrect": false,
+                        "feedback": "El algoritmo es el procedimiento matemático utilizado para transformar el texto en claro en texto cifrado."
+                    },
+                    {
+                        "text": "Clave secreta",
+                        "isCorrect": false,
+                        "feedback": "La clave secreta es el parámetro secreto que se utiliza junto con el algoritmo para cifrar y descifrar el mensaje."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_016",
+                "question": "A qué figura histórica del siglo IX se le atribuyen los primeros textos sobre criptoanálisis, describiendo el método de análisis de frecuencias?",
+                "hint": "Fue un polímata del mundo árabe durante la Edad de Oro del Islam.",
+                "options": [
+                    {
+                        "text": "Julio César",
+                        "isCorrect": false,
+                        "feedback": "Julio César es famoso por usar un cifrado, no por analizar y romper los de otros."
+                    },
+                    {
+                        "text": "Claude Shannon",
+                        "isCorrect": false,
+                        "feedback": "Claude Shannon es considerado el padre de la teoría de la información, pero vivió en el siglo XX."
+                    },
+                    {
+                        "text": "Leon Battista Alberti",
+                        "isCorrect": false,
+                        "feedback": "Leon Battista Alberti fue un humanista italiano del Renacimiento, conocido por sus contribuciones al arte y la arquitectura, no por el criptoanálisis."
+                    },
+                    {
+                        "text": "Al-Kindi",
+                        "isCorrect": true,
+                        "feedback": "Este matemático y filósofo árabe fue pionero en el criptoanálisis al describir cómo las frecuencias de las letras podían usarse para romper cifrados de sustitución simple."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_017",
+                "question": "¿Qué es la 'seguridad por ofuscación'?",
+                "hint": "Piensa en la idea de 'esconder' el funcionamiento de algo como método de protección, en lugar de hacerlo robusto.",
+                "options": [
+                    {
+                        "text": "Un paradigma de seguridad robusto recomendado por los expertos.",
+                        "isCorrect": false,
+                        "feedback": "Al contrario, es un paradigma muy desaconsejado porque proporciona una falsa sensación de seguridad."
+                    },
+                    {
+                        "text": "El uso de claves extremadamente largas y complejas.",
+                        "isCorrect": false,
+                        "feedback": "Si bien las claves largas son importantes, la ofuscación se refiere a ocultar el funcionamiento del sistema, no al tamaño de la clave."
+                    },
+                    {
+                        "text": "La práctica de basar la seguridad de un sistema en mantener secreto su diseño o algoritmo.",
+                        "isCorrect": true,
+                        "feedback": "Consiste en creer que un sistema es seguro simplemente porque nadie sabe cómo funciona, lo cual es frágil, ya que los detalles suelen descubrirse."
+                    },
+                    {
+                        "text": "Un sinónimo del Principio de Kerckhoffs.",
+                        "isCorrect": false,
+                        "feedback": "Es lo contrario. El Principio de Kerckhoffs establece que la seguridad debe basarse en la robustez del algoritmo y la fortaleza de la clave, no en el secreto del diseño."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_018",
+                "question": "Un sinónimo del Principio de Kerckhoffs.",
+                "hint": "Este es el escenario de ataque más básico, donde el criptoanalista tiene la menor cantidad de información disponible.",
+                "options": [
+                    {
+                        "text": "Análisis de frecuencias",
+                        "isCorrect": true,
+                        "feedback": "Para realizar un análisis de frecuencias, el atacante solo necesita una cantidad suficiente de texto cifrado para analizar las estadísticas de los símbolos."
+                    },
+                    {
+                        "text": "Ataque de fuerza bruta",
+                        "isCorrect": false,
+                        "feedback": "Aunque un ataque de fuerza bruta a menudo se realiza con solo texto cifrado, la definición no es exclusiva y se centra en probar claves."
+                    },
+                    {
+                        "text": "Ataque de canal lateral",
+                        "isCorrect": false,
+                        "feedback": "Los ataques de canal lateral explotan información física (como el tiempo de ejecución o el consumo de energía) del dispositivo que realiza el cifrado."
+                    },
+                    {
+                        "text": "Ataque de texto en claro escogido",
+                        "isCorrect": false,
+                        "feedback": "En este escenario, el atacante puede elegir textos en claro y obtener sus correspondientes textos cifrados."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_019",
+                "question": "¿Qué propiedad garantiza que el emisor de un mensaje no pueda negar haberlo enviado?",
+                "hint": "Imagina la importancia de esta propiedad en la firma de un contrato digital.",
+                "options": [
+                    {
+                        "text": "Integridad",
+                        "isCorrect": false,
+                        "feedback": "La integridad verifica que el mensaje no ha sido alterado, pero no quién es el autor original."
+                    },
+                    {
+                        "text": "Confidencialidad",
+                        "isCorrect": false,
+                        "feedback": "La confidencialidad garantiza que solo las partes autorizadas puedan acceder al contenido del mensaje."
+                    },
+                    {
+                        "text": "No repudio",
+                        "isCorrect": true,
+                        "feedback": "Esta propiedad vincula de forma irrefutable a un emisor con un mensaje, impidiendo que pueda negar su autoría posteriormente."
+                    },
+                    {
+                        "text": "Disponibilidad",
+                        "isCorrect": false,
+                        "feedback": "La disponibilidad garantiza que los sistemas y la información estén accesibles cuando se necesiten."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_020",
+                "question": "El trabajo de Claude Shannon a mediados del siglo XX fue fundamental porque:",
+                "hint": "Su principal contribución fue dar un fundamento riguroso y formal a lo que antes era más un arte o una práctica.",
+                "options": [
+                    {
+                        "text": "Aplicó la teoría matemática y de la información a la criptografía, convirtiéndola en una ciencia.",
+                        "isCorrect": true,
+                        "feedback": "Shannon estableció las bases teóricas de la criptografía moderna, definiendo conceptos como el secreto perfecto y analizando matemáticamente la seguridad."
+                    },
+                    {
+                        "text": "Descifró el código de la máquina Enigma.",
+                        "isCorrect": false,
+                        "feedback": "El descifrado de Enigma fue un esfuerzo colectivo liderado por figuras como Alan Turing en Bletchley Park."
+                    },
+                    {
+                        "text": "Inventó el primer cifrado polialfabético.",
+                        "isCorrect": false,
+                        "feedback": "El cifrado polialfabético fue inventado por Leon Battista Alberti en el siglo XV."
+                    },
+                    {
+                        "text": "Formuló el Principio de Kerckhoffs.",
+                        "isCorrect": false,
+                        "feedback": "El Principio de Kerckhoffs fue formulado por Auguste Kerckhoffs en el siglo XIX."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_021",
+                "question": "¿Por qué el cifrado de Vernam (One-Time Pad) es considerado poco práctico para la mayoría de las aplicaciones del mundo real?",
+                "hint": "El problema no está en las matemáticas del cifrado, sino en los requisitos que impone a la clave secreta.",
+                "options": [
+                    {
+                        "text": "Porque su seguridad no ha sido demostrada matemáticamente.",
+                        "isCorrect": false,
+                        "feedback": "Al contrario, es el único cifrado cuya seguridad perfecta ha sido demostrada matemáticamente por Claude Shannon."
+                    },
+                    {
+                        "text": "Por la dificultad de generar, distribuir y gestionar de forma segura claves tan largas como los mensajes.",
+                        "isCorrect": true,
+                        "feedback": "El problema principal es logístico: la necesidad de una clave aleatoria, de un solo uso y de la misma longitud que el mensaje lo hace inviable para usos generales."
+                    },
+                    {
+                        "text": "Porque es computacionalmente muy lento.",
+                        "isCorrect": false,
+                        "feedback": "Es un cifrado muy rápido, ya que solo requiere operaciones de suma/resta modular (XOR)."
+                    },
+                    {
+                        "text": "Porque es vulnerable a ataques de fuerza bruta.",
+                        "isCorrect": false,
+                        "feedback": "Es matemáticamente irrompible si se usa correctamente. La vulnerabilidad no es criptográfica, sino logística."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_022",
+                "question": "En el cifrado de sustitución homofónica, ¿cuál es el objetivo de asignar varios símbolos cifrados a las letras más comunes del alfabeto?",
+                "hint": "Piensa en cómo esta técnica intenta combatir la principal debilidad de la sustitución simple.",
+                "options": [
+                    {
+                        "text": "Hacer el mensaje cifrado más corto.",
+                        "isCorrect": false,
+                        "feedback": "Esta técnica generalmente hace que el mensaje cifrado sea más largo, ya que el alfabeto cifrado es mayor."
+                    },
+                    {
+                        "text": "Aplanar la distribución de frecuencias de los símbolos cifrados.",
+                        "isCorrect": true,
+                        "feedback": "Al dar más opciones de cifrado a letras como la 'E', se busca que todos los símbolos en el texto cifrado aparezcan con una frecuencia similar, frustrando el análisis de frecuencias."
+                    },
+                    {
+                        "text": "Crear un cifrado de transposición.",
+                        "isCorrect": false,
+                        "feedback": "Los cifrados de transposición reorganizan las letras, no las sustituyen."
+                    },
+                    {
+                        "text": "Facilitar el descifrado a mano.",
+                        "isCorrect": false,
+                        "feedback": "De hecho, complica el descifrado manual al requerir tablas de búsqueda más grandes."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_023",
+                "question": "El ataque que se aprovecha de la implementación física de un algoritmo (midiendo tiempo, consumo eléctrico, etc.) se conoce como:",
+                "hint": "Es como intentar adivinar la combinación de una caja fuerte escuchando los 'clics' de la cerradura.",
+                "options": [
+                    {
+                        "text": "Ingeniería social",
+                        "isCorrect": false,
+                        "feedback": "La ingeniería social ataca al factor humano, engañando a las personas para que revelen información, no al hardware."
+                    },
+                    {
+                        "text": "Ataque de diccionario",
+                        "isCorrect": false,
+                        "feedback": "Un ataque de diccionario intenta descifrar contraseñas probando palabras comunes de un diccionario. No está relacionado con el hardware."
+                    },
+                    {
+                        "text": "Ataque de solo texto cifrado",
+                        "isCorrect": false,
+                        "feedback": "Un ataque de solo texto cifrado intenta descifrar un mensaje cifrado sin conocer el texto plano. No está relacionado con el hardware."
+                    },
+                    {
+                        "text": "Ataque de canal lateral",
+                        "isCorrect": true,
+                        "feedback": "Este tipo de ataque no ataca las matemáticas del algoritmo, sino la información que se 'filtra' a través de canales físicos durante su ejecución."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_024",
+                "question": "¿Cuál de estas opciones describe mejor un cifrado de transposición?",
+                "hint": "Este tipo de cifrado es como barajar las letras de un mensaje.",
+                "options": [
+                    {
+                        "text": "La letra 'A' se convierte en 'D', la 'B' en 'E', etc.",
+                        "isCorrect": false,
+                        "feedback": "Esto es un cifrado de sustitución, ya que cada letra se reemplaza por otra."
+                    },
+                    {
+                        "text": "La palabra 'HOLA' se cifra usando una clave como 'LUNA'.",
+                        "isCorrect": false,
+                        "feedback": "Esto es un cifrado de sustitución polialfabética, ya que cada letra se reemplaza por otra según la clave."
+                    },
+                    {
+                        "text": "La letra 'E' puede cifrarse como '#', '7' o '$'.",
+                        "isCorrect": false,
+                        "feedback": "Esto es un cifrado de sustitución homofónica, ya que la misma letra se reemplaza por diferentes símbolos."
+                    },
+                    {
+                        "text": "La palabra 'SECRETO' se convierte en 'OTERCES'.",
+                        "isCorrect": true,
+                        "feedback": "Las letras originales se mantienen, pero su orden ha sido alterado (permutado), que es la definición de transposición."
+                    }
+                ]
+            },
+            {
+                "id": "intro_easy_025",
+                "question": "El término para un mensaje cifrado, es decir, el resultado de aplicar un algoritmo de cifrado, es:",
+                "hint": "Es la forma del mensaje que un atacante como Eve interceptaría en el canal de comunicación.",
+                "options": [
+                    {
+                        "text": "Criptograma (Ciphertext)",
+                        "isCorrect": true,
+                        "feedback": "Criptograma o texto cifrado es el término técnico para el mensaje en su forma ilegible tras el cifrado."
+                    },
+                    {
+                        "text": "Clave (Key)",
+                        "isCorrect": false,
+                        "feedback": "La clave es la información secreta usada en el proceso de cifrado y descifrado, no el mensaje resultante."
+                    },
+                    {
+                        "text": "Nonce",
+                        "isCorrect": false,
+                        "feedback": "Un nonce (number used once) es un valor aleatorio o pseudoaleatorio que se utiliza una sola vez en un contexto criptográfico, a menudo para garantizar la seguridad de las transacciones o comunicaciones. No es el mensaje cifrado."
+                    },
+                    {
+                        "text": "Texto en claro (Plaintext)",
+                        "isCorrect": false,
+                        "feedback": "El texto en claro es el mensaje original antes de ser cifrado. Es el opuesto al criptograma."
+                    }
+                ]
+            }
+        ],
+        "medium": [],
+        "hard": []
+    }
+}

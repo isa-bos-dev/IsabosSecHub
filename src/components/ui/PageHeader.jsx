@@ -15,7 +15,12 @@ const PageHeader = ({
 }) => {
     return (
         <div className="text-center space-y-4">
-            <h1 className={`text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-${gradientFrom} to-${gradientTo} pb-2`}>
+            <h1
+                className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text pb-2"
+                style={{
+                    backgroundImage: `linear-gradient(to right, var(--color-${gradientFrom}), var(--color-${gradientTo}))`
+                }}
+            >
                 {title}
             </h1>
             <p className="text-lg text-(--text-secondary) max-w-3xl mx-auto leading-relaxed">

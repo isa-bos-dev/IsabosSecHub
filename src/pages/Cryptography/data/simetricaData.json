@@ -1,0 +1,281 @@
+{
+    "header": {
+        "title": "Criptografía Simétrica",
+        "description": "Arquitectura y mecanismos de los Cifrados en Flujo y en Bloque: de la teoría de Vernam al estándar AES."
+    },
+    "intro": "Como estudiosos de la seguridad de la información, debemos abordar esta disciplina no solo como una técnica, sino como la resolución de un conflicto fundamental entre la perfección teórica y la viabilidad práctica. En esta sección, analizaremos cómo hemos evolucionado desde el ideal de Vernam hasta la sofisticación algebraica del estándar AES.",
+    "quote": {
+        "text": "La criptografía es el arte de proteger la información transformándola en algo ilegible para cualquiera que no cuente con la clave secreta.",
+        "author": "Principio fundamental"
+    },
+    "tabs": [
+        {
+            "id": "fundamentos",
+            "label": "Fundamentos y Flujo",
+            "icon": "Zap",
+            "variant": "success",
+            "content": [
+                {
+                    "type": "section-header",
+                    "title": "El dilema de la eficiencia: más allá del cifrado de Vernam"
+                },
+                {
+                    "type": "text",
+                    "value": "En la teoría de la información, el cifrado de Vernam representa el cenit de la seguridad: es incondicionalmente seguro. Sin embargo, este ideal plantea una paradoja logística insalvable. Para garantizar esta seguridad, la clave debe ser tan extensa como el mensaje y utilizarse una sola vez. Si dispusiéramos de un canal seguro para intercambiar claves de tal magnitud, lógicamente podríamos utilizar dicho canal para el mensaje mismo, tornando el cifrado en una redundancia costosa."
+                },
+                {
+                    "type": "highlight",
+                    "value": "La criptografía simétrica moderna nace para resolver esta ineficiencia, sustituyendo la seguridad incondicional por la seguridad computacional. Nuestra estrategia consiste en emplear claves cortas (semillas) que, mediante algoritmos deterministas robustos, se expanden para proteger volúmenes ingentes de datos."
+                },
+                {
+                    "type": "section-header",
+                    "title": "Criptosistemas en flujo: la expansión seudoaleatoria"
+                },
+                {
+                    "type": "text",
+                    "value": "El cifrado en flujo es la heredera pragmática del sistema de Vernam. Aquí, el componente crítico es el Generador Seudoaleatorio (PRNG). Este algoritmo recibe una entrada de tamaño reducido, la semilla (k), y produce una secuencia cifrante (s) de longitud arbitraria.\n\nEs imperativo que el generador sea determinista: emisor y receptor deben generar exactamente la misma secuencia a partir de la misma semilla para que la operación XOR (m ⊕ s = c) sea reversible."
+                },
+                {
+                    "type": "definition",
+                    "term": "Periodo y seguridad críptica",
+                    "meaning": "Dado que un PRNG opera en un estado finito, la secuencia eventualmente entrará en un ciclo. Definimos el Periodo (p) como el entero más pequeño tal que s_{i+p} = s_i, ∀ i ≥ 0. Un periodo reducido es una vulnerabilidad inaceptable: si un atacante identifica la repetición, la predictibilidad del sistema se vuelve absoluta."
+                },
+                {
+                    "type": "section-header",
+                    "title": "Evaluación de la aleatoriedad: el estándar del NIST"
+                },
+                {
+                    "type": "text",
+                    "value": "Para que una secuencia seudoaleatoria sea criptográficamente válida, debe superar rigurosos test estadísticos que garanticen su indistinguibilidad frente a una secuencia puramente aleatoria."
+                },
+                {
+                    "type": "terminal-example",
+                    "title": "1. Test de frecuencia de bits individuales",
+                    "content": "# Evalúa si la proporción de ceros y unos es equilibrada (~0.5)\n# Transformación: 0 -> -1   |   1 -> 1\n\nX = { x_i | x_i = 2 * s_i - 1 }\ns_obs = abs( sum(X) ) / sqrt(n)\n\n> Si s_obs es pequeño, hay equilibrio. Si es grande, hay sesgo."
+                },
+                {
+                    "type": "terminal-example",
+                    "title": "2. Test de frecuencia en un bloque",
+                    "content": "# Divide la secuencia en 'b' bloques de tamaño 'm'\n# Calcula la proporción de unos (pi_k) en cada bloque\n\nChi_sq = 4m * sum( (pi_k - 0.5)^2 for k in 1..b )\n\n> Mide si la proporción varía localmente."
+                },
+                {
+                    "type": "terminal-example",
+                    "title": "3. Test de ráfagas (Runs Test)",
+                    "content": "# Analiza las oscilaciones o cambios de valor consecutivos (0->1 o 1->0)\n# Pre-condición: Debe haber superado el test de frecuencia.\n\nr(i) = 0 si s[i] == s[i+1]; sino 1\nV_n = sum(r(i)) + 1\n\n> Un V_n muy alto implica oscilación rápida; muy bajo implica largas rachas."
+                }
+            ]
+        },
+        {
+            "id": "generadores",
+            "label": "Generadores (LFSR y No Lineales)",
+            "icon": "Cpu",
+            "variant": "accent",
+            "content": [
+                {
+                    "type": "section-header",
+                    "title": "Generadores lineales y la predictibilidad de los LFSR"
+                },
+                {
+                    "type": "text",
+                    "value": "Los Registros de Desplazamiento Realimentados Linealmente (LFSR) son apreciados por su eficiencia en hardware. Un LFSR de longitud n genera una secuencia basada en la relación lineal definida por un polinomio de conexiones."
+                },
+                {
+                    "type": "math-block",
+                    "title": "Ecuación de recurrencia LFSR",
+                    "content": "s[n+1] = c[1]s[n] + c[2]s[n-1] + ... + c[n]s[1]\n\n> Si el polinomio es primitivo, el periodo alcanza el máximo (2^n - 1)."
+                },
+                {
+                    "type": "highlight",
+                    "title": "La vulnerabilidad de Massey",
+                    "value": "Debido a la naturaleza algebraica (lineal), un atacante NO necesita fuerza bruta. Conociendo solo 2n bits de salida, puede resolver el sistema de ecuaciones usando el algoritmo de Berlekamp-Massey y clonar el generador instantáneamente. Por ello, la linealidad es el enemigo."
+                },
+                {
+                    "type": "section-header",
+                    "title": "Generadores no lineales: A5/1 y Trivium"
+                },
+                {
+                    "type": "text",
+                    "value": "Para mitigar la debilidad de los LFSR, debemos introducir no linealidad en el diseño."
+                },
+                {
+                    "type": "text",
+                    "value": "Para mitigar la debilidad de los LFSR, debemos introducir no linealidad en el diseño. Analizaremos dos casos de estudio fundamentales que ilustran este principio."
+                },
+                {
+                    "type": "case-study-trigger",
+                    "items": [
+                        {
+                            "id": "a51",
+                            "title": "Caso de Estudio: A5/1 (GSM)",
+                            "description": "El cifrador original de la telefonía móvil 2G.",
+                            "icon": "Radio",
+                            "color": "error"
+                        },
+                        {
+                            "id": "trivium",
+                            "title": "Caso de Estudio: Trivium (ISO)",
+                            "description": "Estándar moderno para hardware ligero (eSTREAM).",
+                            "icon": "Cpu",
+                            "color": "primary"
+                        }
+                    ]
+                },
+                {
+                    "type": "comparison-table",
+                    "title": "Comparativa de Arquitectura",
+                    "headers": [
+                        "Característica",
+                        "A5/1 (GSM)",
+                        "Trivium (RFID)"
+                    ],
+                    "rows": [
+                        [
+                            "Componentes",
+                            "3 LFSR (64 bits total)",
+                            "3 Registros (288 bits total)"
+                        ],
+                        [
+                            "No Linealidad",
+                            "Función mayoritaria (Clocking irregular)",
+                            "Puertas AND (algebraica)"
+                        ],
+                        [
+                            "Inicialización",
+                            "Clave sesión (64) + Trama (22)",
+                            "Clave (80) + Vector Inicial (80)"
+                        ],
+                        [
+                            "Calentamiento",
+                            "100 ciclos",
+                            "1152 ciclos"
+                        ]
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "bloque",
+            "label": "Bloque y AES",
+            "icon": "Box",
+            "variant": "secondary",
+            "content": [
+                {
+                    "type": "section-header",
+                    "title": "Criptosistemas en bloque: la ausencia de memoria"
+                },
+                {
+                    "type": "text",
+                    "value": "A diferencia de los sistemas en flujo, el cifrado en bloque procesa fragmentos estáticos de n bits (c = E_k(b)). Su característica definitoria es que carece de memoria: bajo la misma clave, bloques de texto claro idénticos producen textos cifrados idénticos. Esta propiedad requiere el uso de Modos de Operación."
+                },
+                {
+                    "type": "card-group",
+                    "items": [
+                        {
+                            "title": "Modo ECB (Electronic Code Book)",
+                            "content": "SIMPLE PERO INSEGURO. Cifra cada bloque independientemente. Preserva patrones visuales (el famoso 'pingüino' cifrado sigue viéndose). Permite ataques de repetición y reordenación.",
+                            "variant": "error"
+                        },
+                        {
+                            "title": "Modo CBC (Cipher Block Chaining)",
+                            "content": "ESTÁNDAR CLÁSICO. Encadena bloques con XOR previo al cifrado. Requiere un Vector de Inicialización (IV) aleatorio. Error de propagación: un bit corrupto daña el bloque actual y el siguiente.",
+                            "variant": "warning"
+                        },
+                        {
+                            "title": "Modo CTR (Counter)",
+                            "content": "ESTÁNDAR MODERNO. Convierte el bloque en flujo cifrando un contador incremental. Permite paralelización total y acceso aleatorio. No propaga errores.",
+                            "variant": "primary"
+                        }
+                    ]
+                },
+                {
+                    "type": "section-header",
+                    "title": "Advanced Encryption Standard (AES): el estándar de oro"
+                },
+                {
+                    "type": "text",
+                    "value": "El AES (Rijndael) es un cifrador de sustitución-permutación que opera en bloques de 128 bits sobre el cuerpo finito GF(2^8)."
+                },
+                {
+                    "type": "terminal-example",
+                    "title": "Polinomio irreducible de AES",
+                    "content": "P(x) = x^8 + x^4 + x^3 + x + 1\n\n> Define la aritmética del campo de Galois GF(2^8)."
+                },
+                {
+                    "type": "definition",
+                    "term": "Las 4 funciones de ronda (confusión y difusión)",
+                    "meaning": "Cada ronda de AES aplica una secuencia de transformaciones reversibles diseñadas para maximizar la entropía."
+                },
+                {
+                    "type": "list",
+                    "items": [
+                        "1. AddRoundKey: XOR bit a bit con la subclave (única parte lineal relacionada con la clave).",
+                        "2. ByteSub: Sustitución NO lineal (S-Box) basada en inversos en GF(2^8).",
+                        "3. ShiftRow: Permutación de filas (difusión intra-bloque).",
+                        "4. MixColumns: Multiplicación matricial (difusión inter-columnas)."
+                    ]
+                },
+                {
+                    "type": "math-block",
+                    "title": "Operación MixColumns (matricial)",
+                    "content": "| s'0j |   | 02 03 01 01 |   | s0j |\n| s'1j | = | 01 02 03 01 | * | s1j |\n| s'2j |   | 01 01 02 03 |   | s2j |\n| s'3j |   | 03 01 01 02 |   | s3j |"
+                },
+                {
+                    "type": "section-header",
+                    "title": "Conclusión y prospectiva"
+                },
+                {
+                    "type": "text",
+                    "value": "La seguridad simétrica actual no descansa en el secreto del algoritmo, sino en la profundidad de su complejidad no lineal. Ante la computación cuántica, ¿bastará Rijndael (AES)? El debate queda abierto."
+                }
+            ]
+        }
+    ],
+    "caseStudies": {
+        "a51": {
+            "title": "A5/1: El guardián del GSM",
+            "tags": [
+                "64-bit Key",
+                "Stream Cipher",
+                "Broken"
+            ],
+            "description": "Utilizado para cifrar la comunicación de voz en redes móviles GSM. Se basa en tres registros LFSR con clocking irregular.",
+            "specs": {
+                "Internal State": "64 bits (LFSR1: 19, LFSR2: 22, LFSR3: 23)",
+                "Feedback Polynomials": [
+                    "LFSR1: x^19 + x^5 + x^2 + x + 1",
+                    "LFSR2: x^22 + x^21 + 1",
+                    "LFSR3: x^23 + x^15 + x^2 + x + 1"
+                ],
+                "Non-Linearity": "Majority Vote Clocking (Regla de mayoría 2 de 3)"
+            },
+            "mechanism": "En cada ciclo, se examinan los bits de reloj de cada registro (R1[8], R2[10], R3[10]). Se calcula la función mayoría F(c1,c2,c3). Solo aquellos registros cuyo bit de reloj coincida con F avanzan. Esto desincroniza los registros y rompe la linealidad algebraica simple.",
+            "attacks": [
+                "Time-Memory Trade-off (Biryukov-Shamir-Wagner): Recupera la clave en segundos usando tablas precomputadas.",
+                "Correlation Attacks: Explotan la inicialización lineal de la clave y el frame number.",
+                "Rainbow Tables: Tablas estáticas para inversión de funciones."
+            ],
+            "conclusion": "Aunque ingenioso para hardware de los 80, A5/1 es hoy inseguro. Su debilidad principal es el estado interno corto (64 bits) y la linealidad parcial de su inicialización."
+        },
+        "trivium": {
+            "title": "Trivium: La eficiencia moderna",
+            "tags": [
+                "80-bit Key",
+                "ISO Standard",
+                "eSTREAM Finalist"
+            ],
+            "description": "Diseñado para ser extremadamente simple en hardware pero robusto. Finalista del proyecto eSTREAM y estándar ISO/IEC 29192-3.",
+            "specs": {
+                "Internal State": "288 bits (3 registros de shift no lineales)",
+                "Structure": "3 Shift Registers (93, 84, 111 bits) conectados en anillo",
+                "Non-Linearity": "Puertas AND en la función de feedback (Multiplicación en GF(2))"
+            },
+            "mechanism": "Cada bit de salida es una suma XOR de bits del estado y, crucialmente, un producto AND de dos bits del estado. (s_i = a + b + c + d*e). El producto d*e introduce una no-linealidad algebraica de grado 2 en cada ronda. Tras 1152 rondas de inicialización, cada bit del estado depende de forma compleja de la clave y el IV.",
+            "attacks": [
+                "Cube Attacks: Efectivos contra versiones con rondas reducidas (e.g. 700 rondas).",
+                "State Recovery: Teóricamente 2^89.5, apenas mejor que fuerza bruta.",
+                "No hay ataques prácticos conocidos contra la versión completa (1152 rondas)."
+            ],
+            "conclusion": "Trivium demuestra que la simplicidad no implica inseguridad. Su gran estado interno (288 bits) y mezcla no lineal lo hacen resistente incluso hoy, siendo ideal para IoT y RFID."
+        }
+    }
+}
