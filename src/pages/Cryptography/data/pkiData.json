@@ -1,0 +1,232 @@
+{
+    "header": {
+        "title": "Infraestructura de Clave Pública (PKI)",
+        "description": "Arquitectura, Estándares y la Realidad del Despliegue en la Confianza Digital."
+    },
+    "menu": [
+        {
+            "id": "intro",
+            "label": "Introducción y Dilema"
+        },
+        {
+            "id": "ecosystem",
+            "label": "Ecosistema de Confianza"
+        },
+        {
+            "id": "certificates",
+            "label": "Ciclo de Vida y Validación"
+        },
+        {
+            "id": "x509",
+            "label": "Estándares X.509"
+        },
+        {
+            "id": "revocation",
+            "label": "Mecanismos de Revocación"
+        },
+        {
+            "id": "pkcs",
+            "label": "Normas PKCS y RSA Avanzado"
+        },
+        {
+            "id": "representation",
+            "label": "Datos: ASN.1, DER, PEM"
+        },
+        {
+            "id": "practice",
+            "label": "La PKI en la Práctica"
+        },
+        {
+            "id": "conclusion",
+            "label": "Conclusión"
+        }
+    ],
+    "content": {
+        "intro": {
+            "title": "Introducción: El Dilema de la Identidad",
+            "subtitle": "La incertidumbre de la identidad en el espacio cifrado",
+            "description": "En el ámbito de la seguridad de la información, la criptografía de clave pública resolvió con elegancia el problema de la distribución de secretos. Sin embargo, esta solución técnica introdujo un dilema ontológico: la incertidumbre de la identidad. ¿Cómo podemos asegurar que una clave pública pertenece efectivamente a la entidad que dice ser su titular? Sin una respuesta robusta, el sistema colapsa ante ataques de suplantación y de 'hombre en el medio'.\n\nLa Infraestructura de Clave Pública (PKI) se constituye como la respuesta sistémica a este vacío. No se limita a un mero despliegue de software; representa un ecosistema complejo de procesos, roles y especificaciones técnicas diseñadas para vincular identidades con sus respectivas claves mediante certificados digitales. Esta infraestructura es, en esencia, el andamiaje sobre el que descansa la confianza digital en entornos abiertos, permitiendo que la autenticidad, la integridad y el no repudio dejen de ser conceptos teóricos para convertirse en realidades operativas.",
+            "icon": "Fingerprint"
+        },
+        "ecosystem": {
+            "title": "El Ecosistema de Confianza",
+            "subtitle": "Entidades de una PKI y Separación de Funciones",
+            "description": "Una PKI no es un bloque monolítico, sino una arquitectura de separación de funciones diseñada para maximizar la seguridad y la escalabilidad.",
+            "entities": [
+                {
+                    "name": "Autoridad de Certificación (CA)",
+                    "desc": "Eje central de confianza. Certifica el vínculo identidad-clave mediante firma digital. Gestiona la emisión y revocación."
+                },
+                {
+                    "name": "Autoridad de Registro (RA)",
+                    "desc": "Brazo operativo para verificación de identidad (presencial/documental). Permite escalabilidad separando validación de emisión."
+                },
+                {
+                    "name": "Autoridad de Validación (VA)",
+                    "desc": "Comprueba el estado de vigencia (OCSP). Libera a la CA de la carga transaccional de consultas."
+                },
+                {
+                    "name": "Autoridad de Sellado de Tiempo (TSA)",
+                    "desc": "Provee sellos de tiempo (hash + timestamp) para demostrar existencia de datos y validar firmas tras expiración de certificados."
+                },
+                {
+                    "name": "Marcos Normativos (CP y CPS)",
+                    "desc": "Política de Certificación (CP) establece usos permitidos. Declaración de Prácticas (CPS) detalla procedimientos técnico-organizativos."
+                }
+            ],
+            "icon": "Sitemap"
+        },
+        "certificates": {
+            "title": "La Ontología del Certificado",
+            "subtitle": "Ciclo de Vida, Generación y Validación",
+            "definition": "Un certificado digital de clave pública es una estructura de datos que vincula una clave pública a una identidad. Esta vinculación se produce haciendo que una autoridad de certificación de confianza firme el certificado digital.",
+            "generation": [
+                {
+                    "method": "Por el usuario",
+                    "desc": "Claves generadas en el equipo del titular. Ideal para el no repudio (control exclusivo)."
+                },
+                {
+                    "method": "Por la CA o RA",
+                    "desc": "Infraestructura centralizada. Facilita gestión pero introduce riesgo (copia de clave privada)."
+                },
+                {
+                    "method": "Por una tercera parte",
+                    "desc": "Delegación externa con destrucción obligatoria tras entrega segura."
+                },
+                {
+                    "method": "En hardware especializado",
+                    "desc": "Generación y custodia en chip seguro (ej. DNIe). Máxima seguridad, impide extracción."
+                }
+            ],
+            "validation": [
+                "<strong>Integridad:</strong> Validación de la firma digital de la CA sobre el certificado.",
+                "<strong>Temporalidad:</strong> Verificación de los campos notBefore y notAfter.",
+                "<strong>Revocación:</strong> Consulta de CRL o respuesta OCSP actual.",
+                "<strong>Uso de Clave:</strong> Concordancia entre la operación y las extensiones KeyUsage.",
+                "<strong>Cadena de Confianza:</strong> Construcción de la ruta jerárquica hasta una CA raíz."
+            ],
+            "icon": "FileBadge"
+        },
+        "x509": {
+            "title": "Estándares X.509",
+            "subtitle": "El ADN de la Identidad Digital (v3)",
+            "description": "Estándar ITU-T predominante. Diferencia el Certificado de Clave Pública (identidad) del Certificado de Atributos (roles/privilegios).",
+            "fields": {
+                "headers": [
+                    "Campo",
+                    "Descripción Técnica"
+                ],
+                "rows": [
+                    [
+                        "serialNumber",
+                        "Entero único asignado por la CA."
+                    ],
+                    [
+                        "issuer",
+                        "Distinguished Name (DN) de la autoridad firmante."
+                    ],
+                    [
+                        "validity",
+                        "Intervalo temporal (notBefore / notAfter)."
+                    ],
+                    [
+                        "subject",
+                        "Identificación del titular (DN)."
+                    ],
+                    [
+                        "subjectPublicKeyInfo",
+                        "Algoritmo y valor de la clave pública certificada."
+                    ]
+                ]
+            },
+            "extensions_note": "Las extensiones incluyen un flag de 'criticidad'. Si es TRUE y la aplicación no la reconoce, debe invalidar el certificado. Esto evita brechas de seguridad.",
+            "types_note": "Tipología: Entidad final vs. CA (Autoemitidos, Autofirmados, Cruzados).",
+            "icon": "TableProperties"
+        },
+        "revocation": {
+            "title": "Mecanismos de Revocación",
+            "subtitle": "CRL frente a OCSP",
+            "description": "La anulación de la confianza antes de la expiración es uno de los puntos más críticos y costosos.",
+            "methods": [
+                {
+                    "name": "CRL (Listas de Revocación)",
+                    "desc": "Listas firmadas estáticas. Debilidad: Latencia (ventana de vulnerabilidad entre actualizaciones)."
+                },
+                {
+                    "name": "Delta CRL",
+                    "desc": "Enumera solo cambios desde una CRL Base para ahorrar ancho de banda."
+                },
+                {
+                    "name": "Protocolo OCSP",
+                    "desc": "Consultas tiempo real. Advertencia: Respuesta 'good' solo implica 'no revocado', no garantiza emisión legítima."
+                }
+            ],
+            "icon": "FileWarning"
+        },
+        "pkcs": {
+            "title": "Normas PKCS y RSA Avanzado",
+            "subtitle": "Refinamiento de RSA y Estándares Críticos",
+            "intro": "El RSA determinista básico es inseguro (ataques de maleabilidad/homomórficos). PKCS estandariza soluciones robustas.",
+            "oaep": {
+                "title": "RSAES-OAEP (PKCS#1)",
+                "desc": "Esquema probabilístico (Feistel) que elimina determinismo y maleabilidad.",
+                "steps": [
+                    "1. Construcción DB: DB = lHash || PS || 0x01 || M",
+                    "2. Máscara (MGF1): Generación de hashes múltiples desde semilla.",
+                    "3. XOR: maskedDB = DB ⊕ dbMask, maskedSeed = seed ⊕ seedMask."
+                ],
+                "analysis": "La dependencia cruzada asegura que alterar un solo bit cambie todo el bloque, neutralizando patrones."
+            },
+            "kdf": {
+                "pkcs5": "PKCS#5: Derivación de claves (KDF) desde contraseñas con Sal y >1000 iteraciones (freno a fuerza bruta).",
+                "pkcs12": "PKCS#12: Formato de transporte seguro para identidades (clave privada + certificados)."
+            },
+            "icon": "Settings"
+        },
+        "representation": {
+            "title": "Representación de Datos",
+            "subtitle": "ASN.1, DER y PEM",
+            "description": "La interoperabilidad requiere capas de abstracción estrictas.",
+            "formats": [
+                {
+                    "name": "ASN.1",
+                    "desc": "Sintaxis abstracta para describir tipos de datos."
+                },
+                {
+                    "name": "DER (Distinguished Encoding Rules)",
+                    "desc": "Codificación binaria canónica única. IMPERATIVO para firmas digitales (evita fallos por variación de formato)."
+                },
+                {
+                    "name": "PEM (Privacy-Enhanced Mail)",
+                    "desc": "Codificación Base64 de DER para transporte seguro en texto (bloques -----BEGIN...)."
+                }
+            ],
+            "icon": "Code"
+        },
+        "practice": {
+            "title": "La PKI en la Práctica",
+            "subtitle": "Luces y Sombras del Despliegue Real",
+            "description": "El despliegue en HTTPS revela fallos estructurales, principalmente la centralización de la confianza.",
+            "cases": [
+                {
+                    "title": "Trustwave (2012)",
+                    "desc": "Emisión de sub-CA subordinada para intercepción de tráfico TLS corporativo. Legal pero arquitectónicamente peligroso."
+                },
+                {
+                    "title": "NIC India / ANSSI",
+                    "desc": "Emisión fraudulenta/no autorizada para dominios globales (Google), evidenciando fallos de auditoría."
+                },
+                {
+                    "title": "Certificate Pinning",
+                    "desc": "Defensa: Asociar host a clave pública específica en código, rechazando otras CAs válidas."
+                }
+            ],
+            "icon": "GlobeLock"
+        },
+        "conclusion": {
+            "title": "Hacia una Confianza Robusta",
+            "content": "Hemos recorrido desde la ontología de X.509 hasta la lógica de RSAES-OAEP. La PKI es robusta en su teoría, pero frágil en su implementación humana y administrativa. El DNI electrónico 3.0 ejemplifica la excelencia técnica mediante la separación de funciones (pares de claves distintos para Autenticación y Firma), pero también subraya el fracaso de la usabilidad en el mundo real.<br/><br/>La pregunta que debemos trasladar al futuro es de índole arquitectónica: <span class='text-blue-400 font-bold'>en un mundo que tiende a la descentralización, ¿es sostenible mantener la confianza global delegada en unos pocos centenares de autoridades de certificación, o es el momento de transitar hacia modelos de confianza distribuidos y resilientes?</span>",
+            "icon": "ShieldCheck"
+        }
+    }
+}
