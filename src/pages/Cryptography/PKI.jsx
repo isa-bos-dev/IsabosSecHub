@@ -64,7 +64,7 @@ const PKI = () => {
                                 <div key={idx} className="p-4 bg-(--bg-secondary) rounded-lg border-l-4 border-info hover:bg-(--bg-tertiary) transition-colors">
                                     <h4 className="font-bold text-(--text-primary) mb-1 flex items-center gap-2">
                                         {idx === 0 && <Shield size={16} className="text-info" />}
-                                        {idx === 1 && <FileBadge size={16} className="text-info" />}
+                                        {idx === 1 && <FileSignature size={16} className="text-info" />}
                                         {idx === 2 && <CheckCircle2 size={16} className="text-info" />}
                                         {idx === 3 && <Clock size={16} className="text-info" />}
                                         {idx === 4 && <FileText size={16} className="text-info" />}
