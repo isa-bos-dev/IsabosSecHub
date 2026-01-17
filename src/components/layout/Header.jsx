@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
-// Se han eliminado importaciones no utilizadas de 'lucide-react' para limpieza
+import { Terminal } from 'lucide-react';
+import Tooltip from '../ui/Tooltip';
 
 const Header = ({
     title = "CyberSecTCP/IP",
@@ -37,22 +38,47 @@ const Header = ({
                         </Link>
                     </div>
 
-                    {/* Main Navigation Tabs */}
-                    <div className="w-full xl:w-auto overflow-x-auto overflow-y-hidden no-scrollbar">
-                        <div className="flex space-x-6 min-w-max px-2">
-                            {links.map((link) => (
-                                <NavLink
-                                    key={link.to}
-                                    to={link.to}
-                                    end={link.end}
-                                    className={({ isActive }) => `nav-item py-3 text-xs font-bold uppercase tracking-wider ${isActive ? 'active' : ''}`}
-                                    style={{
-                                        '--nav-active-color': titleSpanColor
-                                    }}
+                    {/* Main Navigation and Tools Wrapper */}
+                    <div className="flex items-center w-full xl:w-auto gap-2">
+                        {/* Scrollable Navigation Links */}
+                        <div className="flex-1 xl:flex-none overflow-x-auto overflow-y-visible no-scrollbar">
+                            <div className="flex space-x-6 min-w-max px-2">
+                                {links.map((link) => (
+                                    <NavLink
+                                        key={link.to}
+                                        to={link.to}
+                                        end={link.end}
+                                        className={({ isActive }) => `nav-item py-3 text-xs font-bold uppercase tracking-wider ${isActive ? 'active' : ''}`}
+                                        style={{
+                                            '--nav-active-color': titleSpanColor
+                                        }}
+                                    >
+                                        {link.label}
+                                    </NavLink>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* External Tool Link - Fixed Position relative to nav */}
+                        <div className="flex-none flex items-center pl-2 border-l border-(--text-tertiary)">
+                            <Tooltip
+                                borderColor={titleSpanColor}
+                                content={
+                                    <div className="text-left">
+                                        <div className="text-xs font-semibold">Linux Tools</div>
+                                        <div className="text-[10px] opacity-80">Abrir aplicación</div>
+                                    </div>
+                                }
+                            >
+                                <a
+                                    href="https://isabosdev.com/linux-tools/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="group flex items-center justify-center p-2 rounded-md hover:bg-(--bg-secondary) transition-colors"
                                 >
-                                    {link.label}
-                                </NavLink>
-                            ))}
+                                    <Terminal className="w-5 h-5 transition-transform group-hover:scale-110" style={{ color: titleSpanColor }} />
+                                </a>
+                            </Tooltip>
                         </div>
                     </div>
 
