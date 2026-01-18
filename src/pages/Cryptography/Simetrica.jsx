@@ -7,7 +7,9 @@ import Title from '../../components/ui/Title';
 import QuoteBlock from '../../components/ui/QuoteBlock';
 import TerminalWindow, { TerminalLine } from '../../components/ui/TerminalWindow';
 import DetailModal from '../../components/ui/DetailModal';
+import { useNavigate } from 'react-router-dom';
 import simetricaData from './data/simetricaData.json';
+import infographicImg from '../../assets/infografias/CIFRADO_SIMETRICO.png';
 
 const tabVariants = {
     primary: 'bg-primary/10 text-primary border-primary shadow-[0_0_15px_rgba(74,222,128,0.2)]',
@@ -35,12 +37,23 @@ const iconMap = {
 };
 
 const Simetrica = () => {
+    const navigate = useNavigate();
     const [activeTabId, setActiveTabId] = useState(simetricaData.tabs[0].id);
     const [selectedCase, setSelectedCase] = useState(null);
 
     const activeTabObj = simetricaData.tabs.find(t => t.id === activeTabId);
     const variant = activeTabObj?.variant || 'success';
     const IconComponent = iconMap[activeTabObj.icon] || Zap;
+
+    const openInfographic = () => {
+        navigate('/cryptography/infografia', {
+            state: {
+                imageSrc: infographicImg,
+                title: 'Cifrado Simétrico: Flujo vs Bloque',
+                description: 'Comparativa visual entre Cifrado en Flujo y Cifrado en Bloque.'
+            }
+        });
+    };
 
     const renderContent = (content, idx) => {
         // Reuse color for internal components
@@ -198,12 +211,22 @@ const Simetrica = () => {
 
     return (
         <div className="animate-fade-in space-y-8 pb-12">
-            <PageHeader
-                title={simetricaData.header.title}
-                description={simetricaData.header.description}
-                gradientFrom="primary"
-                gradientTo="success"
-            />
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+                <PageHeader
+                    title={simetricaData.header.title}
+                    description={simetricaData.header.description}
+                    gradientFrom="primary"
+                    gradientTo="success"
+                    className="mb-0"
+                />
+                <button
+                    onClick={openInfographic}
+                    className="flex items-center gap-2 px-6 py-3 bg-(--bg-secondary) border border-success/30 text-success rounded-xl font-bold hover:bg-success/10 transition-all shadow-lg hover:shadow-success/20 shrink-0 cursor-pointer"
+                >
+                    <Grid size={20} />
+                    Ver Infografía
+                </button>
+            </div>
 
             <div className="max-w-4xl mx-auto text-center mb-8">
                 <p className="text-xl text-(--text-secondary) leading-relaxed font-light">

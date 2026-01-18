@@ -27,6 +27,7 @@ import {
     Terminal,
     ArrowRight
 } from 'lucide-react'; // Importing icons likely to be used
+import { useNavigate } from 'react-router-dom'; // Importing useNavigate
 import DetailModal from '../../components/ui/DetailModal';
 import PageHeader from '../../components/ui/PageHeader';
 import QuoteBlock from '../../components/ui/QuoteBlock';
@@ -36,8 +37,10 @@ import ComparisonCard from '../../components/ui/ComparisonCard';
 import InfoCard from '../../components/ui/InfoCard';
 import pkiData from './data/pkiData.json';
 import SEO from '../../components/SEO';
+import infographicImg from '../../assets/infografias/INFRAESTRUCTURA_PKI.png'; // Import infographic image
 
 const PKI = () => {
+    const navigate = useNavigate(); // Initialize useNavigate
     const [activeSection, setActiveSection] = useState('intro');
     const [checkedValidations, setCheckedValidations] = useState(new Set());
     const [selectedCase, setSelectedCase] = useState(null);
@@ -677,6 +680,16 @@ const PKI = () => {
         }
     };
 
+    const openInfographic = () => {
+        navigate('/cryptography/infografia', {
+            state: {
+                imageSrc: infographicImg,
+                title: 'Infraestructura de Clave Pública (PKI)',
+                description: 'El Ecosistema de la Confianza Digital: CA, RA, Certificados y Ciclo de Vida.'
+            }
+        });
+    };
+
     return (
         <div className="animate-fade-in space-y-8">
             <SEO
@@ -684,12 +697,22 @@ const PKI = () => {
                 description={data.header.description}
                 keywords="PKI, Infraestructura de Clave Pública, certificados digitales, X.509, CA, RA, validación"
             />
-            <PageHeader
-                title={data.header.title}
-                description={data.header.description}
-                gradientFrom="success"
-                gradientTo="primary"
-            />
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+                <PageHeader
+                    title={data.header.title}
+                    description={data.header.description}
+                    gradientFrom="success"
+                    gradientTo="primary"
+                    className="mb-0"
+                />
+                <button
+                    onClick={openInfographic}
+                    className="flex items-center gap-2 px-6 py-3 bg-(--bg-secondary) border border-success/30 text-success rounded-xl font-bold hover:bg-success/10 transition-all shadow-lg hover:shadow-success/20 shrink-0 cursor-pointer"
+                >
+                    <Building size={20} />
+                    Ver Infografía
+                </button>
+            </div>
 
             <div className="flex flex-col lg:flex-row gap-8">
                 {/* Sidebar Menu */}

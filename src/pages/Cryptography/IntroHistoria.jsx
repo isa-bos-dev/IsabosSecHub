@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
     Scroll, Ghost, Columns, RefreshCw, FileText, ShieldAlert, Binary, BarChart,
     Cpu, Key, User, Globe, Server, AlertTriangle, Code, Lock, Brain
@@ -11,6 +11,7 @@ import QuoteBlock from '../../components/ui/QuoteBlock';
 
 
 import introHistoriaData from './data/introHistoria.json';
+import infographicImg from '../../assets/infografias/HISTORIA_CRIPTOGRAFIA.png';
 
 
 const iconMap = {
@@ -30,6 +31,7 @@ const iconMap = {
 
 
 const IntroHistoria = () => {
+    const navigate = useNavigate();
     const [selectedExample, setSelectedExample] = useState(null);
 
     const { header, timeline, exampleDetails } = introHistoriaData;
@@ -54,14 +56,34 @@ const IntroHistoria = () => {
         }
     };
 
+    const openInfographic = () => {
+        navigate('/cryptography/infografia', {
+            state: {
+                imageSrc: infographicImg,
+                title: 'Historia de la Criptografía',
+                description: 'Cronología visual de la evolución criptográfica desde la antigüedad hasta la era digital.'
+            }
+        });
+    };
+
     return (
         <div className="space-y-12 animate-fade-in pb-12">
-            <PageHeader
-                title={header.title}
-                description={header.description}
-                gradientFrom="primary"
-                gradientTo="success"
-            />
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+                <PageHeader
+                    title={header.title}
+                    description={header.description}
+                    gradientFrom="primary"
+                    gradientTo="success"
+                    className="mb-0"
+                />
+                <button
+                    onClick={openInfographic}
+                    className="flex items-center gap-2 px-6 py-3 bg-(--bg-secondary) border border-success/30 text-success rounded-xl font-bold hover:bg-success/10 transition-all shadow-lg hover:shadow-success/20 shrink-0 cursor-pointer"
+                >
+                    <Scroll size={20} />
+                    Ver Infografía
+                </button>
+            </div>
 
             <div className="max-w-5xl mx-auto">
                 <Timeline

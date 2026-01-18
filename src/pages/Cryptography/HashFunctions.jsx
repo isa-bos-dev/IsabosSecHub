@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import {
     ShieldCheck, Lock, Key, Hammer, Database, Hash, AlertTriangle, Fingerprint, FileCheck,
     Component, Layers, Cpu, Box, History, Search, Code, Terminal
@@ -11,6 +12,7 @@ import QuoteBlock from '../../components/ui/QuoteBlock';
 import TerminalWindow, { TerminalLine } from '../../components/ui/TerminalWindow';
 import DetailModal from '../../components/ui/DetailModal';
 import hashData from './data/hashData.json';
+import infographicImg from '../../assets/infografias/HASH.png';
 
 const iconMap = {
     ShieldCheck,
@@ -49,17 +51,38 @@ const HOVER_CONFIG = {
 };
 
 const HashFunctions = () => {
+    const navigate = useNavigate();
     const [selectedApp, setSelectedApp] = useState(null);
+
+    const openInfographic = () => {
+        navigate('/cryptography/infografia', {
+            state: {
+                imageSrc: infographicImg,
+                title: 'Funciones Hash: El ADN de la Criptografía',
+                description: 'Integridad de datos, firmas digitales y resistencia a colisiones.'
+            }
+        });
+    };
 
     return (
         <>
             <div className="space-y-16 pb-12 animate-fade-in">
-                <PageHeader
-                    title={hashData.header.title}
-                    description={hashData.header.description}
-                    gradientFrom="primary"
-                    gradientTo="success"
-                />
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+                    <PageHeader
+                        title={hashData.header.title}
+                        description={hashData.header.description}
+                        gradientFrom="primary"
+                        gradientTo="success"
+                        className="mb-0"
+                    />
+                    <button
+                        onClick={openInfographic}
+                        className="flex items-center gap-2 px-6 py-3 bg-(--bg-secondary) border border-primary/30 text-primary rounded-xl font-bold hover:bg-primary/10 transition-all shadow-lg hover:shadow-primary/20 shrink-0 cursor-pointer"
+                    >
+                        <Hash size={20} />
+                        Ver Infografía
+                    </button>
+                </div>
 
                 {/* INTRODUCCIÓN */}
                 <div className="space-y-8">

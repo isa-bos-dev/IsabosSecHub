@@ -24,6 +24,7 @@ import Asimetrica from './pages/Cryptography/Asimetrica';
 import PKI from './pages/Cryptography/PKI';
 import Protocolos from './pages/Cryptography/Protocolos';
 import CryptoQuiz from './pages/Cryptography/Quiz';
+import InfografiaViewer from './components/ui/InfografiaViewer'; // Viewer de infografías
 
 // Componentes de la App Network
 import ProjectLayout from './components/layout/ProjectLayout';
@@ -101,6 +102,7 @@ const App = () => {
           <Route path="pki" element={<PKI />} />
           <Route path="protocolos" element={<Protocolos />} />
           <Route path="cuestionario" element={<CryptoQuiz />} />
+          <Route path="infografia" element={<InfografiaViewer />} />
         </Route>
 
         {/* Rutas del Proyecto Network */}

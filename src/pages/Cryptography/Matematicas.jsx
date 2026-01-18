@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import {
-    Sigma, Divide, Layers, Key, AlertTriangle, Database, Hash, Server, ChevronRight
+    Sigma, Divide, Layers, Key, AlertTriangle, Database, Hash, Server, ChevronRight, Calculator
 } from 'lucide-react';
 import PageHeader from '../../components/ui/PageHeader';
 import QuoteBlock from '../../components/ui/QuoteBlock';
 import TerminalWindow, { TerminalLine } from '../../components/ui/TerminalWindow';
 import matematicasData from './data/matematicasData.json';
+import infographicImg from '../../assets/infografias/MATEMATICAS.png';
 
 const Matematicas = () => {
+    const navigate = useNavigate();
     const { header, intro, question, sections, conclusion } = matematicasData;
     const [selectedSection, setSelectedSection] = useState(null);
 
@@ -22,6 +25,16 @@ const Matematicas = () => {
         AlertTriangle,
         Database,
         Server
+    };
+
+    const openInfographic = () => {
+        navigate('/cryptography/infografia', {
+            state: {
+                imageSrc: infographicImg,
+                title: 'Matemáticas: El Corazón de la Criptografía',
+                description: 'Pilares de la Aritmética Modular, Logaritmos Discretos y Complejidad Computacional.'
+            }
+        });
     };
 
     // Mapear colores por ID de sección (simulando lo que hace Capas.jsx con colorClass)
@@ -201,12 +214,22 @@ const Matematicas = () => {
 
     return (
         <div className="space-y-8 animate-fade-in">
-            <PageHeader
-                title={header.title}
-                description={header.description}
-                gradientFrom="primary"
-                gradientTo="success"
-            />
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+                <PageHeader
+                    title={header.title}
+                    description={header.description}
+                    gradientFrom="primary"
+                    gradientTo="success"
+                    className="mb-0"
+                />
+                <button
+                    onClick={openInfographic}
+                    className="flex items-center gap-2 px-6 py-3 bg-(--bg-secondary) border border-success/30 text-success rounded-xl font-bold hover:bg-success/10 transition-all shadow-lg hover:shadow-success/20 shrink-0 cursor-pointer"
+                >
+                    <Calculator size={20} />
+                    Ver Infografía
+                </button>
+            </div>
 
             <div className="max-w-4xl mx-auto mb-12 text-center text-(--text-secondary)">
                 <p className="text-lg mb-4">{intro}</p>

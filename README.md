@@ -31,6 +31,17 @@ Esta aplicación web centraliza información de ciberseguridad de forma estructu
 - **🔧 Arsenal ofensivo:** Herramientas de auditoría para bases de datos (SQLmap, NoSQLMap, BBQSQL, etc.).
 - **🛡️ Defensa en profundidad:** Estrategias de mitigación para proteger bases de datos (RASP, Zero Trust, CSPM, backups inmutables).
 
+#### 🔐 **Criptografía (Cryptography)**
+- **📊 Panorama general:** Visualización infográfica de los 5 pilares de la seguridad criptográfica (confidencialidad, integridad, autenticación, no repudio, disponibilidad) con ejemplos de implementación real.
+- **📜 Historia de la criptografía:** Línea temporal interactiva desde cifrados clásicos (César, Vigenère) hasta criptografía cuántica, incluyendo hitos como Enigma y DES.
+- **🔢 Fundamentos matemáticos:** El corazón de la criptografía moderna, explorando teoría de números, aritmética modular, logaritmos discretos y complejidad computacional.
+- **🔒 Cifrado simétrico:** Análisis profundo de cifrados de flujo (RC4, ChaCha20) y cifrados de bloque (AES, DES, 3DES) con modos de operación (ECB, CBC, CTR, GCM).
+- **#️⃣ Funciones hash:** El ADN de la criptografía - desde MD5 hasta SHA-3, incluyendo la paradoja del cumpleaños, arquitectura Merkle-Damgård y aplicaciones (HMAC, blockchain, firmas digitales).
+- **🔑 Criptografía asimétrica:** RSA, Diffie-Hellman, curvas elípticas (ECC), problemas matemáticos difíciles y equivalencias de seguridad.
+- **🏛️ Infraestructura PKI:** Ecosistema de confianza digital - autoridades certificadoras (CA/RA), estándar X.509, gestión del ciclo de vida de certificados, revocación (CRL/OCSP), y estándares PKCS.
+- **🌐 Protocolos criptográficos:** Más allá del cifrado - Secret Sharing de Shamir, firmas ciegas, pruebas de conocimiento cero (ZKP), transferencia inconsciente (OT) y computación multiparte segura (MPC).
+- **🎨 Infografías interactivas:** 8 infografías técnicas de alta calidad con visualizaciones de algoritmos, comparativas de robustez y casos de uso reales.
+
 ### 💻 Stack tecnológico
 
 El proyecto está construido con tecnologías web modernas para garantizar rendimiento, accesibilidad y una experiencia visual premium:
@@ -59,7 +70,7 @@ IsabosSecHub está en constante evolución. El proyecto continuará expandiéndo
 
 - **📝 Cuestionarios interactivos:** Autoevaluaciones para medir el conocimiento adquirido.
 - **📚 Expansión de contenido:** Más ejemplos prácticos, casos de estudio y profundización teórica en cada tema.
-- **🎓 Nuevos módulos:** Incorporación de temas como criptografía, ingeniería social, forense digital, seguridad en contenedores, y más.
+- **🎓 Nuevos módulos:** Incorporación de temas como ingeniería social, forense digital, seguridad en contenedores, pentesting web avanzado, y más.
 - **🔄 Actualizaciones continuas:** Incorporación de nuevas amenazas, técnicas y herramientas a medida que evoluciona el panorama de ciberseguridad.
 
 ### ⚠️ **Descargo de responsabilidad**

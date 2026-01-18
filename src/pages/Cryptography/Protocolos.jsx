@@ -15,15 +15,28 @@ import {
     MessageSquare,
     Eye
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import QuoteBlock from '../../components/ui/QuoteBlock';
 import PageHeader from '../../components/ui/PageHeader';
 import Card from '../../components/ui/Card';
 import protocolsData from './data/protocolsData.json';
 import SEO from '../../components/SEO';
+import infographicImg from '../../assets/infografias/PROTOCOLOS.png'; // Import infographic image
 
 const Protocolos = () => {
+    const navigate = useNavigate();
     const data = protocolsData;
     const { content } = data;
+
+    const openInfographic = () => {
+        navigate('/cryptography/infografia', {
+            state: {
+                imageSrc: infographicImg,
+                title: 'Protocolos Criptográficos Avanzados',
+                description: 'Seguridad más allá del cifrado: ZKP, MPC y Esquemas de Umbral.'
+            }
+        });
+    };
 
     return (
         <div className="space-y-24 pb-12 animate-fade-in">
@@ -32,12 +45,22 @@ const Protocolos = () => {
                 description={data.header.description}
                 keywords="criptografía, protocolos, zkp, mpc, shamir, seguridad"
             />
-            <PageHeader
-                title={data.header.title}
-                description={data.header.description}
-                gradientFrom="primary"
-                gradientTo="accent"
-            />
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+                <PageHeader
+                    title={data.header.title}
+                    description={data.header.description}
+                    gradientFrom="primary"
+                    gradientTo="accent"
+                    className="mb-0"
+                />
+                <button
+                    onClick={openInfographic}
+                    className="flex items-center gap-2 px-6 py-3 bg-(--bg-secondary) border border-primary/30 text-primary rounded-xl font-bold hover:bg-primary/10 transition-all shadow-lg hover:shadow-primary/20 shrink-0 cursor-pointer"
+                >
+                    <Network size={20} />
+                    Ver Infografía
+                </button>
+            </div>
 
             {/* 1. INTRODUCCIÓN */}
             <section className="space-y-8">
