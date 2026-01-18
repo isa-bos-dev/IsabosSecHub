@@ -6,15 +6,15 @@
     "menu": [
         {
             "id": "intro",
-            "label": "Introducción y Dilema"
+            "label": "Introducción y dilema"
         },
         {
             "id": "ecosystem",
-            "label": "Ecosistema de Confianza"
+            "label": "Ecosistema de confianza"
         },
         {
             "id": "certificates",
-            "label": "Ciclo de Vida y Validación"
+            "label": "Ciclo de vida y validación"
         },
         {
             "id": "x509",
@@ -22,11 +22,11 @@
         },
         {
             "id": "revocation",
-            "label": "Mecanismos de Revocación"
+            "label": "Mecanismos de revocación"
         },
         {
             "id": "pkcs",
-            "label": "Normas PKCS y RSA Avanzado"
+            "label": "Normas PKCS y RSA avanzado"
         },
         {
             "id": "representation",
@@ -34,23 +34,23 @@
         },
         {
             "id": "practice",
-            "label": "La PKI en la Práctica"
+            "label": "La PKI en la práctica"
         },
         {
             "id": "conclusion",
-            "label": "Conclusión"
+            "label": "Futuro"
         }
     ],
     "content": {
         "intro": {
-            "title": "Introducción: El Dilema de la Identidad",
+            "title": "Introducción: el dilema de la identidad",
             "subtitle": "La incertidumbre de la identidad en el espacio cifrado",
             "description": "En el ámbito de la seguridad de la información, la criptografía de clave pública resolvió con elegancia el problema de la distribución de secretos. Sin embargo, esta solución técnica introdujo un dilema ontológico: la incertidumbre de la identidad. ¿Cómo podemos asegurar que una clave pública pertenece efectivamente a la entidad que dice ser su titular? Sin una respuesta robusta, el sistema colapsa ante ataques de suplantación y de 'hombre en el medio'.\n\nLa Infraestructura de Clave Pública (PKI) se constituye como la respuesta sistémica a este vacío. No se limita a un mero despliegue de software; representa un ecosistema complejo de procesos, roles y especificaciones técnicas diseñadas para vincular identidades con sus respectivas claves mediante certificados digitales. Esta infraestructura es, en esencia, el andamiaje sobre el que descansa la confianza digital en entornos abiertos, permitiendo que la autenticidad, la integridad y el no repudio dejen de ser conceptos teóricos para convertirse en realidades operativas.",
             "icon": "Fingerprint"
         },
         "ecosystem": {
-            "title": "El Ecosistema de Confianza",
-            "subtitle": "Entidades de una PKI y Separación de Funciones",
+            "title": "El ecosistema de confianza",
+            "subtitle": "Entidades de una PKI y separación de funciones",
             "description": "Una PKI no es un bloque monolítico, sino una arquitectura de separación de funciones diseñada para maximizar la seguridad y la escalabilidad.",
             "entities": [
                 {
@@ -77,8 +77,8 @@
             "icon": "Sitemap"
         },
         "certificates": {
-            "title": "La Ontología del Certificado",
-            "subtitle": "Ciclo de Vida, Generación y Validación",
+            "title": "La ontología del certificado",
+            "subtitle": "Ciclo de vida, generación y validación",
             "definition": "Un certificado digital de clave pública es una estructura de datos que vincula una clave pública a una identidad. Esta vinculación se produce haciendo que una autoridad de certificación de confianza firme el certificado digital.",
             "generation": [
                 {
@@ -109,12 +109,12 @@
         },
         "x509": {
             "title": "Estándares X.509",
-            "subtitle": "El ADN de la Identidad Digital (v3)",
+            "subtitle": "El ADN de la identidad digital (v3)",
             "description": "Estándar ITU-T predominante. Diferencia el Certificado de Clave Pública (identidad) del Certificado de Atributos (roles/privilegios).",
             "fields": {
                 "headers": [
                     "Campo",
-                    "Descripción Técnica"
+                    "Descripción técnica"
                 ],
                 "rows": [
                     [
@@ -144,7 +144,7 @@
             "icon": "TableProperties"
         },
         "revocation": {
-            "title": "Mecanismos de Revocación",
+            "title": "Mecanismos de revocación",
             "subtitle": "CRL frente a OCSP",
             "description": "La anulación de la confianza antes de la expiración es uno de los puntos más críticos y costosos.",
             "methods": [
@@ -164,8 +164,8 @@
             "icon": "FileWarning"
         },
         "pkcs": {
-            "title": "Normas PKCS y RSA Avanzado",
-            "subtitle": "Refinamiento de RSA y Estándares Críticos",
+            "title": "Normas PKCS y RSA avanzado",
+            "subtitle": "Refinamiento de RSA y estándares críticos",
             "intro": "El RSA determinista básico es inseguro (ataques de maleabilidad/homomórficos). PKCS estandariza soluciones robustas.",
             "oaep": {
                 "title": "RSAES-OAEP (PKCS#1)",
@@ -184,7 +184,7 @@
             "icon": "Settings"
         },
         "representation": {
-            "title": "Representación de Datos",
+            "title": "Representación de datos",
             "subtitle": "ASN.1, DER y PEM",
             "description": "La interoperabilidad requiere capas de abstracción estrictas.",
             "formats": [
@@ -204,8 +204,8 @@
             "icon": "Code"
         },
         "practice": {
-            "title": "La PKI en la Práctica",
-            "subtitle": "Luces y Sombras del Despliegue Real",
+            "title": "La PKI en la práctica",
+            "subtitle": "Luces y sombras del despliegue real",
             "description": "El despliegue en HTTPS revela fallos estructurales, principalmente la centralización de la confianza.",
             "cases": [
                 {
@@ -224,7 +224,7 @@
             "icon": "GlobeLock"
         },
         "conclusion": {
-            "title": "Hacia una Confianza Robusta",
+            "title": "Hacia una confianza robusta",
             "content": "Hemos recorrido desde la ontología de X.509 hasta la lógica de RSAES-OAEP. La PKI es robusta en su teoría, pero frágil en su implementación humana y administrativa. El DNI electrónico 3.0 ejemplifica la excelencia técnica mediante la separación de funciones (pares de claves distintos para Autenticación y Firma), pero también subraya el fracaso de la usabilidad en el mundo real.<br/><br/>La pregunta que debemos trasladar al futuro es de índole arquitectónica: <span class='text-blue-400 font-bold'>en un mundo que tiende a la descentralización, ¿es sostenible mantener la confianza global delegada en unos pocos centenares de autoridades de certificación, o es el momento de transitar hacia modelos de confianza distribuidos y resilientes?</span>",
             "icon": "ShieldCheck"
         }
