@@ -409,5 +409,9 @@
                 }
             ]
         }
+    },
+    "quote": {
+        "text": "La historia de la criptografía es la historia de la inteligencia humana luchando contra su propia curiosidad.",
+        "author": "Anónimo"
     }
 }

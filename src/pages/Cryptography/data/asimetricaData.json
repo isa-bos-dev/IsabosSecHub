@@ -45,7 +45,7 @@
             "label": "Criptografía poscuántica"
         },
         {
-            "id": "conclusion",
+            "id": "future",
             "label": "Futuro"
         }
     ],
@@ -251,7 +251,7 @@
             "analysis": "Estamos en una carrera contra el tiempo. La transición hacia algoritmos poscuánticos es compleja no solo por la matemática implicada, sino por la falta de madurez y estandarización global. El colapso del logaritmo discreto no es una posibilidad teórica lejana; es un evento para el cual nuestra infraestructura actual no está preparada.",
             "icon": "Cpu"
         },
-        "conclusion": {
+        "future": {
             "title": "Un futuro en cifras",
             "content": "La criptografía de clave pública es el guardián de nuestra privacidad y la base de la autenticidad en el tejido digital. Desde los descubrimientos silenciados del GCHQ hasta los estándares actuales del NIST, hemos construido un mundo sobre la dureza de ciertos problemas matemáticos.<br/><br/>Sin embargo, la ciencia no es estática. Al concluir esta lección, debemos plantearnos: <span class='text-blue-400 font-bold'>¿Estamos preparados para la transición hacia una infraestructura de clave pública resistente a la computación cuántica, o estamos confiando ciegamente en la longevidad de los primos actuales?</span> La respuesta a esta pregunta definirá la integridad de nuestra civilización digital en las próximas décadas.",
             "icon": "Globe"

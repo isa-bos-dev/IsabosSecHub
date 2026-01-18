@@ -5,10 +5,16 @@ import { motion } from 'framer-motion';
 import Footer from '../../components/layout/Footer';
 import Card from '../../components/ui/Card';
 import Title from '../../components/ui/Title';
+import SEO from '../../components/SEO';
 
 const Home = () => {
     return (
         <div className="min-h-screen bg-(--bg-primary) text-(--text-primary) font-sans flex flex-col items-center justify-center relative overflow-hidden">
+            <SEO
+                title="Inicio"
+                description="Plataforma centralizada de investigación y demostración de ciberseguridad. Explora amenazas, criptografía y redes."
+                keywords="ciberseguridad, hacking, criptografía, redes, educación, isabos"
+            />
 
             {/* Background Effects */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
@@ -71,7 +77,7 @@ const Home = () => {
                             <div className="mb-6 p-4 bg-secondary/10 rounded-full group-hover:bg-secondary/20 transition-colors">
                                 <Server className="w-12 h-12 text-secondary" />
                             </div>
-                            <Title level={3} className="text-(--text-primary) mb-3">Threat Intelligence</Title>
+                            <Title level={3} color="secondary" className="mb-3">Threat Intelligence</Title>
                             <p className="text-sm text-(--text-secondary) leading-relaxed mb-6">
                                 Base de datos de vulnerabilidades, inyecciones SQL/NoSQL, Ransomware y vectores de ataque modernos.
                             </p>
@@ -91,7 +97,7 @@ const Home = () => {
                             <div className="mb-6 p-4 bg-success/10 rounded-full group-hover:bg-success/20 transition-colors">
                                 <Key className="w-12 h-12 text-success" />
                             </div>
-                            <Title level={3} className="text-(--text-primary) mb-3">Cryptography</Title>
+                            <Title level={3} color="success" className="mb-3">Cryptography</Title>
                             <p className="text-sm text-(--text-secondary) leading-relaxed mb-6">
                                 Fundamentos matemáticos, cifrado simétrico/asimétrico, hashing y protocolos.
                             </p>

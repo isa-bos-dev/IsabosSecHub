@@ -7,6 +7,7 @@ import {
 import PageHeader from '../../components/ui/PageHeader';
 import Timeline from '../../components/ui/Timeline';
 import DetailModal from '../../components/ui/DetailModal';
+import QuoteBlock from '../../components/ui/QuoteBlock';
 
 
 import introHistoriaData from './data/introHistoria.json';
@@ -99,6 +100,15 @@ const IntroHistoria = () => {
                     </span>
                 </Link>
             </div>
+
+            {introHistoriaData.quote && (
+                <div className="max-w-4xl mx-auto mt-16 mb-8 px-4">
+                    <QuoteBlock
+                        quote={introHistoriaData.quote.text}
+                        author={introHistoriaData.quote.author}
+                    />
+                </div>
+            )}
 
             {/* Modal de Detalle */}
             <DetailModal

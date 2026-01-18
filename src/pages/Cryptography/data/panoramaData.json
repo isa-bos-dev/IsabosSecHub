@@ -1,0 +1,154 @@
+{
+    "header": {
+        "title": "Criptografía: El juego del gato y el ratón",
+        "description": "Una visión panorámica de la seguridad matemática, desde los escribas egipcios hasta la era cuántica.",
+        "icon": "Map"
+    },
+    "intro": {
+        "title": "El origen de la ocultación",
+        "content": "Desde la perspectiva de un académico, la criptografía no debe entenderse meramente como una técnica de ocultación, sino como el pilar maestro sobre el que se erige la arquitectura de la ciberseguridad moderna.",
+        "timeline": {
+            "year": "1900 a.C.",
+            "event": "Escriba egipcio y el jeroglífico no estándar",
+            "desc": "Este acto fundacional marca el inicio de la búsqueda del 'símbolo no estándar' como primera primitiva de protección."
+        },
+        "highlight": "La historia de la criptografía no es lineal, sino dialéctica: una sucesión perpetua de propuestas seguidas de ataques."
+    },
+    "pillars": {
+        "title": "Los 5 pilares de la seguridad",
+        "intro": "La seguridad es una propiedad emergente de cinco dimensiones fundamentales:",
+        "items": [
+            {
+                "name": "Privacidad y confidencialidad",
+                "desc": "Información ininteligible para no autorizados.",
+                "icon": "EyeOff",
+                "color": "primary"
+            },
+            {
+                "name": "Autenticación",
+                "desc": "Verificación matemática de la identidad.",
+                "icon": "UserCheck",
+                "color": "success"
+            },
+            {
+                "name": "Integridad",
+                "desc": "Garantía de no alteración del mensaje.",
+                "icon": "ShieldCheck",
+                "color": "warning"
+            },
+            {
+                "name": "No repudio",
+                "desc": "Imposibilidad de negar la autoría.",
+                "icon": "FileSignature",
+                "color": "secondary"
+            },
+            {
+                "name": "Intercambio de claves",
+                "desc": "El problema de 'bootstrapping' de toda la criptografía.",
+                "icon": "Key",
+                "color": "accent"
+            }
+        ]
+    },
+    "foundation": {
+        "title": "De la función a la clave",
+        "math": "C = E<sub>k</sub>(M) &nbsp;&nbsp;&nbsp; m = D<sub>k'</sub>(C)",
+        "actors": [
+            "Alicia (legítimo)",
+            "Bernat (legítimo)",
+            "Eva (pasivo)",
+            "Óscar (activo)"
+        ],
+        "kerckhoffs": {
+            "title": "Principio de Kerckhoffs",
+            "quote": "El enemigo conoce el sistema",
+            "meaning": "La fortaleza debe residir en la clave, no en el secreto del algoritmo."
+        }
+    },
+    "attacks": {
+        "title": "Debilidad de los ataques clásicos",
+        "types": [
+            {
+                "name": "Fuerza bruta",
+                "alias": "Fuerza sucia",
+                "desc": "Búsqueda exhaustiva en el espacio de claves.",
+                "stat": "Un supercomputador (10^17 ops/s) tardaría 5.000 veces la edad del universo para 120 bits.",
+                "status": "Inviable computacionalmente hoy.",
+                "color": "error"
+            },
+            {
+                "name": "Análisis de frecuencias",
+                "alias": "Estadístico",
+                "desc": "Explota la redundancia del idioma natural en cifrados simples.",
+                "stat": "Letras como 'E' o 'A' se repiten predeciblemente.",
+                "status": "Mitigado destruyendo rastros estadísticos.",
+                "color": "warning"
+            }
+        ]
+    },
+    "stream_vs_block": {
+        "title": "La ingeniería de los cifradores",
+        "stream": {
+            "name": "Cifrado de flujo (Stream)",
+            "math": "C = M \\oplus F(k)",
+            "features": [
+                "Eficiente",
+                "XOR based",
+                "Fragilidad ante reuso"
+            ],
+            "case_study": {
+                "title": "Fallo WEP",
+                "desc": "IV de 24 bits garantizaba colisiones y ataques de reutilización. Vulnerable a 'bit-flipping'."
+            }
+        },
+        "block": {
+            "name": "Cifrado de bloque",
+            "concepts": [
+                "Confusión (complejidad clave/cifrado)",
+                "Difusión (disipación estadística)"
+            ],
+            "modes": [
+                {
+                    "name": "ECB",
+                    "desc": "Determinista, inseguro (pingüino)",
+                    "status": "bad"
+                },
+                {
+                    "name": "CBC",
+                    "desc": "Encadenamiento, aleatorio",
+                    "status": "good"
+                }
+            ],
+            "vulnerability": "Padding Oracle Attack (ej. POODLE en SSL 3.0)"
+        }
+    },
+    "integrity_hash": {
+        "title": "Funciones hash e integridad",
+        "concept": "Huellas digitales de longitud fija.",
+        "paradox": {
+            "name": "Paradoja del cumpleaños",
+            "desc": "Encontrar una colisión es exponencialmente más fácil que encontrar una preimagen."
+        },
+        "implication": "MD5 está roto. Si hay colisión, la firma digital pierde validez."
+    },
+    "pki_trust": {
+        "title": "PKI: El desafío de la confianza",
+        "evolution": "Diffie-Hellman (1976) -> RSA (1978)",
+        "vulnerability": "Ataque de Bleichenbacher (Oracle PKCS#1 v1.5)",
+        "thesis": "La seguridad se desplaza del algoritmo al proceso.",
+        "case_study": {
+            "name": "Malware Flame (2012)",
+            "desc": "Atacó Windows Update no rompiendo RSA, sino explotando una colisión MD5 en la cadena de certificados de Microsoft."
+        }
+    },
+    "implementation_fail": {
+        "title": "El error de implementación: Caso PS3",
+        "desc": "Tragedia matemática por reuso de nonce (k) en ECDSA.",
+        "math": "s = k^{-1}(z + rd) \\implies k reutilizado permite hallar d",
+        "lesson": "La aleatoriedad es una condición necesaria para la seguridad."
+    },
+    "quote": {
+        "text": "En un entorno de capacidad de cómputo incesante y errores humanos persistentes, ¿es nuestra confianza en la dureza computacional un santuario temporal antes de la próxima epifanía matemática, o estamos destinados a habitar en un ciclo perpetuo de vulnerabilidad y enmienda?",
+        "author": "Reflexión Final"
+    }
+}

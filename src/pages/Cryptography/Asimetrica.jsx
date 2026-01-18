@@ -27,6 +27,11 @@ const iconMap = {
 const Asimetrica = () => {
     const [activeSection, setActiveSection] = useState('intro');
     const currentContent = data.content[activeSection];
+
+    if (!currentContent) {
+        return <div className="p-8 text-center text-(--text-secondary)">Sección no encontrada: {activeSection}</div>;
+    }
+
     const IconComponent = iconMap[currentContent.icon] || Network;
 
     const renderContent = () => {
@@ -411,7 +416,7 @@ const Asimetrica = () => {
                     </div>
                 );
 
-            case 'conclusion':
+            case 'future':
                 return (
                     <div className="flex items-center justify-center py-4 animate-fade-in">
                         <div className="max-w-2xl text-center">

@@ -6,7 +6,7 @@
     "menu": [
         {
             "id": "intro",
-            "label": "Introducción y dilema"
+            "label": "El dilema"
         },
         {
             "id": "ecosystem",
@@ -29,6 +29,10 @@
             "label": "Normas PKCS y RSA avanzado"
         },
         {
+            "id": "implementation",
+            "label": "Generación y firma"
+        },
+        {
             "id": "representation",
             "label": "Datos: ASN.1, DER, PEM"
         },
@@ -37,41 +41,41 @@
             "label": "La PKI en la práctica"
         },
         {
-            "id": "conclusion",
+            "id": "future",
             "label": "Futuro"
         }
     ],
     "content": {
         "intro": {
-            "title": "Introducción: el dilema de la identidad",
+            "title": "El dilema de la identidad",
             "subtitle": "La incertidumbre de la identidad en el espacio cifrado",
-            "description": "En el ámbito de la seguridad de la información, la criptografía de clave pública resolvió con elegancia el problema de la distribución de secretos. Sin embargo, esta solución técnica introdujo un dilema ontológico: la incertidumbre de la identidad. ¿Cómo podemos asegurar que una clave pública pertenece efectivamente a la entidad que dice ser su titular? Sin una respuesta robusta, el sistema colapsa ante ataques de suplantación y de 'hombre en el medio'.\n\nLa Infraestructura de Clave Pública (PKI) se constituye como la respuesta sistémica a este vacío. No se limita a un mero despliegue de software; representa un ecosistema complejo de procesos, roles y especificaciones técnicas diseñadas para vincular identidades con sus respectivas claves mediante certificados digitales. Esta infraestructura es, en esencia, el andamiaje sobre el que descansa la confianza digital en entornos abiertos, permitiendo que la autenticidad, la integridad y el no repudio dejen de ser conceptos teóricos para convertirse en realidades operativas.",
+            "description": "En el ámbito de la seguridad de la información, la criptografía de clave pública resolvió con elegancia el problema de la distribución de secretos. Sin embargo, esta solución técnica introdujo un dilema ontológico: la incertidumbre de la identidad. ¿Cómo podemos asegurar que una clave pública pertenece efectivamente a la entidad que dice ser su titular? Sin una respuesta robusta, el sistema colapsa ante ataques de suplantación y de 'hombre en el medio'.\n\nLa <strong class='text-success'>Infraestructura de Clave Pública (PKI*)</strong> se constituye como la respuesta sistémica a este vacío. No se limita a un mero despliegue de software; representa un ecosistema complejo de procesos, roles y especificaciones técnicas diseñadas para vincular identidades con sus respectivas claves mediante certificados digitales. Esta infraestructura es, en esencia, el andamiaje sobre el que descansa la confianza digital en entornos abiertos, permitiendo que la autenticidad, la integridad y el no repudio dejen de ser conceptos teóricos para convertirse en realidades operativas.<br/><br/><span class='text-xs italic text-(--text-tertiary)'>* Public Key Infrastructure</span>",
             "icon": "Fingerprint"
         },
         "ecosystem": {
             "title": "El ecosistema de confianza",
             "subtitle": "Entidades de una PKI y separación de funciones",
-            "description": "Una PKI no es un bloque monolítico, sino una arquitectura de separación de funciones diseñada para maximizar la seguridad y la escalabilidad.",
+            "description": "Una <strong class='text-success'>PKI</strong> no es un bloque monolítico, sino una arquitectura de separación de funciones diseñada para maximizar la seguridad y la escalabilidad. La distribución de responsabilidades es un imperativo para mitigar riesgos críticos: comprometer un componente no debe implicar la caída de todo el sistema.",
             "entities": [
                 {
                     "name": "Autoridad de Certificación (CA)",
-                    "desc": "Eje central de confianza. Certifica el vínculo identidad-clave mediante firma digital. Gestiona la emisión y revocación."
+                    "desc": "Es el eje central de confianza y el corazón criptográfico del sistema. Su función primordial es certificar el vínculo inquebrantable entre una identidad (sujeto) y un par de claves mediante la firma digital de certificados.<br/><br/><strong class='text-success'>Responsabilidad crítica:</strong> No solo emite, sino que es la responsable última de gestionar la revocación de dicho vínculo, publicando las CRLs. En entornos de alta seguridad, la <strong>CA Raíz</strong> suele operar <em>offline</em> (fuera de línea) en una cámara acorazada para minimizar su superficie de ataque, delegando la emisión diaria en CAs Subordinadas."
                 },
                 {
                     "name": "Autoridad de Registro (RA)",
-                    "desc": "Brazo operativo para verificación de identidad (presencial/documental). Permite escalabilidad separando validación de emisión."
+                    "desc": "Actúa como el brazo operativo y la interfaz humana para la verificación de identidad (Front-End). Su papel es validar al solicitante mediante procedimientos rigurosos que pueden incluir la personación física y la presentación de documentos oficiales (DNI o pasaporte).<br/><br/><strong class='text-success'>Separación de funciones:</strong> En despliegues masivos, la separación entre la CA y la RA es fundamental: mientras que la CA se mantiene en un búnker digital altamente protegido, la RA gestiona la capilaridad y el contacto con el usuario final, optimizando la escalabilidad y permitiendo validar identidades en múltiples ubicaciones geográficas sin exponer las claves maestras."
                 },
                 {
                     "name": "Autoridad de Validación (VA)",
-                    "desc": "Comprueba el estado de vigencia (OCSP). Libera a la CA de la carga transaccional de consultas."
+                    "desc": "Especializada exclusivamente en la comprobación del estado de vigencia de los certificados en tiempo real. Su existencia libera a la CA de la inmensa carga transaccional de responder a millones de consultas de validez por segundo.<br/><br/>Utiliza protocolos como <strong>OCSP (Online Certificate Status Protocol)</strong> para informar si un certificado específico sigue siendo válido, ha sido revocado o está suspendido, sin necesidad de que el cliente descargue listas de revocación completas."
                 },
                 {
                     "name": "Autoridad de Sellado de Tiempo (TSA)",
-                    "desc": "Provee sellos de tiempo (hash + timestamp) para demostrar existencia de datos y validar firmas tras expiración de certificados."
+                    "desc": "Provee sellos de tiempo confiables que demuestran matemáticamente la existencia de un dato en un instante `t` preciso. Mediante una firma digital sobre el hash del documento combinada con una marca de tiempo UTC fiable.<br/><br/><strong class='text-success'>Valor legal y técnico:</strong> Permite la validación de firmas digitales a largo plazo (LTV), incluso después de que el certificado original del firmante haya expirado o sido revocado, siempre que se pueda probar matemáticamente que la firma se realizó <em>antes</em> de la pérdida de validez del certificado."
                 },
                 {
                     "name": "Marcos Normativos (CP y CPS)",
-                    "desc": "Política de Certificación (CP) establece usos permitidos. Declaración de Prácticas (CPS) detalla procedimientos técnico-organizativos."
+                    "desc": "La confianza no es abstracta ni arbitraria; se codifica en documentos legales y técnicos vinculantes:<br/><ul class='list-disc list-inside mt-2 space-y-1 text-sm'><li><strong class='text-success'>Política de Certificación (CP):</strong> Establece el 'qué'. Define el marco general, los niveles de seguridad y los usos permitidos del certificado (ej. para firma de contratos de alto valor vs. autenticación simple).</li><li><strong class='text-success'>Declaración de Prácticas de Certificación (CPS):</strong> Establece el 'cómo'. Detalla minuciosamente los procedimientos operativos, controles físicos, criptográficos y de personal que la CA sigue para cumplir con la CP.</li></ul>"
                 }
             ],
             "icon": "Sitemap"
@@ -80,153 +84,311 @@
             "title": "La ontología del certificado",
             "subtitle": "Ciclo de vida, generación y validación",
             "definition": "Un certificado digital de clave pública es una estructura de datos que vincula una clave pública a una identidad. Esta vinculación se produce haciendo que una autoridad de certificación de confianza firme el certificado digital.",
+            "csr_title": "Registro y Solicitud (CSR)",
+            "csr_desc": "Tras la validación de identidad, se inicia el proceso técnico con la emisión de una <strong class='text-success'>Solicitud de Firma de Certificado (CSR*)</strong>, habitualmente bajo el estándar <strong>PKCS#10</strong>. Esta estructura de datos contiene la clave pública del solicitante y su información de identidad, firmada con la correspondiente clave privada para demostrar la 'Prueba de Posesión' (POP). Solo tras verificar esta firma interna, la CA procede a firmar y emitir el certificado X.509 final.<br/><br/><span class='text-xs italic text-gray-500'>* Certificate Signing Request</span>",
             "generation": [
                 {
-                    "method": "Por el usuario",
-                    "desc": "Claves generadas en el equipo del titular. Ideal para el no repudio (control exclusivo)."
+                    "method": "Por el usuario (Client-Side)",
+                    "desc": "El titular genera sus claves en su propio equipo (navegador/servidor). Es el método <strong>ideal para el no repudio</strong>, ya que garantiza matemáticamente que solo el titular ha tenido acceso a la clave privada en todo momento. Nadie más, ni siquiera la CA, la ha visto."
                 },
                 {
-                    "method": "Por la CA o RA",
-                    "desc": "Infraestructura centralizada. Facilita gestión pero introduce riesgo (copia de clave privada)."
+                    "method": "Por la CA o RA (Server-Side)",
+                    "desc": "Aprovecha la infraestructura profesional de la autoridad para generar el par de claves. Facilita la gestión y recuperación a usuarios no técnicos, pero introduce un <strong>riesgo de seguridad</strong>: existe una copia de la clave privada (Key Escrow implícito) fuera del control exclusivo del titular."
                 },
                 {
                     "method": "Por una tercera parte",
-                    "desc": "Delegación externa con destrucción obligatoria tras entrega segura."
+                    "desc": "Delegación en una entidad externa de confianza que genera las claves y las entrega de forma segura (ej. tarjeta inteligente pre-cargada). Exige procedimientos estrictos de <strong>destrucción del material</strong> criptográfico tras la entrega."
                 },
                 {
-                    "method": "En hardware especializado",
-                    "desc": "Generación y custodia en chip seguro (ej. DNIe). Máxima seguridad, impide extracción."
+                    "method": "En hardware especializado (HSM/Smart Card)",
+                    "desc": "El nivel máximo de seguridad (ej. <strong>DNI electrónico</strong>). La clave se genera dentro de un chip criptográfico seguro y es técnicamente <strong>imposible de extraer</strong>. Las operaciones de firma ocurren dentro del propio chip, garantizando que la clave privada nunca se expone a la memoria del ordenador."
                 }
             ],
+            "validation_intro": "Tras la validación de identidad, se emite una Solicitud de Firma de Certificado (CSR) —habitualmente bajo el estándar PKCS#10— que contiene la clave pública del solicitante. Una vez emitido el certificado, cualquier entidad que desee confiar en él debe ejecutar un riguroso protocolo de validación:",
             "validation": [
-                "<strong>Integridad:</strong> Validación de la firma digital de la CA sobre el certificado.",
-                "<strong>Temporalidad:</strong> Verificación de los campos notBefore y notAfter.",
-                "<strong>Revocación:</strong> Consulta de CRL o respuesta OCSP actual.",
-                "<strong>Uso de Clave:</strong> Concordancia entre la operación y las extensiones KeyUsage.",
-                "<strong>Cadena de Confianza:</strong> Construcción de la ruta jerárquica hasta una CA raíz."
+                "<strong class='text-warning'>Integridad:</strong> Validación criptográfica de la firma de la CA. Se descifra la firma del certificado con la clave pública de la CA y se compara con el hash del contenido. Cualquier discrepancia indica manipulación.",
+                "<strong class='text-warning'>Temporalidad:</strong> Verificación estricta de las fechas <code>notBefore</code> y <code>notAfter</code>. El certificado es inválido fuera de esa ventana temporal exacta.",
+                "<strong class='text-warning'>Revocación:</strong> Consulta obligatoria a las listas negras. Se verifica contra la <strong>CRL</strong> más reciente o mediante una consulta <strong>OCSP</strong> en tiempo real para asegurar que el certificado no ha sido anulado antes de su expiración.",
+                "<strong class='text-warning'>Uso de clave (Key Usage):</strong> Comprobación semántica. Se verifica si el certificado permite la operación intentada (ej. asegurar que un certificado de 'Firma de Email' no se use para firmar un ejecutable) revisando las extensiones <code>KeyUsage</code>.",
+                "<strong class='text-warning'>Cadena de confianza:</strong> Construcción de la ruta de certificación (Certification Path). Se verifica la firma de la CA emisora, luego la de la CA que firmó a esta, recursivamente hasta llegar a una <strong>CA Raíz</strong> de confianza preinstalada en el sistema (Root Store)."
             ],
             "icon": "FileBadge"
         },
         "x509": {
             "title": "Estándares X.509",
-            "subtitle": "El ADN de la identidad digital (v3)",
-            "description": "Estándar ITU-T predominante. Diferencia el Certificado de Clave Pública (identidad) del Certificado de Atributos (roles/privilegios).",
-            "fields": {
-                "headers": [
-                    "Campo",
-                    "Descripción técnica"
-                ],
-                "rows": [
-                    [
-                        "serialNumber",
-                        "Entero único asignado por la CA."
-                    ],
-                    [
-                        "issuer",
-                        "Distinguished Name (DN) de la autoridad firmante."
-                    ],
-                    [
-                        "validity",
-                        "Intervalo temporal (notBefore / notAfter)."
-                    ],
-                    [
-                        "subject",
-                        "Identificación del titular (DN)."
-                    ],
-                    [
-                        "subjectPublicKeyInfo",
-                        "Algoritmo y valor de la clave pública certificada."
+            "subtitle": "El ADN de la identidad digital",
+            "description": "El estándar <strong class='text-info'>X.509 v3</strong> (ITU-T) define la estructura técnica predominante para los certificados de clave pública. Es fundamental diferenciar conceptualmente dos tipos de certificados en este ecosistema:<br/><br/><ul class='list-disc list-inside space-y-2 ml-4'><li><strong>Certificado de Clave Pública (PKC):</strong> Vincula una identidad a una clave (responde a <em>'¿Quién eres?'</em>).</li><li><strong>Certificado de Atributos (AC):</strong> Vincula privilegios, roles o atributos a un poseedor, separando la identidad de la autorización (responde a <em>'¿Qué puedes hacer?'</em>).</li></ul><br/>Esta separación permite diseñar arquitecturas de seguridad modulares y escalables.",
+            "critical_fields": [
+                {
+                    "field": "serialNumber",
+                    "desc": "Entero único asignado por la CA emisor. Junto con el nombre del emisor, forma un identificador globalmente único para el certificado."
+                },
+                {
+                    "field": "issuer",
+                    "desc": "El <strong>Distinguished Name (DN)</strong> de la autoridad que firma y emite el certificado. Es la entidad que avala la identidad contenida."
+                },
+                {
+                    "field": "validity",
+                    "desc": "Intervalo temporal estricto definido por <code>notBefore</code> (inicio) y <code>notAfter</code> (expiración). Fuera de este rango, el certificado carece de toda validez técnica."
+                },
+                {
+                    "field": "subject",
+                    "desc": "Identificación del titular de la clave pública (DN). En certificados modernos web (TLS), este campo puede estar vacío si la identidad se define completamente en la extensión <code>SubjectAltName</code> (SAN)."
+                },
+                {
+                    "field": "subjectPublicKeyInfo",
+                    "desc": "El corazón del certificado. Contiene el algoritmo criptográfico usado (ej. RSA, ECDSA) y el valor binario de la clave pública en sí misma."
+                }
+            ],
+            "extensions_intro": "Las extensiones (X.509 v3) dotan de flexibilidad y extensibilidad al estándar sin romper la compatibilidad. Cada extensión incluye un indicador vital: el <strong>Flag de Criticidad</strong>.",
+            "extensions_logic": [
+                {
+                    "status": "CRITICAL = TRUE",
+                    "behavior": "Si la aplicación procesadora NO reconoce o no entiende esta extensión, <strong>DEBE rechazar</strong> el certificado inmediatamente. Esto evita fallos de seguridad por ignorar restricciones importantes (ej. <em>Basic Constraints</em> que limitan si un cert puede firmar a otros)."
+                },
+                {
+                    "status": "CRITICAL = FALSE",
+                    "behavior": "Si la aplicación no reconoce la extensión, puede ignorarla y procesar el resto del certificado. Se usa para información informativa o accesoria (ej. detalles del emisor)."
+                }
+            ],
+            "typology": [
+                {
+                    "name": "Certificados de Entidad Final",
+                    "desc": "Pertenecen a usuarios, servidores (SSL/TLS) o dispositivos. <strong>No pueden</strong> emitir otros certificados. Son las 'hojas' del árbol de confianza."
+                },
+                {
+                    "name": "Certificados de CA (Autoridad)",
+                    "desc": "Tienen permiso para firmar otros certificados (bit <code>KeyCertSign</code> activo).",
+                    "subtypes": [
+                        "<strong>Autoemitidos (Self-Issued):</strong> Mismo titular y emisor, pero p.ej. diferentes claves.",
+                        "<strong>Autofirmados (Self-Signed):</strong> Caso especial de la <strong>CA Raíz</strong>. La clave privada firma su propia clave pública, cerrando la cadena de confianza.",
+                        "<strong>Certificados Cruzados (Cross-Certificates):</strong> Una CA firma la clave pública de otra CA independiente para establecer confianza mutua entre organizaciones diferentes (Bridge CA)."
                     ]
-                ]
-            },
-            "extensions_note": "Las extensiones incluyen un flag de 'criticidad'. Si es TRUE y la aplicación no la reconoce, debe invalidar el certificado. Esto evita brechas de seguridad.",
-            "types_note": "Tipología: Entidad final vs. CA (Autoemitidos, Autofirmados, Cruzados).",
-            "icon": "TableProperties"
+                }
+            ],
+            "icon": "FileCode"
         },
         "revocation": {
             "title": "Mecanismos de revocación",
-            "subtitle": "CRL frente a OCSP",
-            "description": "La anulación de la confianza antes de la expiración es uno de los puntos más críticos y costosos.",
+            "subtitle": "Gestión de la desconfianza en tiempo real",
+            "description": "La revocación es el mecanismo de seguridad más complejo y crítico de una PKI. Un certificado digital es inmutable y tiene una validez predefinida (ej. 1 año). Sin embargo, situaciones críticas como el <strong class='text-error'>compromiso de la clave privada</strong> o cambios organizativos requieren invalidar esa confianza <em>antes</em> de su expiración natural.<br/><br/>Sin un control de revocación efectivo, un atacante con una clave robada podría suplantar una identidad impunemente hasta la fecha de caducidad del certificado.",
             "methods": [
                 {
-                    "name": "CRL (Listas de Revocación)",
-                    "desc": "Listas firmadas estáticas. Debilidad: Latencia (ventana de vulnerabilidad entre actualizaciones)."
+                    "name": "CRL (Certificate Revocation Lists)",
+                    "type": "Modelo asíncrono (Listas Negras)",
+                    "desc": "La CA publica periódicamente un archivo firmado que contiene los números de serie de <strong>todos</strong> los certificados revocados que aún no han expirado.",
+                    "pros": "<strong>Integridad:</strong> Alta (firmado por CA).<br/><strong>Archivo:</strong> Fácil de almacenar para auditorías.",
+                    "cons": "<strong>Problema de escalabilidad:</strong> Las listas pueden crecer hasta tener un tamaño inmanejable (MBs).<br/><strong>Ventana de riesgo:</strong> Si la CRL se publica cada 24h, un certificado comprometido hoy será confiable hasta mañana.",
+                    "icon": "FileWarning"
                 },
                 {
-                    "name": "Delta CRL",
-                    "desc": "Enumera solo cambios desde una CRL Base para ahorrar ancho de banda."
+                    "name": "OCSP (Online Certificate Status Protocol)",
+                    "type": "Modelo síncrono (Tiempo Real)",
+                    "desc": "El cliente consulta directamente a un servidor (Responder) el estado de un único certificado específico. El servidor responde: <em>Good</em>, <em>Revoked</em> o <em>Unknown</em>.",
+                    "pros": "<strong>Tiempo Real:</strong> Estado actualizado al segundo.<br/><strong>Eficiencia:</strong> No consume ancho de banda con listas gigantes.",
+                    "cons": "<strong>Privacidad:</strong> La CA conoce qué sitios visita el usuario.<br/><strong>Latencia:</strong> Añade un RTT (Round Trip Time) al handshake.<br/><strong>Fragilidad:</strong> Si el servidor OCSP cae, el navegador debe decidir si bloquear (Hard-Fail) o permitir (Soft-Fail).",
+                    "icon": "GlobeLock"
+                }
+            ],
+            "stapling": {
+                "title": "La Solución Moderna: OCSP Stapling",
+                "desc": "Para resolver los problemas de privacidad y rendimiento del OCSP tradicional, se desarrolló el <strong>OCSP Stapling</strong> (TLS Certificate Status Request extension).<br/><br/>En este modelo, es el propio <strong>servidor web</strong> (no el cliente) quien consulta periódicamente a la CA, obtiene una prueba de validez firmada digitalmente y la 'agrapa' (staples) al certificado durante el saludo inicial (TLS Handshake). El cliente verifica la firma de la CA sobre esa respuesta sin necesidad de contactar a terceros, garantizando privacidad y velocidad."
+            },
+            "reasons_title": "¿Por qué se revoca un certificado?",
+            "reasons_desc": "Cuando una CA invalida un certificado, debe indicar la causa (Reason Code, RFC 5280) para que los sistemas sepan cómo reaccionar. No es lo mismo un mero cambio administrativo que un robo de claves.",
+            "reasons": [
+                {
+                    "name": "keyCompromise",
+                    "id": 1,
+                    "desc": "<strong class='text-error'>CRÍTICO:</strong> La clave privada ha sido robada o expuesta. Revocación inmediata."
                 },
                 {
-                    "name": "Protocolo OCSP",
-                    "desc": "Consultas tiempo real. Advertencia: Respuesta 'good' solo implica 'no revocado', no garantiza emisión legítima."
+                    "name": "affiliationChanged",
+                    "id": 3,
+                    "desc": "El titular ya no pertenece a la organización (ej. empleado despedido)."
+                },
+                {
+                    "name": "cessationOfOperation",
+                    "id": 5,
+                    "desc": "El servidor o servicio ha dejado de existir o utilizarse."
+                },
+                {
+                    "name": "superseded",
+                    "id": 4,
+                    "desc": "El certificado ha sido reemplazado por uno nuevo (ej. cambio de proveedor)."
                 }
             ],
             "icon": "FileWarning"
         },
         "pkcs": {
-            "title": "Normas PKCS y RSA avanzado",
-            "subtitle": "Refinamiento de RSA y estándares críticos",
-            "intro": "El RSA determinista básico es inseguro (ataques de maleabilidad/homomórficos). PKCS estandariza soluciones robustas.",
+            "title": "Estándares PKCS y RSA Avanzado",
+            "subtitle": "De la teoría matemática a la seguridad industrial",
+            "intro_problem": {
+                "title": "¿Por qué el RSA 'básico' es inseguro?",
+                "desc": "El RSA de libro de texto (determinista) es vulnerable. Si cifras el mismo mensaje <em>m</em> dos veces con la misma clave pública, obtienes el mismo criptograma <em>c</em>. Esto permite a un atacante identificar mensajes comunes.<br/><br/>Peor aún, posee una <strong>Propiedad Homomórfica</strong>: <code class='text-accent'>E(m1) · E(m2) = E(m1 · m2)</code> que habilita <strong>Ataques de Maleabilidad</strong>: un atacante puede modificar un criptograma cifrado interceptado para que, al ser descifrado por la víctima, se convierta en un mensaje diferente pero predecible, sin que el atacante necesite conocer la clave privada.",
+                "vulnerabilities": [
+                    "Determinismo (Cifrado de mensajes idénticos)",
+                    "Maleabilidad (Modificación de criptogramas)",
+                    "Ataques de exponente pequeño"
+                ]
+            },
             "oaep": {
-                "title": "RSAES-OAEP (PKCS#1)",
-                "desc": "Esquema probabilístico (Feistel) que elimina determinismo y maleabilidad.",
-                "steps": [
-                    "1. Construcción DB: DB = lHash || PS || 0x01 || M",
-                    "2. Máscara (MGF1): Generación de hashes múltiples desde semilla.",
-                    "3. XOR: maskedDB = DB ⊕ dbMask, maskedSeed = seed ⊕ seedMask."
-                ],
-                "analysis": "La dependencia cruzada asegura que alterar un solo bit cambie todo el bloque, neutralizando patrones."
+                "title": "La Solución: RSAES-OAEP (PKCS#1)",
+                "subtitle": "Optimal Asymmetric Encryption Padding (Esquema probabilístico)",
+                "desc": "Para solucionar esto, PKCS#1 introduce <strong>OAEP</strong>, transformando RSA en un esquema <strong>probabilístico</strong> mediante una Red de Feistel.",
+                "mechanism_steps": [
+                    {
+                        "step": "1. Construcción del bloque DB",
+                        "detail": "<strong>DB = lHash || PS || 0x01 || M</strong><br/>Se concatena el hash de una etiqueta (lHash), un relleno de ceros (PS) semántico, un byte delimitador (0x01) y el mensaje (M)."
+                    },
+                    {
+                        "step": "2. Generación de Máscara (MGF1)",
+                        "detail": "Se usa una semilla aleatoria (seed). MGF1 genera una 'máscara' criptográfica expandiendo esta semilla mediante hashes iterativos."
+                    },
+                    {
+                        "step": "3. Red de Feistel (XOR)",
+                        "detail": "<strong>maskedDB = DB ⊕ MGF(seed)</strong><br/><strong>maskedSeed = seed ⊕ MGF(maskedDB)</strong><br/>Esta dependencia cruzada 'mezcla' todo. Alterar un solo bit del criptograma corrompe todo el bloque al descifrar (Integridad)."
+                    }
+                ]
             },
-            "kdf": {
-                "pkcs5": "PKCS#5: Derivación de claves (KDF) desde contraseñas con Sal y >1000 iteraciones (freno a fuerza bruta).",
-                "pkcs12": "PKCS#12: Formato de transporte seguro para identidades (clave privada + certificados)."
-            },
-            "icon": "Settings"
+            "standards": [
+                {
+                    "id": "PKCS#5",
+                    "name": "Password-Based Cryptography Standard",
+                    "desc": "Crucial para proteger claves privadas en disco. Define <strong>PBKDF2</strong>: un KDF que usa:<br/>• <strong>Salt:</strong> Evita ataques de diccionario.<br/>• <strong>Iteraciones:</strong> (>1000) Frena la fuerza bruta.",
+                    "icon": "Key"
+                },
+                {
+                    "id": "PKCS#12",
+                    "name": "Personal Information Exchange",
+                    "desc": "El 'maletín seguro' (<code>.p12</code>, <code>.pfx</code>) para transportar identidades completas cifradas:<br/>• Clave Privada (vía PKCS#5)<br/>• Certificado de Usuario<br/>• Cadena de Confianza",
+                    "icon": "Briefcase"
+                },
+                {
+                    "id": "PKCS#10",
+                    "name": "Certification Request Standard (CSR)",
+                    "desc": "El formato estándar para solicitar un certificado. Contiene:<br/>• Clave Pública<br/>• Identidad (Subject)<br/>• Firma de la Clave Privada (Prueba de Posesión/PoP).",
+                    "icon": "FileText"
+                },
+                {
+                    "id": "PKCS#11",
+                    "name": "Cryptographic Token Interface (Cryptoki)",
+                    "desc": "API neutra para hardware criptográfico (HSM, Smart Cards). Permite realizar operaciones (firmar) <strong>dentro</strong> del chip, asegurando que la clave privada <strong>nunca</strong> salga al PC.",
+                    "icon": "Cpu"
+                }
+            ],
+            "icon": "BookOpen"
+        },
+        "implementation": {
+            "title": "Taller práctico: OpenSSL",
+            "subtitle": "Generación de claves, CSR y firma digital",
+            "description": "La criptografía no es solo teoría; es operativa. En este taller simularemos el rol de un administrador generando la infraestructura base de una identidad digital usando <strong>OpenSSL</strong>, el estándar de facto en la industria.<br/><br/><span class='text-sm text-info bg-info/10 px-2 py-1 rounded inline-block border border-info/20'><strong>Compatibilidad:</strong> Estos comandos son universales en Linux y macOS. En Windows, recomendamos ejecutar esto desde <strong>Git Bash</strong> o <strong>WSL</strong> para tener acceso nativo a OpenSSL.</span>",
+            "steps": [
+                {
+                    "title": "1. Generar clave privada (RSA)",
+                    "cmd": "openssl genrsa -out privada.key 2048",
+                    "explanation": "Generamos una clave RSA de 2048 bits. Esta es la joya de la corona; quien tenga este archivo posee la identidad. <strong>NUNCA</strong> debe salir del servidor (o HSM)."
+                },
+                {
+                    "title": "2. Extraer clave pública",
+                    "cmd": "openssl rsa -in privada.key -pubout -out publica.pem",
+                    "explanation": "Derivamos la parte pública de la privada. Este archivo <code>.pem</code> es lo que distribuimos al mundo para que nos cifren mensajes."
+                },
+                {
+                    "title": "3. Crear solicitud de firma (CSR)",
+                    "cmd": "openssl req -new -key privada.key -out solicitud.csr",
+                    "explanation": "Creamos un contenedor (PKCS#10) con nuestra Clave Pública y nuestros datos de identidad (País, Organización, Common Name). Esto es lo que enviamos a la CA para que nos certifique."
+                },
+                {
+                    "title": "4. Auto-firmar certificado (Simulación CA)",
+                    "cmd": "openssl x509 -req -days 365 -in solicitud.csr -signkey privada.key -out certificado.crt",
+                    "explanation": "En un entorno real, la CA firmaría esto. Aquí, actuamos como nuestra propia CA (Self-Signed) firmando el CSR con nuestra propia clave privada. Obtenemos un certificado X.509 válido por 1 año."
+                },
+                {
+                    "title": "5. Inspeccionar el certificado",
+                    "cmd": "openssl x509 -in certificado.crt -text -noout",
+                    "explanation": "Decodificamos el binario X.509 a texto legible para verificar: Emisor (Issuer), Sujeto (Subject), Validez y la Firma Digital."
+                }
+            ],
+            "icon": "Terminal"
         },
         "representation": {
             "title": "Representación de datos",
-            "subtitle": "ASN.1, DER y PEM",
-            "description": "La interoperabilidad requiere capas de abstracción estrictas.",
+            "subtitle": "De la abstracción al bit",
+            "description": "Para que los sistemas criptográficos de todo el mundo se entiendan, los datos deben transformarse siguiendo una estricta cadena de montaje. No basta con 'enviar la clave'; hay que definir exactamente qué es, cómo se estructura y cómo se codifica.",
             "formats": [
                 {
-                    "name": "ASN.1",
-                    "desc": "Sintaxis abstracta para describir tipos de datos."
+                    "name": "ASN.1 (Abstract Syntax Notation One)",
+                    "role": "El Plano (Sintaxis)",
+                    "desc": "Es el <strong>lenguaje de definición</strong>. Imagínalo como un 'JSON Schema' pero para telecomunicaciones y mucho más estricto. Define <strong>QUÉ</strong> datos existen (un número, una fecha, una secuencia), pero no dice nada sobre cómo se guardan en el disco.",
+                    "example_title": "Definición ASN.1 de un certificado (simplificada):",
+                    "example_code": "Certificate ::= SEQUENCE {\n  tbsCertificate       TBSCertificate,\n  signatureAlgorithm   AlgorithmIdentifier,\n  signatureValue       BIT STRING\n}"
                 },
                 {
                     "name": "DER (Distinguished Encoding Rules)",
-                    "desc": "Codificación binaria canónica única. IMPERATIVO para firmas digitales (evita fallos por variación de formato)."
+                    "role": "El Cemento (Codificación)",
+                    "desc": "Son las reglas para convertir ese plano ASN.1 en <strong>ceros y unos (binario)</strong> de forma única. A diferencia de otras reglas, DER asegura que un mismo objeto <strong>SIEMPRE</strong> produzca los mismos bytes exactos. <br/><br/><strong>¿Por qué es vital?</strong> Al firmar digitalmente, firmamos el hash de los bytes. Si la codificación variara (aunque el contenido semántico fuera el mismo), el hash cambiaría y la firma sería inválida. DER garantiza consistencia.",
+                    "example_title": "Representación Hexadecimal (Binario):",
+                    "example_code": "30 82 03 A8 30 82 02 90 A0 03 02 01 02 02 10 3E..."
                 },
                 {
                     "name": "PEM (Privacy-Enhanced Mail)",
-                    "desc": "Codificación Base64 de DER para transporte seguro en texto (bloques -----BEGIN...)."
+                    "role": "El Sobre (Transporte)",
+                    "desc": "El binario (DER) es ilegible y rompe correos electrónicos o copy-pastes. PEM soluciona esto codificando el bloque DER en <strong>Base64</strong> y añadiendo cabeceras de texto claro.",
+                    "example_title": "Lo que ves en tu editor:",
+                    "example_code": "-----BEGIN CERTIFICATE-----\nMIIDzTCCArWgAwIBAgIQPl...\n-----END CERTIFICATE-----"
                 }
             ],
             "icon": "Code"
         },
         "practice": {
             "title": "La PKI en la práctica",
-            "subtitle": "Luces y sombras del despliegue real",
-            "description": "El despliegue en HTTPS revela fallos estructurales, principalmente la centralización de la confianza.",
+            "subtitle": "Luces, sombras y riesgos reales",
+            "intro_concept": "El despliegue de HTTPS a nivel global ha revelado debilidades estructurales que no existen en el papel. El problema fundamental reside en la <strong>centralización y transitividad de la confianza</strong>: cualquier Autoridad de Certificación (CA) en la que tu navegador confíe tiene el poder técnico de firmar un certificado válido para *cualquier* dominio del mundo (google.com, tu-banco.com), sin que el dueño real del dominio lo sepa.",
+            "intro_title": "¿Por qué usamos este modelo si tiene vulnerabilidades?",
+            "intro_text": "La PKI es, hoy por hoy, el <strong>único mecanismo escalable</strong> para asegurar Internet. Sin ella, no tendríamos identidad digital. No es que la tecnología sea insegura (RSA funciona); lo que falla es la <strong>Delegación de Confianza</strong>. Si le das las llaves de tu casa a 100 porteros (CAs), basta con que uno sea corrupto para que te roben. Aquí analizamos esos fallos para aprender a mitigarlos.",
             "cases": [
                 {
-                    "title": "Trustwave (2012)",
-                    "desc": "Emisión de sub-CA subordinada para intercepción de tráfico TLS corporativo. Legal pero arquitectónicamente peligroso."
+                    "title": "Incidente Trustwave",
+                    "subtitle": "Sub-CA para vigilancia",
+                    "summary": "Una CA raíz vendió su poder a una empresa para espiar empleados.",
+                    "description": "<p>Trustwave, una Autoridad de Certificación confiable, emitió una CA Subordinada a una empresa privada. Esto permitió a dicha empresa generar certificados válidos (man-in-the-middle) para <strong>cualquier dominio</strong> (Google, Bancos, etc.) dentro de su red corporativa.</p><br/><p><strong>La lección:</strong> El modelo de negocio de las CAs puede entrar en conflicto con la seguridad global. La confianza es 'transitiva' y peligrosa.</p>",
+                    "type": "failure",
+                    "color": "error",
+                    "badgeText": "2012",
+                    "icon": "ShieldAlert"
                 },
                 {
-                    "title": "NIC India / ANSSI",
-                    "desc": "Emisión fraudulenta/no autorizada para dominios globales (Google), evidenciando fallos de auditoría."
+                    "title": "NIC India & ANSSI",
+                    "subtitle": "Incompetencia Gubernamental",
+                    "summary": "Emisión de certificados fraudulentos para dominios globales.",
+                    "description": "<p>El Centro Nacional de Informática de India (NIC) emitió certificados falsos para dominios de Google y Yahoo. Un caso similar ocurrió con la agencia francesa ANSSI. Esto demostró que incluso agencias gubernamentales pueden tener fallos críticos en sus procesos de validación.</p>",
+                    "type": "failure",
+                    "color": "error",
+                    "badgeText": "2014",
+                    "icon": "ShieldAlert"
                 },
                 {
                     "title": "Certificate Pinning",
-                    "desc": "Defensa: Asociar host a clave pública específica en código, rechazando otras CAs válidas."
+                    "subtitle": "La Defensa Técnica",
+                    "summary": "Confiar en la clave, no en la cadena.",
+                    "description": "<p>Para combatir la debilidad de las CAs, nace el <strong>Pinning</strong>. En lugar de confiar en 'cualquier certificado firmado por una CA raíz', la aplicación (ej: App móvil de Banco) tiene <strong>'pineada' (incrustada en su código fuente)</strong> la clave pública real (o su hash) del servidor legítimo.</p><br/><p>Cuando la app se conecta, verifica: <br/>1. ¿El certificado es válido? (Check estándar).<br/>2. <strong>¿La clave pública del certificado coincide con la que tengo guardada en el código?</strong></p><br/><p>Si una CA corrupta emite un certificado falso para ese dominio, la cadena será válida (pasará el paso 1), pero <strong>la clave pública será distinta</strong> (fallará el paso 2), y la conexión se rechazará inmediatamente, protegiendo al usuario incluso ante CAs comprometidas.</p>",
+                    "type": "defense",
+                    "color": "success",
+                    "badgeText": "Defensa",
+                    "icon": "ShieldCheck"
                 }
             ],
             "icon": "GlobeLock"
         },
-        "conclusion": {
+        "future": {
             "title": "Hacia una confianza robusta",
-            "content": "Hemos recorrido desde la ontología de X.509 hasta la lógica de RSAES-OAEP. La PKI es robusta en su teoría, pero frágil en su implementación humana y administrativa. El DNI electrónico 3.0 ejemplifica la excelencia técnica mediante la separación de funciones (pares de claves distintos para Autenticación y Firma), pero también subraya el fracaso de la usabilidad en el mundo real.<br/><br/>La pregunta que debemos trasladar al futuro es de índole arquitectónica: <span class='text-blue-400 font-bold'>en un mundo que tiende a la descentralización, ¿es sostenible mantener la confianza global delegada en unos pocos centenares de autoridades de certificación, o es el momento de transitar hacia modelos de confianza distribuidos y resilientes?</span>",
+            "content": "Hemos recorrido desde la ontología de X.509 hasta la lógica de RSAES-OAEP. La PKI es robusta en su teoría, pero frágil en su implementación humana y administrativa. El DNI electrónico 3.0 ejemplifica la excelencia técnica mediante la separación de funciones (pares de claves distintos para Autenticación y Firma), pero también subraya el fracaso de la usabilidad en el mundo real.<br/><br/>La pregunta que debemos trasladar al futuro es de índole arquitectónica: <span class='text-success font-bold'>en un mundo que tiende a la descentralización, ¿es sostenible mantener la confianza global delegada en unos pocos centenares de autoridades de certificación, o es el momento de transitar hacia modelos de confianza distribuidos y resilientes?</span>",
             "icon": "ShieldCheck"
         }
+    },
+    "quote": {
+        "text": "Si crees que la tecnología puede resolver tus problemas de seguridad, entonces no entiendes los problemas y no entiendes la tecnología.",
+        "author": "Bruce Schneier"
     }
 }

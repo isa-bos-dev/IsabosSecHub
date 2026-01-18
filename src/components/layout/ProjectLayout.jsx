@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Footer from './Footer';
 import Header from './Header';
+import SEO from '../SEO';
 
 const ProjectLayout = ({
     title,
@@ -11,6 +12,11 @@ const ProjectLayout = ({
 }) => {
     return (
         <div className="flex flex-col min-h-screen font-sans" style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
+            <SEO
+                title={title}
+                description={`Explora ${title} - ${subtitle}. Documentación y recursos de ciberseguridad en Isabos Security Hub.`}
+                keywords={`ciberseguridad, security, ${title.toLowerCase()}, ${subtitle.toLowerCase()}, hacking, defensa, red, criptografia`}
+            />
 
             <Header
                 title={title}

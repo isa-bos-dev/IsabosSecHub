@@ -61,7 +61,7 @@ const Panorama = () => {
                     />
                 </div>
 
-                {/* Contenido Masterclass del Timeline */}
+                {/* Contenido del Timeline */}
                 <Timeline
                     items={timeline}
                     onExampleClick={(example) => setSelectedExample(exampleDetails[example] || { title: example, desc: "Información detallada próximamente...", date: "N/A" })}

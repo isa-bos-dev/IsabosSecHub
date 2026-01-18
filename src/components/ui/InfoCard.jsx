@@ -23,8 +23,10 @@ const InfoCard = ({
     footer,
     headerRight,
     cornerBadge,
+    bgColor,
     fullHeight = true,
-    className = ''
+    className = '',
+    ...props
 }) => {
     // Determine border classes based on position
     const borderClass = borderPosition === 'left'
@@ -33,12 +35,16 @@ const InfoCard = ({
 
     return (
         <motion.div
+            {...props}
             whileHover={{
                 y: -5,
                 boxShadow: `0 10px 30px -10px ${color}`
             }}
             className={`bg-(--bg-secondary) p-6 rounded-xl shadow-lg flex flex-col relative ${fullHeight ? 'h-full' : ''} ${borderClass} ${className}`}
-            style={{ borderColor: color }}
+            style={{
+                borderColor: color,
+                backgroundColor: bgColor
+            }}
         >
             {cornerBadge && (
                 <div className="absolute -top-3 -right-3 z-10">
@@ -64,7 +70,10 @@ const InfoCard = ({
                 )}
             </div>
 
-            <div className={`text-(--text-secondary) text-sm ${footer ? 'mb-4' : ''} grow`}>
+            <div
+                className={`text-(--text-secondary) text-sm ${footer ? 'mb-4' : ''} grow [&_strong]:text-(--card-accent)`}
+                style={{ '--card-accent': color }}
+            >
                 {typeof description === 'string' ? (
                     <p dangerouslySetInnerHTML={{ __html: description }} />
                 ) : (

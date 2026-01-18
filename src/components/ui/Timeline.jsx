@@ -46,7 +46,7 @@ const Timeline = ({ items, onExampleClick }) => {
                         whileInView={{ x: 0, opacity: 1 }}
                         viewport={{ once: true }}
                         transition={{ delay: index * 0.1 }}
-                        className={`relative md:ml-20 bg-(--bg-secondary) p-6 rounded-xl border ${item.border} shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] group`}
+                        className={`relative md:ml-20 bg-(--bg-secondary) p-6 rounded-xl border ${item.border} shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] hover:bg-(--bg-primary) group`}
                         style={{
                             '--card-color': hoverColor,
                             '--shadow-color': `${hoverColor}40` // 25% opacidad para sombra
@@ -85,13 +85,11 @@ const Timeline = ({ items, onExampleClick }) => {
                                 item.desc.map((block, i) => {
                                     if (typeof block === 'string') {
                                         return (
-                                            <p key={i} className="text-(--text-secondary) leading-relaxed mb-2 text-justify">
-                                                {block.split(/(\*\*.*?\*\*)/g).map((part, j) =>
-                                                    part.startsWith('**') && part.endsWith('**')
-                                                        ? <strong key={j} className="text-primary font-semibold">{part.slice(2, -2)}</strong>
-                                                        : part
-                                                )}
-                                            </p>
+                                            <p
+                                                key={i}
+                                                className="text-(--text-secondary) leading-relaxed mb-2 text-justify"
+                                                dangerouslySetInnerHTML={{ __html: block }}
+                                            />
                                         );
                                     }
                                     if (block.type === 'etymology') {
@@ -107,9 +105,10 @@ const Timeline = ({ items, onExampleClick }) => {
                                     return null;
                                 })
                             ) : (
-                                <p className="text-(--text-secondary) leading-relaxed mb-4">
-                                    {item.desc}
-                                </p>
+                                <div
+                                    className="text-(--text-secondary) leading-relaxed mb-4"
+                                    dangerouslySetInnerHTML={{ __html: item.desc }}
+                                />
                             )}
                         </div>
 

@@ -24,6 +24,7 @@ const Title = ({
     const colors = {
         primary: 'var(--color-primary)',
         secondary: 'var(--color-secondary)',
+        success: 'var(--color-success)',
         accent: 'var(--color-accent)',
         text: 'var(--text-primary)',
         white: 'var(--white-color)',

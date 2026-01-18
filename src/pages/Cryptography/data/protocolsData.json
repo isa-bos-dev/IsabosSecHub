@@ -1,0 +1,219 @@
+{
+    "header": {
+        "title": "Protocolos Criptográficos Avanzados",
+        "description": "Explora las construcciones matemáticas avanzadas que garantizan anonimato y confianza sin autoridad central. Desde pruebas de conocimiento nulo hasta computación multiparte, descubre cómo las matemáticas resuelven el problema de la deshonestidad en el mundo digital."
+    },
+    "menu": [
+        {
+            "id": "intro",
+            "label": "Introducción y conceptos"
+        },
+        {
+            "id": "shamir-pass",
+            "label": "Protocolo de tres pasos"
+        },
+        {
+            "id": "secret-sharing",
+            "label": "Compartición de secretos"
+        },
+        {
+            "id": "blind-signatures",
+            "label": "Firmas ciegas"
+        },
+        {
+            "id": "zkp",
+            "label": "Pruebas de conocimiento nulo (ZKP)"
+        },
+        {
+            "id": "oblivious-transfer",
+            "label": "Transferencia inconsciente (OT)"
+        },
+        {
+            "id": "mpc",
+            "label": "Computación multiparte (MPC)"
+        },
+        {
+            "id": "future",
+            "label": "Futuro de la privacidad"
+        }
+    ],
+    "content": {
+        "intro": {
+            "title": "Más allá del cifrado de mensajes",
+            "subtitle": "Un desafío ontológico en el ecosistema digital",
+            "description": "Tradicionalmente, la criptografía se ha percibido como el arte de ocultar mensajes mediante el cifrado (confidencialidad). Sin embargo, en el ecosistema digital contemporáneo, nos enfrentamos a desafíos mucho más complejos que la simple protección de datos en reposo o en tránsito. Nos enfrentamos a un problema ontológico: <strong class='text-primary'>¿cómo pueden interactuar múltiples partes en un entorno donde no existe una autoridad central de confianza y donde los propios participantes pueden actuar de forma maliciosa?</strong><br/><br/>La respuesta reside en los <strong class='text-accent'>protocolos criptográficos</strong>. Estas no son meras herramientas, sino construcciones matemáticas sofisticadas, coreografías de algoritmos diseñadas para garantizar propiedades de seguridad avanzadas —como el anonimato, la computación privada, la equidad en el intercambio o la demostración de posesión sin revelación— que los criptosistemas básicos (cifrado simétrico/asimétrico) no pueden ofrecer por sí solos.",
+            "analysis": "La elegancia del álgebra abstracta y la teoría de números proporcionan soluciones definitivas al problema humano de la deshonestidad, permitiendo la colaboración técnica sin necesidad de confianza moral mutua.",
+            "icon": "Network"
+        },
+        "shamir-pass": {
+            "title": "Protocolo de tres pasos de Shamir",
+            "subtitle": "Comunicación sin intercambio de claves (Keyless)",
+            "description": "Propuesto por Adi Shamir, este protocolo aborda una premisa aparentemente imposible: establecer una comunicación secreta entre Alice y Bob <strong class='text-error'>sin que estos hayan intercambiado claves previamente</strong> ni tengan certificados digitales (PKI).<br/><br/>La piedra angular técnica es el uso de <strong class='text-success'>funciones de cifrado conmutativas</strong>. En matemáticas, una operación es conmutativa si el orden no altera el resultado. En criptografía, esto significa que el orden en que aplicamos dos cifrados diferentes no cambia el resultado final:<br/><div class='font-mono bg-black/20 p-2 rounded mt-2 text-center text-accent'>E<sub>kA</sub>(E<sub>kB</sub>(m)) = E<sub>kB</sub>(E<sub>kA</sub>(m))</div>",
+            "steps": [
+                {
+                    "step": "1. Cifrado inicial",
+                    "action": "Alice mete el mensaje en una caja y la cierra con su candado (Llave A). Envía la caja a Bob.",
+                    "math": "C₁ = E<sub>kA</sub>(m)"
+                },
+                {
+                    "step": "2. Doble cifrado",
+                    "action": "Bob recibe la caja. No puede abrirla, pero le pone SU propio candado (Llave B). La devuelve a Alice.",
+                    "math": "C₂ = E<sub>kB</sub>(C₁) = E<sub>kB</sub>(E<sub>kA</sub>(m))"
+                },
+                {
+                    "step": "3. Retirada de capa A",
+                    "action": "Alice recibe la caja con dos candados. Quita EL SUYO (Llave A) gracias a la conmutatividad. La devuelve a Bob.",
+                    "math": "C₃ = D<sub>kA</sub>(C₂) = E<sub>kB</sub>(m)"
+                },
+                {
+                    "step": "4. Descifrado final",
+                    "action": "Bob recibe la caja solo con su candado. Lo abre con su Llave B y recupera el mensaje.",
+                    "math": "m = D<sub>kB</sub>(C₃)"
+                }
+            ],
+            "analysis_vernam": {
+                "title": "Análisis de seguridad: ¿Por qué NO usar XOR (Vernam)?",
+                "desc": "Podríamos pensar en usar XOR (One-Time Pad) ya que es conmutativo. Sin embargo, esto es <strong class='text-error'>fatalmente inseguro</strong>. Un atacante (Eve) que intercepte los tres mensajes (C₁, C₂, C₃) puede recuperar el mensaje trivialmente operándolos entre sí:",
+                "math": "C₁ ⊕ C₂ ⊕ C₃ = (m ⊕ Kₐ) ⊕ (m ⊕ Kₐ ⊕ Kb) ⊕ (m ⊕ Kb) = m",
+                "conclusion": "Las claves se cancelan mutuamente debido a que x ⊕ x = 0. Por tanto, la conmutatividad por sí sola no basta; necesitamos seguridad computacional."
+            },
+            "solution_exp": {
+                "title": "La solución robusta: Exponenciación modular",
+                "desc": "Para garantizar seguridad, recurrimos al cuerpo finito Zₚ. La operación será la exponenciación modular, que es conmutativa y segura bajo la dificultad del <strong class='text-success'>logaritmo discreto</strong>.",
+                "formula": "C = mᵏ mod p",
+                "note": "Al usar exponentes, Eve (el atacante) no puede 'despejar' las claves ni el mensaje simplemente observando el tráfico, a menos que pueda resolver logaritmos discretos en tiempo polinomial."
+            },
+            "icon": "Shuffle"
+        },
+        "secret-sharing": {
+            "title": "Esquemas de compartición de secretos",
+            "subtitle": "El poder de la colaboración (Umbral m, n)",
+            "description": "En seguridad crítica (bancos centrales, lanzamiento de misiles, claves maestras de CA), la centralización es un pecado capital. Si un único individuo custodia una clave crítica, su pérdida, coacción o deshonestidad es catastrófica.<br/><br/>Los <strong class='text-info'>esquemas de umbral (m, n)</strong> distribuyen un secreto S en <em>n</em> fragmentos, de tal forma que se requiere la colaboración de al menos <em>m</em> participantes para reconstruirlo. Cualquier grupo de <em>m-1</em> participantes no obtiene absolutamente ninguna información sobre el secreto.",
+            "shamir_scheme": {
+                "title": "El esquema polinómico de Shamir",
+                "concept": "Este protocolo utiliza la elegancia de la interpolación polinómica de Lagrange. Matemáticamente, se necesitan <em>k</em> puntos para definir unívocamente un polinomio de grado <em>k-1</em>.",
+                "example": {
+                    "setup": "Queremos compartir el secreto S = 673 en un esquema (3, 5). Es decir, hay 5 participantes y se necesitan 3 para recuperar el secreto.",
+                    "math_poly": "Construimos un polinomio de grado 2 (m-1):<br/><span class='text-accent'>a(x) = S + a₁x + a₂x² (mod p)</span>",
+                    "values": "S = 673, p = 1931 (primo). Coeficientes aleatorios: a₁ = 806, a₂ = 436.",
+                    "function": "a(x) = 673 + 806x + 436x² (mod 1931)",
+                    "shares": [
+                        "Usuario 1 recibe a(1) = 1915",
+                        "Usuario 2 recibe a(2) = 167",
+                        "Usuario 3 recibe a(3) = ...",
+                        "Usuario 4 recibe a(4) = ...",
+                        "Usuario 5 recibe a(5) = ..."
+                    ]
+                },
+                "recovery": "Para recuperar S, cualesquiera 3 usuarios juntan sus puntos (x, y). Resuelven el sistema de ecuaciones (o usan interpolación de Lagrange) para hallar el término independiente <strong>a(0) = S</strong>. Con 2 puntos es matemáticamente imposible determinar S; hay infinitos polinomios que pasan por 2 puntos."
+            },
+            "warning": {
+                "title": "Reflexión: El gestor y el traidor",
+                "text": "Debemos ser cautos. Este esquema asume confianza absoluta en el <strong>gestor</strong> que genera el polinomio y reparte los fragmentos. Además, existe una vulnerabilidad sistémica: un usuario deshonesto podría entregar un fragmento falso al grupo durante la reconstrucción. Mientras los demás recuperan un secreto erróneo, el atacante (que tiene su fragmento real + el secreto erróneo de los otros) podría deducir el secreto verdadero. Esto se mitiga con esquemas de <strong>compartición de secretos verificable (VSS)</strong>."
+            },
+            "icon": "Users"
+        },
+        "blind-signatures": {
+            "title": "Firmas ciegas (Blind Signatures)",
+            "subtitle": "Anonimato y autenticación: El voto electrónico y el cash digital",
+            "description": "Ideadas por David Chaum, las firmas ciegas permiten que un usuario obtenga la validación (firma) de un mensaje por parte de una autoridad <strong class='text-accent'>sin que esta llegue a conocer el contenido de lo que firma</strong>. Es el equivalente digital de poner un documento en un sobre con papel carbón por fuera: la autoridad firma sobre el sobre, la marca se transfiere al documento interior, pero la autoridad nunca vio el documento.",
+            "steps": [
+                {
+                    "phase": "1. Cegado (Blinding)",
+                    "actor": "Usuario (Alice)",
+                    "desc": "Alice toma su mensaje <em>m</em> y lo 'ciega' multiplicándolo por un factor aleatorio <em>r</em> elevado a la clave pública <em>e</em> de la autoridad.",
+                    "math": "m' = m · rᵉ (mod n)"
+                },
+                {
+                    "phase": "2. Firma ciega",
+                    "actor": "Autoridad (Bob)",
+                    "desc": "Bob recibe el mensaje garabato <em>m'</em>. Como no puede revertir el cegado, simplemente lo firma con su clave privada <em>d</em>. Bob no sabe qué está firmando, pero autentica la transacción.",
+                    "math": "s' = (m')ᵈ (mod n)"
+                },
+                {
+                    "phase": "3. Descegado (Unblinding)",
+                    "actor": "Usuario (Alice)",
+                    "desc": "Alice recibe <em>s'</em>. Elimina el factor de cegado <em>r</em> multiplicando por su inverso. Gracias a la homomorfía de RSA, el <em>r</em> desaparece, dejando la firma pura de Bob sobre <em>m</em>.",
+                    "math": "s = s' · r⁻¹ = (m·rᵉ)ᵈ · r⁻¹ = mᵈ · rᵉᵈ · r⁻¹ = mᵈ (mod n)"
+                },
+                {
+                    "phase": "Resultado",
+                    "actor": "Público",
+                    "desc": "Alice tiene ahora un mensaje <em>m</em> firmado válidamente por Bob (<em>s</em>). Puede mostrarlo a cualquiera para probar que Bob lo autorizó. Si Bob ve el par (m, s), verificará que es su firma, pero <strong class='text-success'>no podrá vincularlo</strong> al momento en que firmó <em>m'</em>, garantizando anonimato total."
+                }
+            ],
+            "applications": "Fundamental para <strong>voto electrónico</strong> (la mesa electoral firma tu derecho a voto sin ver a quién votas) y <strong>dinero digital anónimo</strong> (el banco valida que tienes fondos sin saber dónde los gastas).",
+            "security_note": "Para evitar que Alice haga firmar 'un cheque en blanco' por millones, se usa la técnica de 'Cut and Choose': Alice presenta <em>n</em> sobres con la misma cantidad. El banco le pide abrir <em>n-1</em> para verificar que son honestos (ej. billetes de 10$). Si todos son correctos, el banco asume que el último también es de 10$ y lo firma ciegamente.",
+            "icon": "EyeOff"
+        },
+        "zkp": {
+            "title": "Pruebas de conocimiento nulo (ZKP)",
+            "subtitle": "Demostrar la verdad sin revelar el secreto",
+            "description": "Una <strong class='text-success'>prueba de conocimiento nulo (Zero-Knowledge Proof)</strong> es el 'Santo Grial' de la autenticación moderna. Permite a un 'probador' (Peggy) convencer a un 'verificador' (Victor) de que conoce un secreto <em>x</em>, sin revelar ni un solo bit de información sobre <em>x</em>, salvo el hecho de que lo conoce.",
+            "properties": [
+                {
+                    "name": "Corrección (Completeness)",
+                    "desc": "Si Peggy dice la verdad y conoce el secreto, Victor siempre quedará convencido."
+                },
+                {
+                    "name": "Robustez (Soundness)",
+                    "desc": "Si Peggy miente y NO conoce el secreto, la probabilidad de que logre engañar a Victor es despreciable."
+                },
+                {
+                    "name": "Conocimiento nulo (Zero-Knowledge)",
+                    "desc": "Después de la prueba, Victor no sabe nada más que 'Peggy conoce el secreto'. No puede derivar el secreto ni demostrar a un tercero que él lo conoce."
+                }
+            ],
+            "cave_analogy": {
+                "title": "Analogía: La cueva de Alí Babá",
+                "desc": "Imagina una cueva circular con una puerta mágica en el fondo que solo se abre con una palabra secreta. Peggy entra por un lado (A o B). Victor espera fuera y grita: '¡Sal por el lado A!'. Si Peggy conoce la palabra mágica, podrá abrir la puerta y salir por A, sin importar por dónde entró. Si no la conoce, solo podrá salir por A si tuvo suerte y entró por A (50% de probabilidad). Repitiendo esto <em>n</em> veces, la probabilidad de engaño cae a 1/2ⁿ."
+            },
+            "math_protocol": {
+                "title": "Protocolo Schnorr (Logaritmo discreto)",
+                "steps": [
+                    "<strong>1. Compromiso:</strong> Peggy elige un aleatorio <em>r</em> y envía <em>t = gʳ</em> a Victor.",
+                    "<strong>2. Desafío (Challenge):</strong> Victor envía un número aleatorio <em>c</em> (reto) a Peggy.",
+                    "<strong>3. Respuesta:</strong> Peggy calcula <em>s = r + c·x</em> (donde x es su secreto) y lo envía.",
+                    "<strong>4. Verificación:</strong> Victor comprueba si <em>gˢ = t · yᶜ</em> (donde y=gˣ es la clave pública). Si coincide, Peggy conoce x."
+                ],
+                "reasoning": "Peggy necesita <em>r</em> y <em>x</em> para construir <em>s</em>. Si no conociera <em>x</em>, no podría responder de forma coherente al desafío aleatorio <em>c</em>."
+            },
+            "icon": "Ghost"
+        },
+        "oblivious-transfer": {
+            "title": "Transferencia inconsciente (Oblivious Transfer)",
+            "subtitle": "El dilema del receptor y la privacidad mutua",
+            "description": "En el protocolo <strong>1-de-2 OT</strong>, un emisor posee dos secretos (S₀, S₁) y el receptor desea obtener uno de ellos (Sᵦ), con dos condiciones de privacidad estrictas:<br/>1. El emisor <strong class='text-error'>no sabe</strong> cuál secreto eligió el receptor.<br/>2. El receptor <strong class='text-error'>no aprende nada</strong> sobre el secreto que NO eligió.",
+            "egl_protocol": {
+                "title": "Protocolo EGL (Even, Goldreich, Lempel)",
+                "desc": "Basado en RSA. Implica generar dos claves públicas posibles. El receptor 'ciega' su elección dentro de una operación matemática. El emisor cifra ambos mensajes con las dos posibles claves, pero el receptor solo posee la clave de descifrado correspondiente a su elección.",
+                "importance": "Este protocolo es el bloque de construcción fundamental para la <strong>computación multipartita segura (MPC)</strong>. No se usa solo para enviar mensajes, sino para evaluar puertas lógicas AND/OR de forma privada."
+            },
+            "use_case": {
+                "title": "Caso de uso: Firma de contratos simultánea",
+                "desc": "Permite a dos partes intercambiar firmas digitales 'bit a bit'. Usando OT, Alice puede darle a Bob el bit N de su firma si y solo si Bob le da el bit N de la suya. Esto evita que alguien obtenga el contrato firmado y 'salga corriendo' antes de entregar su propia firma (Fair Exchange)."
+            },
+            "icon": "ArrowLeftRight"
+        },
+        "mpc": {
+            "title": "Computación multiparte segura (MPC)",
+            "subtitle": "Colaboración sin revelación: La democracia de los datos",
+            "description": "El objetivo final de los protocolos criptográficos: <em>n</em> partes quieren calcular conjuntamente el valor de una función pública <strong>f(x₁, ..., xₙ)</strong> sobre sus entradas privadas <strong>xᵢ</strong>, de tal manera que nadie vea la entrada de los demás, solo el resultado final.",
+            "yao_millionaire": {
+                "title": "El problema de los millonarios de Yao",
+                "problem": "Dos millonarios, Alice y Bob, quieren saber quién es más rico, pero ninguno quiere revelar a la otra persona (ni a un tercero) cuánto dinero tiene exactamente. Solo quieren saber un bit de información: ¿x > y?",
+                "solution": "Andrew Yao propuso un protocolo en 1982 que usa criptografía de clave pública para comparar valores. Esencialmente, Alice crea <em>n</em> cajas cerradas, donde la caja <em>i</em> contiene 'SÍ' si <em>i < x</em> y 'NO' si <em>i >= x</em>. Bob, usando <strong>transferencia inconsciente</strong>, recupera solo la caja correspondiente a su riqueza <em>y</em>. Bob ve la respuesta ('SÍ' o 'NO') pero Alice no sabe qué caja abrió Bob (no sabe <em>y</em>), y Bob no puede abrir las cajas de otros valores (no sabe <em>x</em>)."
+            },
+            "socialist_millionaire": {
+                "title": "Variante: El millonario socialista",
+                "desc": "Busca determinar si <strong>x = y</strong> (igualdad) en lugar de quién es mayor. Se utiliza ampliamente en protocolos modernos de mensajería (como <strong>Signal</strong> u <strong>OTR</strong>) para verificar que dos usuarios tienen la misma 'clave secreta compartida' sin enviarla por la red, autenticando el canal sin exponer el secreto (SMP - Socialist Millionaire Protocol)."
+            },
+            "icon": "Cpu"
+        },
+        "future": {
+            "title": "Futuro: Hacia una criptografía más humana",
+            "content": "Hemos trascendido la criptografía como herramienta de guerra (ocultación) para convertirla en una herramienta de <strong>gobernanza civil</strong>. Estos protocolos permiten gestionar matemáticamente la desconfianza inherente a la interacción humana.<br/><br/>¿Es posible construir una sociedad digital totalmente transparente en sus resultados (auditable) pero absolutamente privada en sus procesos (anonimato, secreto empresarial)? <strong class='text-success'>Los protocolos de conocimiento nulo y la computación multiparte nos dicen que sí.</strong> Estamos pavimentando el camino hacia esa utopía técnica, donde la privacidad no requiera aislamiento, sino matemáticas.",
+            "icon": "Globe"
+        }
+    }
+}

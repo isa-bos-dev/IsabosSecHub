@@ -86,7 +86,7 @@ const App = () => {
               { to: "/cryptography/simetrica", label: "Cifrado Simétrico" },
               { to: "/cryptography/hash", label: "Hash" },
               { to: "/cryptography/asimetrica", label: "Clave Pública" },
-              { to: "/cryptography/pki", label: "PKI" },
+              { to: "/cryptography/pki", label: "Infraestructura (PKI)" },
               { to: "/cryptography/protocolos", label: "Protocolos" },
               { to: "/cryptography/cuestionario", label: "Cuestionario" }
             ]}
