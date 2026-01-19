@@ -1,7 +1,7 @@
 {
     "header": {
         "title": "Criptografía Simétrica",
-        "description": "Arquitectura y mecanismos de los Cifrados en Flujo y en Bloque: de la teoría de Vernam al estándar AES."
+        "description": "Arquitectura y mecanismos de los cifrados en flujo y en bloque: de la teoría de Vernam al estándar AES."
     },
     "intro": "Como estudiosos de la seguridad de la información, debemos abordar esta disciplina no solo como una técnica, sino como la resolución de un conflicto fundamental entre la perfección teórica y la viabilidad práctica. En esta sección, analizaremos cómo hemos evolucionado desde el ideal de Vernam hasta la sofisticación algebraica del estándar AES.",
     "quote": {
@@ -189,6 +189,24 @@
                 },
                 {
                     "type": "section-header",
+                    "title": "Parámetros críticos de diseño"
+                },
+                {
+                    "type": "text",
+                    "value": "Todo cifrado de bloque se define por dos dimensiones fundamentales que determinan su seguridad y rendimiento. Estos parámetros son la respuesta directa al equilibrio entre eficiencia y resistencia criptoanalítica."
+                },
+                {
+                    "type": "definition",
+                    "term": "Longitud de bloque (Block Length)",
+                    "meaning": "Cantidad de bits que contiene el segmento que procesa el algoritmo. <br/><strong class='text-secondary'>Relación con la seguridad:</strong> Como bien señalas, un bloque mayor evita <strong class='text-secondary'>ataques de repetición</strong> y colisiones (Paradoja del Cumpleaños). Con bloques pequeños (64 bits), al cifrar muchos datos es probable que aparezcan patrones repetidos que filtran información. Por eso, el estándar de seguridad actual exige un <strong class='text-secondary'>mínimo de 128 bits</strong> (como en AES)."
+                },
+                {
+                    "type": "definition",
+                    "term": "Longitud de clave (Key Length)",
+                    "meaning": "Número de bits que componen el secreto compartido. <br/><strong class='text-secondary'>Relación con la seguridad:</strong> Define la complejidad frente a la <strong class='text-secondary'>Fuerza Bruta</strong>. Cuanto mayor es la clave, más combinaciones posibles existen, haciendo computacionalmente inviable que un atacante las pruebe todas para encontrar la correcta."
+                },
+                {
+                    "type": "section-header",
                     "title": "Advanced Encryption Standard (AES): el estándar de oro"
                 },
                 {
@@ -226,6 +244,62 @@
                 {
                     "type": "text",
                     "value": "La seguridad simétrica actual no descansa en el secreto del algoritmo, sino en la profundidad de su complejidad no lineal. Ante la computación cuántica, ¿bastará Rijndael (AES)? El debate queda abierto."
+                }
+            ]
+        },
+        {
+            "id": "taller",
+            "label": "Taller OpenSSL",
+            "icon": "Terminal",
+            "variant": "warning",
+            "content": [
+                {
+                    "type": "section-header",
+                    "title": "Laboratorio: Flujo completo de seguridad con OpenSSL"
+                },
+                {
+                    "type": "text",
+                    "value": "En este escenario simularemos un caso real de protección de datos corporativos. Realizaremos el ciclo de vida completo de la seguridad de la información: creación, cálculo de integridad (HUELLA), cifrado para confidencialidad, recuperación ante desastres y validación final de integridad."
+                },
+                {
+                    "type": "definition",
+                    "term": "Paso 1: Generación y línea base de integridad",
+                    "meaning": "Antes de proteger un activo, debemos 'fijar' su estado original. Al calcular el hash del archivo original, creamos una referencia inmutable (línea base) que nos permitirá detectar cualquier corrupción futura, ya sea por error técnico o manipulación maliciosa."
+                },
+                {
+                    "type": "terminal-example",
+                    "title": "1. Creación de prueba y cálculo de hash",
+                    "content": "# 1. Crear un archivo simulando datos confidenciales\necho \"Datos Corporativos Sensibles\" > backup.txt\n\n# 2. Calcular la 'identidad' criptográfica (Hash SHA-256) del archivo original\n# Esto nos servirá de testigo de integridad.\nopenssl dgst -sha256 -out original.sha256 backup.txt\n\n# 3. Verificamos el contenido del hash generado\ncat original.sha256"
+                },
+                {
+                    "type": "definition",
+                    "term": "Paso 2: Protección de confidencialidad (cifrado)",
+                    "meaning": "Aplicamos criptografía simétrica (AES-256-CBC). Es crítico usar PBKDF2 con un alto número de iteraciones (ej. 100,000) para que la derivación de la clave a partir de la contraseña sea lenta y costosa para un atacante, mitigando ataques de fuerza bruta."
+                },
+                {
+                    "type": "terminal-example",
+                    "title": "2. Cifrado con AES-256-CBC endurecido",
+                    "content": "# Ciframos (-aes-256-cbc) endureciendo la clave:\n# -salt: Añade aleatoriedad para evitar Rainbow Tables.\n# -pbkdf2: Derivación de clave moderna.\n# -iter 100000: Obliga a realizar 100k operaciones hash (costoso para el atacante).\n\nopenssl enc -aes-256-cbc -salt -pbkdf2 -iter 100000 -in backup.txt -out backup.enc\n\n# > El sistema solicitará una contraseña. Usa una robusta."
+                },
+                {
+                    "type": "definition",
+                    "term": "Paso 3: Recuperación de datos (descifrado)",
+                    "meaning": "Para recuperar la información, el receptor debe conocer no solo la contraseña, sino los parámetros exactos de cifrado (algoritmo, KDF e iteraciones). Sin ellos, el descifrado fallará matemáticamente."
+                },
+                {
+                    "type": "terminal-example",
+                    "title": "3. Descifrado y restauración",
+                    "content": "# IMPORTANTE: Debemos especificar las mismas iteraciones (-iter 100000)\n# Si omitimos este parámetro, OpenSSL usará el default y fallará al derivar la clave.\n\nopenssl enc -d -aes-256-cbc -pbkdf2 -iter 100000 -in backup.enc -out recuperado.txt\n\n# > Introduce la misma contraseña usada en el paso 2."
+                },
+                {
+                    "type": "definition",
+                    "term": "Paso 4: Validación final de integridad",
+                    "meaning": "Finalmente, cerramos el ciclo de confianza. Comparamos el hash del archivo recuperado con la línea base original. Si son idénticos, garantizamos que la integridad se ha mantenido durante todo el proceso de almacenamiento y recuperación."
+                },
+                {
+                    "type": "terminal-example",
+                    "title": "4. Verificación de integridad post-recuperación",
+                    "content": "# 1. Calculamos el hash del archivo nuevo (recuperado)\nopenssl dgst -sha256 -out recuperado.sha256 recuperado.txt\n\n# 2. Verificación automática (Best Practice)\n# Usamos 'diff -s' para comparar archivos binarios o de texto sin error humano\n\ndiff -s original.sha256 recuperado.sha256\n\n# > Salida esperada: \"Files ... are identical\""
                 }
             ]
         }

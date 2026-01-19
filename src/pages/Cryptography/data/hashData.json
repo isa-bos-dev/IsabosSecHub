@@ -205,6 +205,21 @@
       }
     ]
   },
+  "openSslLab": {
+    "title": "Taller Práctico: Hashing con OpenSSL",
+    "steps": [
+      {
+        "title": "Calculando huellas digitales",
+        "desc": "Generación de hashes SHA-256 para verificación de integridad.",
+        "command": "# Calcular el hash SHA-256 de un archivo\nopenssl dgst -sha256 archivo.txt\n\n# Guardar la salida en un archivo para verificaciones futuras\nopenssl dgst -sha256 -out hash.txt archivo.txt"
+      },
+      {
+        "title": "Verificación manual",
+        "desc": "Comparar la huella actual con la original.",
+        "command": "# Verificar visualmente\ncat hash.txt\nopenssl dgst -sha256 archivo_recuperado.txt\n\n> Si los hashes coinciden carácter a carácter, la integridad está garantizada."
+      }
+    ]
+  },
   "conclusion": {
     "content": "La criptografía es tan fuerte como su eslabón más débil. En el mundo digital, las funciones hash son el acero que forja ese eslabón, permitiéndonos confiar en datos que viajan por redes hostiles sin ser corrompidos.",
     "author": "Bruce Schneier"

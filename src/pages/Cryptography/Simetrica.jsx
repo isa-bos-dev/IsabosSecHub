@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Zap, Cpu, Box, Layers, Hash, ShieldAlert, Key, Grid, Lock, ArrowRight, Table, Radio, X } from 'lucide-react';
+import { Zap, Cpu, Box, Layers, Hash, ShieldAlert, Key, Grid, Lock, ArrowRight, Table, Radio, X, Terminal } from 'lucide-react';
 import PageHeader from '../../components/ui/PageHeader';
 import Card from '../../components/ui/Card';
 import Title from '../../components/ui/Title';
@@ -33,7 +33,8 @@ const iconMap = {
     Zap,
     Cpu,
     Box,
-    Radio
+    Radio,
+    Terminal
 };
 
 const Simetrica = () => {
@@ -50,7 +51,7 @@ const Simetrica = () => {
             state: {
                 imageSrc: infographicImg,
                 title: 'Cifrado Simétrico: Flujo vs Bloque',
-                description: 'Comparativa visual entre Cifrado en Flujo y Cifrado en Bloque.'
+                description: 'Comparativa visual entre cifrado en flujo y cifrado en bloque.'
             }
         });
     };
@@ -63,7 +64,7 @@ const Simetrica = () => {
             case 'section-header':
                 return (
                     <div key={idx} className="mt-12 mb-6 border-b border-(--text-tertiary)/30 pb-2">
-                        <h3 className="text-2xl font-bold text-(--text-success) flex items-center gap-3">
+                        <h3 className={`text-2xl font-bold flex items-center gap-3 text-${variant}`}>
                             <Layers className="w-6 h-6" style={{ color: activeColorVar }} />
                             {content.title}
                         </h3>
@@ -76,7 +77,7 @@ const Simetrica = () => {
             case 'highlight':
                 return (
                     <div key={idx} className={`my-8 p-6 bg-${variant}/10 border-l-4 rounded-r-xl shadow-lg border-${variant}`}>
-                        <p className="text-(--text-success) italic font-medium">
+                        <p className={`italic font-medium text-${variant}`}>
                             {content.value}
                         </p>
                     </div>
@@ -89,9 +90,10 @@ const Simetrica = () => {
                             <Key className="w-5 h-5" />
                             {content.term}
                         </h4>
-                        <p className="text-(--text-secondary) leading-relaxed">
-                            {content.meaning}
-                        </p>
+                        <p
+                            className="text-(--text-secondary) leading-relaxed"
+                            dangerouslySetInnerHTML={{ __html: content.meaning }}
+                        />
                     </div>
                 );
 

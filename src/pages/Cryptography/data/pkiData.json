@@ -1,7 +1,7 @@
 {
     "header": {
-        "title": "Infraestructura de Clave Pública (PKI)",
-        "description": "Arquitectura, Estándares y la Realidad del Despliegue en la Confianza Digital."
+        "title": "Infraestructura de clave pública (PKI)",
+        "description": "Arquitectura, estándares y la realidad del despliegue en la confianza digital."
     },
     "menu": [
         {
@@ -13,7 +13,7 @@
             "label": "Ecosistema de confianza"
         },
         {
-            "id": "certificates",
+            "id": "lifecycle",
             "label": "Ciclo de vida y validación"
         },
         {
@@ -29,20 +29,24 @@
             "label": "Normas PKCS y RSA avanzado"
         },
         {
-            "id": "implementation",
-            "label": "Generación y firma"
-        },
-        {
             "id": "representation",
             "label": "Datos: ASN.1, DER, PEM"
         },
         {
-            "id": "practice",
-            "label": "La PKI en la práctica"
+            "id": "lab-pki-complete",
+            "label": "Taller OpenSSL: gestión de certificados"
         },
         {
-            "id": "future",
-            "label": "Futuro"
+            "id": "lab-mtls",
+            "label": "Taller OpenSSL: Autenticación mTLS"
+        },
+        {
+            "id": "practice",
+            "label": "Casos de estudio y riesgos reales"
+        },
+        {
+            "id": "risks",
+            "label": "Riesgos en la gestión"
         }
     ],
     "content": {
@@ -51,6 +55,45 @@
             "subtitle": "La incertidumbre de la identidad en el espacio cifrado",
             "description": "En el ámbito de la seguridad de la información, la criptografía de clave pública resolvió con elegancia el problema de la distribución de secretos. Sin embargo, esta solución técnica introdujo un dilema ontológico: la incertidumbre de la identidad. ¿Cómo podemos asegurar que una clave pública pertenece efectivamente a la entidad que dice ser su titular? Sin una respuesta robusta, el sistema colapsa ante ataques de suplantación y de 'hombre en el medio'.\n\nLa <strong class='text-success'>Infraestructura de Clave Pública (PKI*)</strong> se constituye como la respuesta sistémica a este vacío. No se limita a un mero despliegue de software; representa un ecosistema complejo de procesos, roles y especificaciones técnicas diseñadas para vincular identidades con sus respectivas claves mediante certificados digitales. Esta infraestructura es, en esencia, el andamiaje sobre el que descansa la confianza digital en entornos abiertos, permitiendo que la autenticidad, la integridad y el no repudio dejen de ser conceptos teóricos para convertirse en realidades operativas.<br/><br/><span class='text-xs italic text-(--text-tertiary)'>* Public Key Infrastructure</span>",
             "icon": "Fingerprint"
+        },
+        "lab-pki-complete": {
+            "title": "Taller OpenSSL: gestión de certificados",
+            "subtitle": "Simulación de una autoridad de certificación (CA) corporativa",
+            "description": "En este escenario avanzado de ingeniería, asumiremos el rol de arquitectos de seguridad de una organización ficticia 'Laboratorio Corp'. Construiremos una CA raíz de confianza desde cero, emitiremos certificados para nuestros servidores web y verificaremos la cadena de confianza completa.",
+            "steps": [
+                {
+                    "title": "Paso 1: Creación de la autoridad de certificación (CA)",
+                    "desc": "Generamos la llave privada y el certificado raíz de nuestra entidad de confianza. Usamos RSA de 4096 bits para máxima seguridad y una validez estándar de 1 año para laboratorio.",
+                    "content": "# 1. Generar la clave privada de la CA (con password robusta)\nopenssl genrsa -aes256 -out laboratorio-ca.key 4096\n\n# 2. Generar el certificado auto-firmado de la CA (Root Certificate)\n# -x509: El estándar que define CAs mediante autofirma\n# -days 365: Validez de un año\n# -subj: Automatiza los datos (CN=Laboratorio Root CA)\n\nopenssl req -new -x509 -days 365 -key laboratorio-ca.key -sha256 -out laboratorio-ca.crt -subj \"/C=GB/ST=England/L=London/O=Laboratorio Corp/CN=Laboratorio Root CA\""
+                },
+                {
+                    "title": "Paso 2: Generación de clave y CSR para el servidor",
+                    "desc": "Preparamos la identidad del servidor web (london-secure.com). Creamos su clave privada (2048 bits es suficiente para servidores finales) y la Solicitud de Firma de Certificado (CSR).",
+                    "content": "# 1. Generar clave privada del servidor (sin password para arranque automático)\nopenssl genrsa -out servidor.key 2048\n\n# 2. Crear la solicitud de firma (CSR)\n# Es CRÍTICO que el Common Name (CN) coincida con el dominio\n\nopenssl req -new -key servidor.key -out servidor.csr -subj \"/C=GB/ST=England/L=London/O=Servicios Web/CN=london-secure.com\""
+                },
+                {
+                    "title": "Paso 3: Definición de extensiones (SAN)",
+                    "desc": "Los navegadores modernos (Chrome/Edge) exigen el campo Subject Alternative Name (SAN). Creamos un archivo de configuración para inyectar esta extensión.",
+                    "content": "# Crear archivo de configuración de extensiones v3.ext\n# Esto define que el certificado es para servidor y su DNS alternativo\n\necho \"authorityKeyIdentifier=keyid,issuer\nbasicConstraints=CA:FALSE\nkeyUsage = digitalSignature, keyEncipherment\nextendedKeyUsage = serverAuth\nsubjectAltName = @alt_names\n\n[alt_names]\nDNS.1 = london-secure.com\" > v3.ext"
+                },
+                {
+                    "title": "Paso 4: Firma del certificado",
+                    "desc": "La CA actúa como notario digital y valida la solicitud (CSR), emitiendo un certificado válido firmado con su clave raíz y las extensiones SAN.",
+                    "content": "# Firmar la CSR con la clave de la CA y las extensiones SAN\n# -CA: Certificado de la autoridad\n# -CAkey: Clave privada de la autoridad\n# -CAcreateserial: Crea número de serie único\n\nopenssl x509 -req -in servidor.csr -CA laboratorio-ca.crt -CAkey laboratorio-ca.key -CAcreateserial -out servidor.crt -days 365 -sha256 -extfile v3.ext\n\n# Inspeccionar el certificado (Verificar emisor, sujeto y extensiones)\nopenssl x509 -in servidor.crt -text -noout"
+                },
+                {
+                    "title": "Paso 5: Despliegue y prueba de fallo (Untrusted)",
+                    "desc": "Levantamos el servidor y simulamos el acceso. Como el sistema operativo AÚN NO confía en nuestra CA casera, el navegador debe protegernos bloqueando la conexión.",
+                    "content": "# 1. Mapear dominio local (Hosts)\n# Editamos hosts para que 'london-secure.com' apunte a mi máquina (127.0.0.1)\n# [Win]: drivers/etc/hosts | [Linux/Mac]: /etc/hosts\n\n# 2. Arrancar servidor HTTPS en puerto 443\nopenssl s_server -cert servidor.crt -key servidor.key -www -accept 443\n\n# 3. Prueba de acceso (Fallo esperado)\n# Navega a https://london-secure.com\n# RESULTADO: Alerta de seguridad 'NET::ERR_CERT_AUTHORITY_INVALID'.\n# Esto es CORRECTO: El sistema no conoce a 'Laboratorio Corp'."
+                },
+                {
+                    "title": "Paso 6: Estableciendo la confianza (Trust)",
+                    "desc": "Cerramos el círculo. Instalamos el certificado raíz de nuestra CA en el almacén de confianza del sistema. Ahora, el navegador verificará la firma, verá que confía en el firmante (nosotros) y mostrará el candado verde.",
+                    "content": "# Con el servidor aún corriendo:\n\n# 1. Instalar 'laboratorio-ca.crt' (Ver nota abajo para tu SO)\n# 2. Reiniciar el navegador (Crucial para que lea el nuevo almacén)\n# 3. Acceder de nuevo a https://london-secure.com\n\n# RESULTADO: Candado Verde y acceso permitido.\n# Has creado tu propia identidad digital confiable.",
+                    "note": "[Win Home]: Doble clic .crt > Instalar > Máquina local > 'Entidades de certificación raíz de confianza'.\n[Win Pro]: Ejecutar 'certmgr.msc' > Importar en 'Entidades de certificación raíz'.\n[MacOS]: Llaveros > Sistema > Arrastrar .crt > Doble clic > Confiar > 'Confiar siempre'.\n[Linux]: cp laboratorio-ca.crt /usr/local/share/ca-certificates/ && update-ca-certificates"
+                }
+            ],
+            "icon": "Terminal"
         },
         "ecosystem": {
             "title": "El ecosistema de confianza",
@@ -80,7 +123,41 @@
             ],
             "icon": "Sitemap"
         },
-        "certificates": {
+        "lab-mtls": {
+            "title": "Taller OpenSSL: Autenticación Mutua (mTLS)",
+            "subtitle": "Autenticación de desarrolladores",
+            "description": "Ahora que tenemos un servidor seguro, debemos garantizar que solo los desarrolladores autorizados de 'Laboratorio Corp' puedan acceder a áreas restringidas. Implementaremos <strong class='text-success'>mTLS (Mutual TLS)</strong>, donde el servidor también autentica al cliente solicitando su certificado personal.",
+            "steps": [
+                {
+                    "title": "Paso 1: Generar identidad del desarrollador",
+                    "desc": "Creamos la clave privada y la solicitud (CSR) para el desarrollador. Es vital diferenciar roles: estos no son certificados de servidor, sino de 'Autenticación de Cliente'. Indique su email corporativo en el campo OU.",
+                    "content": "# 1. Generar clave privada del desarrollador\nopenssl genrsa -out desarrollador.key 2048\n\n# 2. Generar CSR del cliente (Incluir email en OU)\n# IMPORTANTE: CN debe ser el nombre del desarrollador\nopenssl req -new -key desarrollador.key -out desarrollador.csr -subj \"/C=GB/ST=England/L=London/O=Laboratorio Corp/OU=admin@uoc.edu/CN=Desarrollador Senior\""
+                },
+                {
+                    "title": "Paso 2: Firma con extensiones (clientAuth)",
+                    "desc": "El usuario no es un servidor. Debemos indicar explícitamente en el certificado que su uso legítimo es la autenticación de cliente (clientAuth). Si no lo hacemos, algunos servidores estrictos podrían rechazarlo.",
+                    "content": "# 1. Crear perfil de extensiones para Cliente\necho \"extendedKeyUsage = clientAuth, emailProtection\" > cliente.ext\n\n# 2. Firmar el certificado aplicando las restricciones\n# -extfile cliente.ext: Inyecta las reglas de uso\nopenssl x509 -req -days 365 -in desarrollador.csr -CA laboratorio-ca.crt -CAkey laboratorio-ca.key -CAcreateserial -out desarrollador.crt -sha256 -extfile cliente.ext"
+                },
+                {
+                    "title": "Paso 3: Empaquetar credenciales (PKCS#12)",
+                    "desc": "El formato <strong>PKCS#12</strong> (extensión .p12 o .pfx) es un <strong>'maletín digital'</strong> cifrado. Actúa como un contenedor portable que almacena simultáneamente tu <strong>Clave Privada</strong> (tu identidad secreta) y tu <strong>Certificado Público</strong> (tu credencial), protegidos por una contraseña única. Es el estándar universal para transportar identidades digitales completas e instalarlas en navegadores o sistemas operativos.",
+                    "content": "# Exportar a PKCS#12 (Requiere password de exportación)\n# Este archivo 'desarrollador.p12' es lo que se instala en el navegador\nopenssl pkcs12 -export -out desarrollador.p12 -inkey desarrollador.key -in desarrollador.crt -certfile laboratorio-ca.crt"
+                },
+                {
+                    "title": "Paso 4: Configurar servidor mTLS",
+                    "desc": "Levantamos nuevamente el servidor, pero esta vez FORZAMOS la validación del certificado cliente (-Verify 1). Si el cliente no presenta un certificado firmado por nuestra CA, la conexión se rechaza.",
+                    "content": "# Arrancar servidor en modo mTLS\n# -Verify 1: Solicita y verifica el certificado del cliente (profundidad 1)\n# -CAfile: La lista de CAs en las que el servidor confía para validar clientes\n\nopenssl s_server -cert servidor.crt -key servidor.key -www -accept 443 -Verify 1 -CAfile laboratorio-ca.crt"
+                },
+                {
+                    "title": "Paso 5: Autenticación exitosa",
+                    "desc": "Importamos el .p12 en el navegador y accedemos. El servidor validará criptográficamente nuestra identidad.",
+                    "content": "# 1. Importar 'desarrollador.p12' en el navegador (Almacén Personal)\n# 2. Acceder a https://london-secure.com\n# 3. El navegador solicitará qué certificado usar (Client Certificate Selection)\n# 4. Seleccionar 'Desarrollador Senior'\n\n# RESULTADO: Acceso concedido + Detalles del certificado cliente en la respuesta HTML.",
+                    "note": "[Chrome/Edge]: Configuración > Privacidad > Seguridad > Gestionar certificados > Personal > Importar (.p12).\n[Firefox]: Ajustes > Privacidad > Certificados > Ver certificados > Sus certificados > Importar."
+                }
+            ],
+            "icon": "User"
+        },
+        "lifecycle": {
             "title": "La ontología del certificado",
             "subtitle": "Ciclo de vida, generación y validación",
             "definition": "Un certificado digital de clave pública es una estructura de datos que vincula una clave pública a una identidad. Esta vinculación se produce haciendo que una autoridad de certificación de confianza firme el certificado digital.",
@@ -279,39 +356,6 @@
             ],
             "icon": "BookOpen"
         },
-        "implementation": {
-            "title": "Taller práctico: OpenSSL",
-            "subtitle": "Generación de claves, CSR y firma digital",
-            "description": "La criptografía no es solo teoría; es operativa. En este taller simularemos el rol de un administrador generando la infraestructura base de una identidad digital usando <strong>OpenSSL</strong>, el estándar de facto en la industria.<br/><br/><span class='text-sm text-info bg-info/10 px-2 py-1 rounded inline-block border border-info/20'><strong>Compatibilidad:</strong> Estos comandos son universales en Linux y macOS. En Windows, recomendamos ejecutar esto desde <strong>Git Bash</strong> o <strong>WSL</strong> para tener acceso nativo a OpenSSL.</span>",
-            "steps": [
-                {
-                    "title": "1. Generar clave privada (RSA)",
-                    "cmd": "openssl genrsa -out privada.key 2048",
-                    "explanation": "Generamos una clave RSA de 2048 bits. Esta es la joya de la corona; quien tenga este archivo posee la identidad. <strong>NUNCA</strong> debe salir del servidor (o HSM)."
-                },
-                {
-                    "title": "2. Extraer clave pública",
-                    "cmd": "openssl rsa -in privada.key -pubout -out publica.pem",
-                    "explanation": "Derivamos la parte pública de la privada. Este archivo <code>.pem</code> es lo que distribuimos al mundo para que nos cifren mensajes."
-                },
-                {
-                    "title": "3. Crear solicitud de firma (CSR)",
-                    "cmd": "openssl req -new -key privada.key -out solicitud.csr",
-                    "explanation": "Creamos un contenedor (PKCS#10) con nuestra Clave Pública y nuestros datos de identidad (País, Organización, Common Name). Esto es lo que enviamos a la CA para que nos certifique."
-                },
-                {
-                    "title": "4. Auto-firmar certificado (Simulación CA)",
-                    "cmd": "openssl x509 -req -days 365 -in solicitud.csr -signkey privada.key -out certificado.crt",
-                    "explanation": "En un entorno real, la CA firmaría esto. Aquí, actuamos como nuestra propia CA (Self-Signed) firmando el CSR con nuestra propia clave privada. Obtenemos un certificado X.509 válido por 1 año."
-                },
-                {
-                    "title": "5. Inspeccionar el certificado",
-                    "cmd": "openssl x509 -in certificado.crt -text -noout",
-                    "explanation": "Decodificamos el binario X.509 a texto legible para verificar: Emisor (Issuer), Sujeto (Subject), Validez y la Firma Digital."
-                }
-            ],
-            "icon": "Terminal"
-        },
         "representation": {
             "title": "Representación de datos",
             "subtitle": "De la abstracción al bit",
@@ -342,7 +386,7 @@
             "icon": "Code"
         },
         "practice": {
-            "title": "La PKI en la práctica",
+            "title": "Casos de estudio y riesgos reales",
             "subtitle": "Luces, sombras y riesgos reales",
             "intro_concept": "El despliegue de HTTPS a nivel global ha revelado debilidades estructurales que no existen en el papel. El problema fundamental reside en la <strong>centralización y transitividad de la confianza</strong>: cualquier Autoridad de Certificación (CA) en la que tu navegador confíe tiene el poder técnico de firmar un certificado válido para *cualquier* dominio del mundo (google.com, tu-banco.com), sin que el dueño real del dominio lo sepa.",
             "intro_title": "¿Por qué usamos este modelo si tiene vulnerabilidades?",
@@ -381,7 +425,7 @@
             ],
             "icon": "GlobeLock"
         },
-        "future": {
+        "risks": {
             "title": "Hacia una confianza robusta",
             "content": "Hemos recorrido desde la ontología de X.509 hasta la lógica de RSAES-OAEP. La PKI es robusta en su teoría, pero frágil en su implementación humana y administrativa. El DNI electrónico 3.0 ejemplifica la excelencia técnica mediante la separación de funciones (pares de claves distintos para Autenticación y Firma), pero también subraya el fracaso de la usabilidad en el mundo real.<br/><br/>La pregunta que debemos trasladar al futuro es de índole arquitectónica: <span class='text-success font-bold'>en un mundo que tiende a la descentralización, ¿es sostenible mantener la confianza global delegada en unos pocos centenares de autoridades de certificación, o es el momento de transitar hacia modelos de confianza distribuidos y resilientes?</span>",
             "icon": "ShieldCheck"

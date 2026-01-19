@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
     Network, History, Shuffle, Key, Dices, PenTool,
     ShieldAlert, Zap, Cpu, Globe, ChevronRight,
-    Lock, Unlock, ArrowRight, FileText
+    Lock, Unlock, ArrowRight, FileText, Terminal
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import PageHeader from '../../components/ui/PageHeader';
@@ -23,7 +23,8 @@ const iconMap = {
     ShieldAlert,
     Zap,
     Cpu,
-    Globe
+    Globe,
+    Terminal
 };
 
 const Asimetrica = () => {
@@ -425,6 +426,76 @@ const Asimetrica = () => {
                         <div className="p-6 bg-warning/5 rounded-xl border-l-4 border-warning">
                             <h4 className="font-bold text-warning mb-2 uppercase text-xs tracking-wider">Análisis del Profesor</h4>
                             <p className="text-(--text-primary)">{currentContent.analysis}</p>
+                        </div>
+                    </div>
+                );
+
+            case 'hybrid':
+                return (
+                    <div className="space-y-8 animate-fade-in">
+                        {/* Header Section */}
+                        <div className="bg-(--bg-secondary) p-6 rounded-xl border-l-4 border-accent shadow-sm">
+                            <h3 className="text-xl font-bold text-accent mb-2">{currentContent.subtitle}</h3>
+                            <p className="text-(--text-secondary) mb-4 text-lg">{currentContent.description}</p>
+                        </div>
+
+                        {/* Theoretical Concept */}
+                        <div className="bg-(--bg-primary) p-6 rounded-xl border border-(--text-tertiary)/20">
+                            <h4 className="font-bold text-(--text-primary) mb-2 flex items-center gap-2">
+                                <Key size={20} className="text-primary" />
+                                {currentContent.concept.title}
+                            </h4>
+                            <div className="text-(--text-secondary) leading-relaxed" dangerouslySetInnerHTML={{ __html: currentContent.concept.text }} />
+                        </div>
+
+                        {/* Practical Example */}
+                        <div className="space-y-6">
+                            <h3 className="text-lg font-bold text-(--text-primary) border-b border-(--text-tertiary)/30 pb-2">
+                                {currentContent.example.title}
+                            </h3>
+                            <div className="text-(--text-primaryic px-6 py-4 bg-primary/10 rounded-xl border-l-4 border-primary transition-all duration-300 hover:scale-[1.01] shadow-sm hover:shadow-primary/20">
+                                <span className="font-bold text-primary not-italic uppercase text-xs block mb-1">Escenario</span>
+                                <span dangerouslySetInnerHTML={{ __html: currentContent.example.scenario }} />
+                            </div>
+
+                            {/* Protocol Phases Grid */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {currentContent.example.steps.map((step, idx) => (
+                                    <div key={idx} className="p-5 bg-(--bg-secondary) rounded-xl border border-(--text-tertiary)/30 hover:border-accent/50 transition-colors">
+                                        <h5 className="font-bold text-accent text-sm uppercase mb-3">{step.phase}</h5>
+                                        <div className="bg-(--bg-code) p-3 rounded mb-3 text-center">
+                                            <code className="text-(--white-color) font-mono text-lg">
+                                                <span dangerouslySetInnerHTML={{ __html: step.math }} />
+                                            </code>
+                                        </div>
+                                        <p className="text-xs text-(--text-secondary)" dangerouslySetInnerHTML={{ __html: step.desc }} />
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Recovery Logic */}
+                            <div className="bg-success/5 p-6 rounded-xl border border-success/20">
+                                <h4 className="font-bold text-success mb-4 flex items-center gap-2">
+                                    <Unlock size={20} />
+                                    {currentContent.example.recovery.title}
+                                </h4>
+                                <ul className="space-y-4">
+                                    {currentContent.example.recovery.steps.map((step, idx) => (
+                                        <li key={idx} className="flex gap-3 text-sm text-(--text-secondary)">
+                                            <span className="shrink-0 w-6 h-6 rounded-full bg-success/20 text-success flex items-center justify-center font-bold text-xs mt-0.5">
+                                                {idx + 1}
+                                            </span>
+                                            <div dangerouslySetInnerHTML={{ __html: step }} />
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            {/* Conclusion */}
+                            <div className="text-(--text-primary) italic px-6 py-4 bg-primary/10 rounded-xl border-l-4 border-primary transition-all duration-300 hover:scale-[1.01] shadow-sm hover:shadow-primary/20">
+                                <span className="font-bold text-primary not-italic uppercase text-xs block mb-1">Conclusión</span>
+                                <span dangerouslySetInnerHTML={{ __html: currentContent.example.conclusion }} />
+                            </div>
                         </div>
                     </div>
                 );

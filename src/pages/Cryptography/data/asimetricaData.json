@@ -1,7 +1,7 @@
 {
     "header": {
-        "title": "Fundamentos y Aplicaciones de la Criptografía de Clave Pública",
-        "description": "Una Perspectiva Técnica y Educativa sobre la infraestructura matemática que permite la confianza en un mundo digital deslocalizado."
+        "title": "Cifrado asimétrico (clave pública y privada)",
+        "description": "Fundamentos de la criptografía de doble clave: cómo la asimetría matemática permite la seguridad y autenticación digital."
     },
     "quote": {
         "text": "Las decisiones que tomamos hoy sobre la seguridad de las comunicaciones determinarán el tipo de sociedad en la que viviremos mañana.",
@@ -43,6 +43,10 @@
         {
             "id": "post-quantum",
             "label": "Criptografía poscuántica"
+        },
+        {
+            "id": "hybrid",
+            "label": "Análisis de Esquemas Híbridos"
         },
         {
             "id": "future",
@@ -249,6 +253,46 @@
                 "Árboles de Hash (esquema de Merkle)."
             ],
             "analysis": "Estamos en una carrera contra el tiempo. La transición hacia algoritmos poscuánticos es compleja no solo por la matemática implicada, sino por la falta de madurez y estandarización global. El colapso del logaritmo discreto no es una posibilidad teórica lejana; es un evento para el cual nuestra infraestructura actual no está preparada.",
+            "icon": "Cpu"
+        },
+        "hybrid": {
+            "title": "Análisis de esquemas híbridos",
+            "subtitle": "Metodología de recuperación de mensajes",
+            "description": "En criptografía avanzada es común encontrar esquemas 'ad-hoc' que combinan elementos estándar (como RSA) de formas no convencionales. Aprenderemos a diseccionarlos para recuperar la información.",
+            "concept": {
+                "title": "Resolución teórica",
+                "text": "Para resolver este problema, Bernardo debe aislar la incógnita <strong>m</strong> de la tercera componente del texto cifrado (c₃ = x² · m mod N). El obstáculo es que no conoce el valor aleatorio x, pero puede recuperarlo utilizando las propiedades de RSA."
+            },
+            "example": {
+                "title": "Pasos de resolución",
+                "scenario": "Bernardo recibe el criptograma c = (c₁, c₂, c₃) y posee sus claves privadas (d₁, d₂).",
+                "steps": [
+                    {
+                        "phase": "1. Recuperar x",
+                        "math": "x &equiv; c<sub>1</sub><sup>d<sub>1</sub></sup> (mod N)",
+                        "desc": "<strong>¿De dónde sale esto?</strong> Es la fórmula estándar de <strong>descifrado RSA</strong> (ver sección RSA). Como c₁ se creó elevando 'x' a la e₁, lo revertimos elevando a d₁."
+                    },
+                    {
+                        "phase": "2. Máscara Inversa",
+                        "math": "inv &equiv; (x<sup>2</sup>)<sup>-1</sup> (mod N)",
+                        "desc": "<strong>¿De dónde sale esto?</strong> Necesitamos 'eliminar' el x² que está multiplicando al mensaje. En <strong>aritmética modular</strong> (ver Fundamentos), para anular una multiplicación, multiplicamos por el <strong>inverso modular</strong>."
+                    },
+                    {
+                        "phase": "3. Despejar m",
+                        "math": "m &equiv; c<sub>3</sub> &middot; (x<sup>2</sup>)<sup>-1</sup> (mod N)",
+                        "desc": "<strong>¿De dónde sale esto?</strong> Es álgebra simple: Teníamos <em>c₃ = m · x²</em>. Al multiplicar ambos lados por el inverso de x², cancelamos la máscara y nos quedamos solo con <strong>m</strong>."
+                    }
+                ],
+                "recovery": {
+                    "title": "Ejemplo práctico numérico (p=3, q=11)",
+                    "steps": [
+                        "<strong>1. Configuración:</strong> N=33. Bernardo elige claves públicas e₁=3, e₂=7. Calcula privadas d₁=7, d₂=3.",
+                        "<strong>2. Cifrado (Alicia):</strong> Quiere enviar <strong>m=5</strong>. Elige aleatorio x=4.<br/>Calcula c₁=4³ mod 33 = <strong>31</strong>. c₂=4⁷ mod 33 = <strong>16</strong>. c₃ = 4²·5 mod 33 = 16·5 mod 33 = <strong>14</strong>.<br/>Envía: (31, 16, 14).",
+                        "<strong>3. Descifrado (Bernardo):</strong><br/>• Recupera x: 31⁷ mod 33 = <strong>4</strong>.<br/>• Calcula máscara: x² = 16.<br/>• Halla inverso: El inverso de 16 mod 33 es <strong>31</strong> (ya que 16·31 = 496 = 15·33 + 1).<br/>• Recupera m: 14 · 31 mod 33 = 434 mod 33 = <strong>5</strong>."
+                    ]
+                },
+                "conclusion": "Como puedes ver, aunque el sistema usa dos exponentes, el 'secreto' que permite abrir el candado de c₃ es el valor x, el cual Bernardo puede obtener fácilmente gracias a que posee los inversos d₁ o d₂."
+            },
             "icon": "Cpu"
         },
         "future": {

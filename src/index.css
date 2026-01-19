@@ -56,6 +56,13 @@
       transform: translateY(0);
     }
   }
+
+  /* 8. Sticky Note Theme (Post-it) */
+  --note-bg: #fff9c4;
+  --note-border: #fbc02d;
+  --note-text: #334155;
+  --note-accent: #f57f17;
+  --note-tape: rgba(255, 255, 255, 0.3);
 }
 
 

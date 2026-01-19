@@ -38,6 +38,7 @@ import InfoCard from '../../components/ui/InfoCard';
 import pkiData from './data/pkiData.json';
 import SEO from '../../components/SEO';
 import infographicImg from '../../assets/infografias/INFRAESTRUCTURA_PKI.png'; // Import infographic image
+import StickyNote from '../../components/ui/StickyNote';
 
 const PKI = () => {
     const navigate = useNavigate(); // Initialize useNavigate
@@ -62,7 +63,9 @@ const PKI = () => {
             Code,
             GlobeLock,
             ShieldCheck,
-            Terminal
+            Terminal,
+            risks: ShieldCheck,
+            'lab-mtls': User
         };
         return icons[iconName] || Fingerprint;
     };
@@ -110,7 +113,9 @@ const PKI = () => {
                     </div>
                 );
 
-            case 'certificates':
+
+
+            case 'lifecycle':
                 return (
                     <div className="space-y-8 animate-fade-in">
                         <div className="bg-success/5 p-6 rounded-xl border border-success/20 text-center">
@@ -465,38 +470,6 @@ const PKI = () => {
                     </div>
                 );
 
-            case 'implementation':
-                return (
-                    <div className="space-y-8 animate-fade-in">
-                        <div className="bg-(--bg-primary) p-6 rounded-xl border-l-4 border-info">
-                            <h3 className="text-xl font-bold text-(--text-primary) mb-2">{currentContent.subtitle}</h3>
-                            <div className="text-(--text-secondary)" dangerouslySetInnerHTML={{ __html: currentContent.description }} />
-                        </div>
-
-                        <div className="space-y-6">
-                            {currentContent.steps.map((step, idx) => (
-                                <div key={idx} className="relative pl-8 border-l-2 border-success/30 pb-4 last:pb-0 last:border-0">
-                                    <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-success ring-4 ring-(--bg-primary)"></div>
-
-                                    <h4 className="font-bold text-success mb-3 text-lg">{step.title}</h4>
-
-                                    <div className="p-3 bg-info/5 rounded border border-info/10 text-sm text-(--text-secondary) leading-relaxed mb-3"
-                                        dangerouslySetInnerHTML={{ __html: step.explanation }} />
-
-                                    <div className="bg-(--bg-code) rounded-lg p-4 font-(--font-mono) text-sm text-(--text-primary) border border-(--text-primary)/10 shadow-inner  overflow-x-auto group">
-                                        <div className="flex justify-between items-start">
-                                            <span className="text-warning mr-2">$</span>
-                                            <span className="grow">{step.cmd}</span>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                );
-
             case 'representation':
                 return (
                     <div className="space-y-8 animate-fade-in">
@@ -534,6 +507,71 @@ const PKI = () => {
                                             {fmt.example_code}
                                         </div>
                                     </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                );
+
+            case 'lab-mtls':
+            case 'lab-pki-complete':
+                return (
+                    <div className="space-y-8 animate-fade-in">
+                        <div className="bg-success/10 p-6 rounded-xl border-l-4 border-success shadow-sm">
+                            <h3 className="text-xl font-bold text-success mb-2">{currentContent.subtitle}</h3>
+                            <div
+                                className="text-(--text-secondary) leading-relaxed"
+                                dangerouslySetInnerHTML={{ __html: currentContent.description }}
+                            />
+                        </div>
+
+                        <div className="space-y-6">
+                            {currentContent.steps.map((step, idx) => (
+                                <div key={idx} className="bg-(--bg-primary) border border-(--text-tertiary) rounded-xl p-6 shadow-md hover:border-success/50 transition-colors">
+                                    <div className="flex items-center gap-3 mb-4">
+                                        <div className="w-8 h-8 rounded-full bg-success text-(--bg-primary) flex items-center justify-center text-sm font-bold">
+                                            {idx + 1}
+                                        </div>
+                                        <h4 className="text-lg font-bold text-(--text-primary)">
+                                            {step.title}
+                                        </h4>
+                                    </div>
+
+                                    {step.desc && (
+                                        <p className="text-sm text-(--text-secondary) mb-4 pl-11">
+                                            {step.desc}
+                                        </p>
+                                    )}
+
+                                    {step.content && (
+                                        <div className="pl-11">
+                                            <div className="bg-[#1e1e1e] rounded-lg overflow-hidden border border-gray-700 shadow-inner">
+                                                <div className="flex items-center justify-between px-4 py-2 bg-[#2d2d2d] border-b border-gray-700">
+                                                    <div className="flex gap-2">
+                                                        <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
+                                                        <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                                                        <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+                                                    </div>
+                                                    <span className="text-xs text-gray-400 font-mono">Terminal - OpenSSL Lab</span>
+                                                </div>
+                                                <div className="p-4 font-mono text-sm overflow-x-auto">
+                                                    {step.content.split('\n').map((line, i) => (
+                                                        <div key={i} className={`${line.trim().startsWith('#') ? 'text-gray-500 italic' : line.trim().startsWith('>') ? 'text-green-400 font-bold' : 'text-gray-300'}`}>
+                                                            {line}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {step.note && (
+                                        <div className="pl-11 mt-6">
+                                            <StickyNote title="NOTA DE IMPORTACIÓN">
+                                                {step.note}
+                                            </StickyNote>
+                                        </div>
+                                    )}
                                 </div>
                             ))}
                         </div>
@@ -661,7 +699,7 @@ const PKI = () => {
                     </div>
                 );
 
-            case 'future':
+            case 'risks':
                 return (
                     <div className="flex items-center justify-center py-4 animate-fade-in">
                         <div className="max-w-2xl text-center">
@@ -674,7 +712,6 @@ const PKI = () => {
                         </div>
                     </div>
                 );
-
             default:
                 return <div className="text-(--text-secondary)">Seleccione un tema del menú lateral.</div>;
         }

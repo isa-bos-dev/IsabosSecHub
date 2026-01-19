@@ -481,6 +481,31 @@ const HashFunctions = () => {
                     </div>
                 </div>
 
+                {/* OpenSSL Lab Section */}
+                {hashData.openSslLab && (
+                    <div className="space-y-8">
+                        <h2 className="text-3xl font-bold text-(--text-primary) flex items-center">
+                            <Terminal className="mr-3" style={{ color: 'var(--color-primary)' }} />
+                            {hashData.openSslLab.title}
+                        </h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            {hashData.openSslLab.steps.map((step, idx) => (
+                                <div key={idx} className="bg-(--bg-secondary) border border-(--text-tertiary) rounded-xl p-6 shadow-lg">
+                                    <h3 className="text-xl font-bold text-(--text-success) mb-2">{step.title}</h3>
+                                    <p className="text-(--text-secondary) mb-4">{step.desc}</p>
+                                    <TerminalWindow>
+                                        {step.command.split('\n').map((line, i) => (
+                                            <TerminalLine key={i} type={line.trim().startsWith('#') || line.trim().startsWith('>') ? 'comment' : 'output'}>
+                                                {line}
+                                            </TerminalLine>
+                                        ))}
+                                    </TerminalWindow>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
                 {/* Quote */}
                 <div className="py-8">
                     <QuoteBlock
