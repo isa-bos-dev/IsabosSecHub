@@ -46,7 +46,7 @@ const IntroHistoria = () => {
         const details = exampleDetails[exampleKey];
         // Find the parent timeline item to get the color
         const parentItem = timelineItems.find(item => item.examples && item.examples.includes(exampleKey));
-        // Extract color class (e.g. "text-warning") or default to success
+        // Extract color class or default to success
         const colorClass = parentItem ? parentItem.color : 'text-success';
 
         if (details) {
