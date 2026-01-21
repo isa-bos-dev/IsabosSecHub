@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import PageHeader from '../../components/ui/PageHeader';
-import infographicImg from '../../assets/infografias/CLAVE_PUBLICA.png';
+
 import Card from '../../components/ui/Card';
 import Title from '../../components/ui/Title';
 import QuoteBlock from '../../components/ui/QuoteBlock';
@@ -38,15 +38,7 @@ const Asimetrica = () => {
 
     const IconComponent = iconMap[currentContent.icon] || Network;
 
-    const openInfographic = () => {
-        navigate('/cryptography/infografia', {
-            state: {
-                imageSrc: infographicImg,
-                title: 'Criptografía de Clave Pública',
-                description: 'El corazón de la seguridad digital: Fundamentos y algoritmos asimétricos.'
-            }
-        });
-    };
+
 
     const renderContent = () => {
         switch (activeSection) {
@@ -521,22 +513,13 @@ const Asimetrica = () => {
 
     return (
         <div className="animate-fade-in space-y-8">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
-                <PageHeader
-                    title={data.header.title}
-                    description={data.header.description}
-                    gradientFrom="primary"
-                    gradientTo="success"
-                    className="mb-0"
-                />
-                <button
-                    onClick={openInfographic}
-                    className="flex items-center gap-2 px-6 py-3 bg-(--bg-secondary) border border-success/30 text-success rounded-xl font-bold hover:bg-success/10 transition-all shadow-lg hover:shadow-success/20 shrink-0 cursor-pointer"
-                >
-                    <FileText size={20} />
-                    Ver Infografía
-                </button>
-            </div>
+            <PageHeader
+                title={data.header.title}
+                description={data.header.description}
+                gradientFrom="primary"
+                gradientTo="success"
+                className="mb-0"
+            />
 
             <div className="flex flex-col lg:flex-row gap-8">
                 {/* Menú Lateral */}

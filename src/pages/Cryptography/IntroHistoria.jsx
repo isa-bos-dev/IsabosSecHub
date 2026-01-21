@@ -11,7 +11,7 @@ import QuoteBlock from '../../components/ui/QuoteBlock';
 
 
 import introHistoriaData from './data/introHistoria.json';
-import infographicImg from '../../assets/infografias/HISTORIA_CRIPTOGRAFIA.png';
+
 
 
 const iconMap = {
@@ -44,46 +44,33 @@ const IntroHistoria = () => {
 
     const handleExampleClick = (exampleKey) => {
         const details = exampleDetails[exampleKey];
+        // Find the parent timeline item to get the color
+        const parentItem = timelineItems.find(item => item.examples && item.examples.includes(exampleKey));
+        // Extract color class (e.g. "text-warning") or default to success
+        const colorClass = parentItem ? parentItem.color : 'text-success';
+
         if (details) {
-            setSelectedExample(details);
+            setSelectedExample({ ...details, colorClass });
         } else {
             // Fallback for missing details
             setSelectedExample({
                 title: exampleKey,
                 desc: "Información detallada aún no disponible.",
-                date: "N/A"
+                date: "N/A",
+                colorClass
             });
         }
     };
 
-    const openInfographic = () => {
-        navigate('/cryptography/infografia', {
-            state: {
-                imageSrc: infographicImg,
-                title: 'Historia de la Criptografía',
-                description: 'Cronología visual de la evolución criptográfica desde la antigüedad hasta la era digital.'
-            }
-        });
-    };
-
     return (
         <div className="space-y-12 animate-fade-in pb-12">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
-                <PageHeader
-                    title={header.title}
-                    description={header.description}
-                    gradientFrom="primary"
-                    gradientTo="success"
-                    className="mb-0"
-                />
-                <button
-                    onClick={openInfographic}
-                    className="flex items-center gap-2 px-6 py-3 bg-(--bg-secondary) border border-success/30 text-success rounded-xl font-bold hover:bg-success/10 transition-all shadow-lg hover:shadow-success/20 shrink-0 cursor-pointer"
-                >
-                    <Scroll size={20} />
-                    Ver Infografía
-                </button>
-            </div>
+            <PageHeader
+                title={header.title}
+                description={header.description}
+                gradientFrom="primary"
+                gradientTo="success"
+                className="mb-0"
+            />
 
             <div className="max-w-5xl mx-auto">
                 <Timeline
@@ -138,8 +125,8 @@ const IntroHistoria = () => {
                 onClose={() => setSelectedExample(null)}
                 headerContent={selectedExample && (
                     <div>
-                        <h2 className="text-2xl font-bold text-(--text-success) mb-1 flex items-center gap-2">
-                            <Globe className="w-5 h-5 text-success" />
+                        <h2 className={`text-2xl font-bold mb-1 flex items-center gap-2 ${selectedExample.colorClass || 'text-success'}`}>
+                            <Globe className={`w-5 h-5 ${selectedExample.colorClass ? selectedExample.colorClass.replace('text-', 'text-') : 'text-success'}`} />
                             {selectedExample.title}
                         </h2>
                         <div className="flex gap-3 text-sm text-(--text-secondary) mt-2">
@@ -147,7 +134,7 @@ const IntroHistoria = () => {
                                 <FileText className="w-3 h-3" /> {selectedExample.date}
                             </span>
                             {selectedExample.type && (
-                                <span className="px-2 py-0.5 bg-(--bg-success) rounded-full border border-(--text-tertiary) text-xs">
+                                <span className={`px-2 py-0.5 rounded-full border border-(--text-tertiary) text-xs bg-(--bg-secondary) ${selectedExample.colorClass || 'text-success'}`}>
                                     {selectedExample.type}
                                 </span>
                             )}
@@ -175,8 +162,10 @@ const IntroHistoria = () => {
                                         return text.split('\n').map((line, lineIdx) => (
                                             <React.Fragment key={lineIdx}>
                                                 {line.split(/(\*\*.*?\*\*|\*.*?\*)/g).map((part, partIdx) => {
-                                                    if (part.startsWith('**') && part.endsWith('**')) return <strong key={partIdx} className="text-success font-semibold">{part.slice(2, -2)}</strong>;
-                                                    if (part.startsWith('*') && part.endsWith('*')) return <strong key={partIdx} className="text-success font-semibold">{part.slice(1, -1)}</strong>;
+                                                    if (part.startsWith('**') && part.endsWith('**'))
+                                                        return <strong key={partIdx} className={`${selectedExample.colorClass || 'text-success'} font-bold`}>{part.slice(2, -2)}</strong>;
+                                                    if (part.startsWith('*') && part.endsWith('*'))
+                                                        return <strong key={partIdx} className={`${selectedExample.colorClass || 'text-success'} font-bold`}>{part.slice(1, -1)}</strong>;
                                                     return part;
                                                 })}
                                                 {lineIdx < text.split('\n').length - 1 && <br />}

@@ -1,112 +1,230 @@
 {
-    "radarChart": {
-        "title": "PROTOCOLOS VS SEGURIDAD",
-        "labels": [
-            "Telnet",
-            "FTP",
-            "HTTP",
-            "SNMPv1",
-            "DNS",
-            "IMAP/POP3"
-        ],
-        "datasets": [
-            {
-                "label": "Vulnerabilidad a Sniffing",
-                "data": [
-                    10,
-                    10,
-                    8,
-                    9,
-                    6,
-                    9
+    "header": {
+        "title": "Ataques de red: Interceptación y manipulación",
+        "description": "La red es un entorno hostil. Descubre cómo los atacantes usan la física de los protocolos para robar información (Sniffing) y redirigir tráfico (Spoofing).",
+        "gradientFrom": "primary",
+        "gradientTo": "primary-alpha-10"
+    },
+    "menu": [
+        {
+            "id": "intro",
+            "label": "Sniffing y protocolos"
+        },
+        {
+            "id": "arp",
+            "label": "Spoofing"
+        },
+        {
+            "id": "frag",
+            "label": "Fragmentación IP"
+        },
+        {
+            "id": "pivoting",
+            "label": "Pivoting y SSH"
+        },
+        {
+            "id": "defenses",
+            "label": "Defensa y Protección"
+        }
+    ],
+    "content": {
+        "intro": {
+            "title": "Protocolos Inseguros",
+            "icon": "Network",
+            "sniffing": {
+                "title": "Escuchas de red (Sniffing)",
+                "description": "El **Sniffing** es el equivalente digital a \"pinchar\" una línea telefónica. En una red, los datos viajan en paquetes. Un atacante configura su tarjeta de red en <span class=\"text-(--color-warning) font-(--font-mono)\">Modo Promiscuo</span>, obligándola a leer *todo* el tráfico que pasa por el cable, no solo el destinado a ella.",
+                "dangerTitle": "Peligro: Texto plano",
+                "dangerDesc": "Protocolos antiguos (Telnet, FTP, HTTP) envían credenciales sin cifrar. Cualquiera con Wireshark en la misma red puede leer tu contraseña simplemente mirando los bytes del paquete."
+            },
+            "radarChart": {
+                "title": "Protocolos vs Seguridad",
+                "labels": [
+                    "Telnet",
+                    "FTP",
+                    "HTTP",
+                    "SNMPv1",
+                    "DNS",
+                    "IMAP/POP3"
                 ],
-                "color": "error"
-            },
-            {
-                "label": "Nivel de Cifrado (Seguridad)",
-                "data": [
-                    0,
-                    1,
-                    2,
-                    0,
-                    1,
-                    4
-                ],
-                "color": "secondary"
+                "datasets": [
+                    {
+                        "label": "Vulnerabilidad a Sniffing",
+                        "data": [
+                            10,
+                            10,
+                            8,
+                            9,
+                            6,
+                            9
+                        ],
+                        "color": "error"
+                    },
+                    {
+                        "label": "Nivel de Cifrado (Seguridad)",
+                        "data": [
+                            0,
+                            1,
+                            2,
+                            0,
+                            1,
+                            4
+                        ],
+                        "color": "secondary"
+                    }
+                ]
             }
-        ]
-    },
-    "sniffing": {
-        "title": "Escuchas de red (Sniffing)",
-        "description": "El **Sniffing** es el equivalente digital a \"pinchar\" una línea telefónica. En una red, los datos viajan en paquetes. Un atacante configura su tarjeta de red en <span class=\"text-(--color-warning) font-(--font-mono)\">Modo Promiscuo</span>, obligándola a leer *todo* el tráfico que pasa por el cable, no solo el destinado a ella.",
-        "dangerTitle": "Peligro: Texto plano",
-        "dangerDesc": "Protocolos antiguos (Telnet, FTP, HTTP) envían credenciales sin cifrar. Cualquiera con Wireshark en la misma red puede leer tu contraseña simplemente mirando los bytes del paquete."
-    },
-    "arpSpoofing": {
-        "title": "Anatomía de un ataque MITM (ARP Spoofing)",
-        "steps": [
-            {
-                "title": "1. La confianza ciega",
-                "desc": "El protocolo ARP (Address Resolution Protocol) no tiene autenticación. Si alguien dice \"Soy la IP 192.168.1.1\", el resto de la red le cree.",
-                "borderColor": "text-tertiary",
-                "code": "Victima -> ¿Quién tiene 192.168.1.1?",
-                "codeColor": "success"
-            },
-            {
-                "title": "2. El envenenamiento",
-                "desc": "El atacante envía miles de respuestas ARP falsas (Gratuitous ARP) a la víctima y al Router.",
-                "borderColor": "warning",
-                "badge": "ATAQUE",
-                "codeLines": [
-                    "Atacante -> ¡Soy 192.168.1.1! (Al PC)",
-                    "Atacante -> ¡Soy 192.168.1.50! (Al Router)"
-                ],
-                "codeColor": "error"
-            },
-            {
-                "title": "3. Interceptación total",
-                "desc": "Todo el tráfico pasa ahora por el atacante. Puede leerlo (sniffing), modificarlo o bloquearlo (DoS) antes de reenviarlo.",
-                "borderColor": "error",
-                "diagram": true
+        },
+        "arp": {
+            "title": "Spoofing",
+            "icon": "GitCommit",
+            "title_content": "Anatomía de un ataque MITM (ARP Spoofing)",
+            "steps": [
+                {
+                    "title": "1. La confianza ciega",
+                    "desc": "El protocolo ARP (Address Resolution Protocol) no tiene autenticación. Si alguien dice \"Soy la IP 192.168.1.1\", el resto de la red le cree.",
+                    "borderColor": "text-tertiary",
+                    "code": "Victima -> ¿Quién tiene 192.168.1.1?",
+                    "codeColor": "success"
+                },
+                {
+                    "title": "2. El envenenamiento",
+                    "desc": "El atacante envía miles de respuestas ARP falsas (Gratuitous ARP) a la víctima y al Router.",
+                    "borderColor": "warning",
+                    "badge": "ATAQUE",
+                    "codeLines": [
+                        "Atacante -> ¡Soy 192.168.1.1! (Al PC)",
+                        "Atacante -> ¡Soy 192.168.1.50! (Al Router)"
+                    ],
+                    "codeColor": "error"
+                },
+                {
+                    "title": "3. Interceptación total",
+                    "desc": "Todo el tráfico pasa ahora por el atacante. Puede leerlo (sniffing), modificarlo o bloquearlo (DoS) antes de reenviarlo.",
+                    "borderColor": "error",
+                    "diagram": true
+                }
+            ],
+            "dnsData": {
+                "title": "Ataque: DNS Spoofing",
+                "scenario": {
+                    "title": "Definición Técnica y Conceptual",
+                    "text": "<strong>Definición Técnica:</strong> Es un ataque de integridad en el que un actor malicioso intercepta consultas DNS (generalmente UDP puerto 53) e inyecta respuestas falsificadas (DNS Responses) antes de que llegue la respuesta legítima. Esto redirige el tráfico de la víctima hacia un servidor controlado por el atacante.<br/><br/><strong>Analogía:</strong> Es como corromper una guía telefónica: cuando la víctima pregunta '¿Dónde está el banco?', tú respondes 'Aquí mismo' (dándole tu IP) antes que el servidor real.",
+                    "diagram": "VÍCTIMA (¿banco.com?) ➜ ☠️ ATACANTE (Respuesta Falsa) ➜ ❌ IP MALICIOSA"
+                },
+                "solution": {
+                    "title": "Implementación Táctica (vía Bettercap)",
+                    "explanation": "Para ejecutar este ataque, necesitamos dos fases: primero situarnos entre la víctima y el router (MITM) y luego interceptar y falsificar sus peticiones DNS.",
+                    "steps": [
+                        {
+                            "id": 1,
+                            "action": "Definir las mentiras (Hosts)",
+                            "command": "nano spoof_rules.conf",
+                            "desc": "Creamos un archivo le indique a la herramienta qué suplantar. Ej: <code>local .*facebook.com IP_ATACANTE</code>. Esto redirigirá todo el tráfico de Facebook a tu servidor web falso."
+                        },
+                        {
+                            "id": 2,
+                            "action": "Iniciar el MITM (ARP)",
+                            "command": "set arp.spoof.targets IP_VICTIMA; arp.spoof on",
+                            "desc": "Envenenamos la caché ARP de la víctima para que todo su tráfico pase por nuestra tarjeta de red. Sin esto, no 'oímos' sus peticiones DNS."
+                        },
+                        {
+                            "id": 3,
+                            "action": "Activar el Oráculo Falso",
+                            "command": "set dns.spoof.domains spoof_rules.conf; dns.spoof on",
+                            "desc": "Arrancamos el módulo DNS. Ahora, cada vez que la víctima pida 'facebook.com', <strong>Bettercap</strong> responderá con tu IP al instante."
+                        }
+                    ]
+                }
             }
-        ]
-    },
-    "fragmentation": {
-        "title": "Fragmentación IP maliciosa",
-        "description": "Los routers fragmentan paquetes grandes para que pasen por enlaces con MTU pequeña. Los atacantes abusan de esto:",
-        "attacks": [
-            {
-                "name": "Ataque Teardrop",
-                "desc": "Envía fragmentos con \"offsets\" superpuestos. Cuando el sistema operativo intenta reensamblarlos, se confunde, sobrescribe memoria y crashea (Pantalla Azul).",
-                "color": "info"
-            },
-            {
-                "name": "Evasión de IDS/Firewall",
-                "desc": "Divide la firma del ataque (ej. un payload malicioso) en fragmentos tan pequeños que el Firewall no puede reconocer el patrón hasta que es demasiado tarde.",
-                "color": "accent"
+        },
+        "frag": {
+            "title": "Fragmentación Maliciosa",
+            "icon": "FileWarning",
+            "data": {
+                "title": "Fragmentación IP maliciosa",
+                "description": "Los routers fragmentan paquetes grandes para que pasen por enlaces con MTU pequeña. Los atacantes abusan de esto:",
+                "attacks": [
+                    {
+                        "name": "Ataque Teardrop",
+                        "desc": "Envía fragmentos con \"offsets\" superpuestos. Cuando el sistema operativo intenta reensamblarlos, se confunde, sobrescribe memoria y crashea (Pantalla Azul).",
+                        "color": "info"
+                    },
+                    {
+                        "name": "Evasión de IDS/Firewall",
+                        "desc": "Divide la firma del ataque (ej. un payload malicioso) en fragmentos tan pequeños que el Firewall no puede reconocer el patrón hasta que es demasiado tarde.",
+                        "color": "accent"
+                    }
+                ]
             }
-        ]
-    },
-    "protection": {
-        "title": "Cómo protegerse",
-        "subtitle": "La defensa contra estos ataques requiere higiene de red.",
-        "tips": [
-            {
-                "text": "Usar HTTPS/SSH/VPN siempre (Cifrado).",
-                "icon": "Unlock"
-            },
-            {
-                "text": "Activar Dynamic ARP Inspection en Switches.",
-                "icon": "Shield"
-            },
-            {
-                "text": "Segmentar la red con VLANs.",
-                "icon": "Monitor"
+        },
+        "pivoting": {
+            "title": "Pivoting y Túneles SSH",
+            "icon": "Terminal",
+            "data": {
+                "title": "Pivoting y túneles SSH",
+                "scenario": {
+                    "title": "El problema de la red segregada",
+                    "text": "Imagina que comprometes un servidor ('Pivote') que tiene dos tarjetas de red. Una mira hacia ti (Internet/LAN) y la otra hacia una <strong>red interna oculta</strong>. ¿Cómo llevas tus herramientas (Nmap, Browser, Metasploit) hasta esa red inalcanzable?",
+                    "diagram": "ATACANTE (Tú) ➜ [Túnel SSH] ➜ PIVOTE (Dual Homed) ➜ RED OCULTA (Target)"
+                },
+                "solution": {
+                    "title": "La solución universal: Dynamic Port Forwarding",
+                    "explanation": "Convertiremos al equipo intermedio (Pivote) en un <strong>enrutador SOCKS</strong> para que nuestras herramientas viajen a través de él.",
+                    "steps": [
+                        {
+                            "id": 1,
+                            "action": "Identificar la IP Pivote",
+                            "command": "ifconfig (en el host comprometido)",
+                            "desc": "Primero debes saber cuál es la IP del equipo al que ya tienes acceso SSH y que ve la otra red. Supongamos que esta es <strong>IP_PIVOTE</strong>."
+                        },
+                        {
+                            "id": 2,
+                            "action": "Crear el Túnel SOCKS",
+                            "command": "ssh -D 1080 usuario@IP_PIVOTE",
+                            "desc": "Ejecuta esto en <strong>TU máquina</strong>. <code>-D 1080</code> abre el puerto 1080 localmente para escuchar tráfico."
+                        },
+                        {
+                            "id": 3,
+                            "action": "Configurar Proxychains",
+                            "command": "nano /etc/proxychains.conf",
+                            "desc": "Añade al final del archivo la línea: <code class='text-success'>socks5 127.0.0.1 1080</code>. Esto le dice a tu Linux dónde enviar los paquetes."
+                        },
+                        {
+                            "id": 4,
+                            "action": "Lanzar Ataque (Nmap)",
+                            "command": "proxychains nmap -sT -Pn IP_VICTIMA",
+                            "desc": "Escaneamos la IP víctima. <br/>• <code>-sT</code> (Connect Scan): Obligatorio porque SOCKS no soporta paquetes 'raw' (SYN). <br/>• <code>-Pn</code>: Asume que el host está online (no hace ping, que a veces falla por proxy)."
+                        }
+                    ]
+                }
             }
-        ]
-    },
-    "quote": {
-        "text": "El cifrado es la única línea de defensa cuando el medio de transporte ha sido comprometido. Nunca asumas que el cable es seguro.",
-        "author": "IsaBosDev"
+        },
+        "defenses": {
+            "title": "Estrategias de Defensa",
+            "icon": "Shield",
+            "data": {
+                "title": "Cómo protegerse",
+                "subtitle": "La defensa contra estos ataques requiere higiene de red.",
+                "tips": [
+                    {
+                        "text": "Usar HTTPS/SSH/VPN siempre (Cifrado).",
+                        "icon": "Unlock"
+                    },
+                    {
+                        "text": "Activar Dynamic ARP Inspection en Switches.",
+                        "icon": "Shield"
+                    },
+                    {
+                        "text": "Segmentar la red con VLANs.",
+                        "icon": "Monitor"
+                    }
+                ]
+            },
+            "quote": {
+                "text": "El cifrado es la única línea de defensa cuando el medio de transporte ha sido comprometido. Nunca asumas que el cable es seguro.",
+                "author": "IsaBosDev"
+            }
+        }
     }
 }

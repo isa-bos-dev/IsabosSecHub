@@ -11,8 +11,12 @@ import Ransomware from './pages/Threats/Ransomware';
 import CloudAPI from './pages/Threats/CloudAPI';
 import Infra from './pages/Threats/Infra';
 import Arsenal from './pages/Threats/Arsenal';
+
 import Defense from './pages/Threats/Defense';
 import Quiz from './pages/Threats/Quiz';
+// ... (existing imports)
+
+// ...
 
 // Componentes del Proyecto Cryptography
 import CryptoPanorama from './pages/Cryptography/Panorama';
@@ -24,7 +28,7 @@ import Asimetrica from './pages/Cryptography/Asimetrica';
 import PKI from './pages/Cryptography/PKI';
 import Protocolos from './pages/Cryptography/Protocolos';
 import CryptoQuiz from './pages/Cryptography/Quiz';
-import InfografiaViewer from './components/ui/InfografiaViewer'; // Viewer de infografías
+
 
 // Componentes de la App Network
 import ProjectLayout from './components/layout/ProjectLayout';
@@ -34,6 +38,7 @@ import Reconocimiento from './pages/Network/Reconocimiento';
 import Ataques from './pages/Network/Ataques';
 import DoS from './pages/Network/DoS';
 import NetworkQuiz from './pages/Network/Quiz';
+import KillChain from './pages/Network/KillChain';
 import ScrollToTop from './components/ScrollToTop';
 
 const App = () => {
@@ -102,7 +107,7 @@ const App = () => {
           <Route path="pki" element={<PKI />} />
           <Route path="protocolos" element={<Protocolos />} />
           <Route path="cuestionario" element={<CryptoQuiz />} />
-          <Route path="infografia" element={<InfografiaViewer />} />
+
         </Route>
 
         {/* Rutas del Proyecto Network */}
@@ -113,6 +118,7 @@ const App = () => {
             titleColor="primary"
             links={[
               { to: "/network", label: "Panorama", end: true },
+              { to: "/network/killchain", label: "Perspectiva del Atacante" },
               { to: "/network/capas", label: "Capas TCP/IP" },
               { to: "/network/reconocimiento", label: "Reconocimiento" },
               { to: "/network/ataques", label: "Ataques de red" },
@@ -122,6 +128,7 @@ const App = () => {
           />
         }>
           <Route index element={<Panorama />} /> {/* Default: /network */}
+          <Route path="killchain" element={<KillChain />} />
           <Route path="capas" element={<Capas />} />
           <Route path="reconocimiento" element={<Reconocimiento />} />
           <Route path="ataques" element={<Ataques />} />

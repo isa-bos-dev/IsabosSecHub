@@ -1,0 +1,237 @@
+{
+    "header": {
+        "title": "La Mirada del Adversario",
+        "subtitle": "Guía Completa de la Cyber Kill Chain",
+        "description": "Bienvenido a esta masterclass. Para defenderse eficazmente de un adversario, es crucial entender cómo piensa, cómo planifica y cómo actúa.",
+        "gradientFrom": "#EF4444",
+        "gradientTo": "#7F1D1D"
+    },
+    "menu": [
+        {
+            "id": "concept",
+            "label": "El Marco: Cyber Kill Chain",
+            "icon": "Crosshair"
+        },
+        {
+            "id": "phase1",
+            "label": "Fase 1: Reconocimiento",
+            "icon": "Eye"
+        },
+        {
+            "id": "phase2",
+            "label": "Fase 2: Armamentización",
+            "icon": "Hammer"
+        },
+        {
+            "id": "phase3",
+            "label": "Fase 3: Explotación",
+            "icon": "Zap"
+        },
+        {
+            "id": "phase456",
+            "label": "Fases 4-6: Consolidación",
+            "icon": "Anchor"
+        },
+        {
+            "id": "phase7",
+            "label": "Fase 7: Acciones Finales",
+            "icon": "Flag"
+        }
+    ],
+    "content": {
+        "concept": {
+            "title": "Cyber Kill Chain: La Estructura del Ataque",
+            "description": "Lockheed Martin adaptó este concepto militar para modelar las 7 fases secuenciales de una intrusión. El objetivo defensivo es 'romper' cualquier eslabón.",
+            "phases": [
+                {
+                    "step": 1,
+                    "name": "Reconocimiento",
+                    "desc": "Recopilación de información del objetivo."
+                },
+                {
+                    "step": 2,
+                    "name": "Armamentización",
+                    "desc": "Creación de malware a medida (Weaponization)."
+                },
+                {
+                    "step": 3,
+                    "name": "Entrega",
+                    "desc": "Envío del payload (Phishing, USB, Web)."
+                },
+                {
+                    "step": 4,
+                    "name": "Explotación",
+                    "desc": "Ejecución de código para ganar acceso."
+                },
+                {
+                    "step": 5,
+                    "name": "Instalación",
+                    "desc": "Backdoors y persistencia."
+                },
+                {
+                    "step": 6,
+                    "name": "Control (C2)",
+                    "desc": "Canal de mando remoto."
+                },
+                {
+                    "step": 7,
+                    "name": "Acciones",
+                    "desc": "Robo, destrucción o cifrado."
+                }
+            ]
+        },
+        "phase1": {
+            "title": "Fase 1: Reconocimiento (La Base)",
+            "subtitle": "Aprender lo máximo posible sobre el entorno objetivo sin ser detectado.",
+            "techniques": [
+                {
+                    "name": "Footprinting Activo",
+                    "desc": "Interactúa con el objetivo (Ping, Traceroute). Riesgo de detección alto (IDS).",
+                    "color": "warning"
+                },
+                {
+                    "name": "Footprinting Pasivo",
+                    "desc": "No toca el objetivo. OSINT, Redes Sociales, WHOIS, Archive.org. Sigiloso.",
+                    "color": "success"
+                }
+            ],
+            "tools": {
+                "title": "Arsenal de Reconocimiento",
+                "items": [
+                    "OSRFramework (OSINT automatizado)",
+                    "Maltego (Relaciones gráficas)",
+                    "Shodan / Nmap (Escaneo)"
+                ]
+            },
+            "types": [
+                {
+                    "name": "Website",
+                    "desc": "Tecnologías usadas (BuiltWith, Whatweb)."
+                },
+                {
+                    "name": "Email",
+                    "desc": "Rastreo de cabeceras e IPs."
+                },
+                {
+                    "name": "DNS",
+                    "desc": "Mapeo de infraestructura (DNS Dumpster)."
+                },
+                {
+                    "name": "Red",
+                    "desc": "Identificar hosts vivos, puertos y SO."
+                }
+            ]
+        },
+        "phase2": {
+            "title": "Fase 2: Armamentización (Weaponization)",
+            "subtitle": "Creación del arsenal digital personalizado para el objetivo.",
+            "concepts": [
+                {
+                    "term": "Exploit Kit",
+                    "def": "Herramienta que automatiza el uso de vulnerabilidades."
+                },
+                {
+                    "term": "Payload",
+                    "def": "La carga maliciosa (Malware) que se ejecutará."
+                },
+                {
+                    "term": "Crypters",
+                    "def": "Software para cifrar malware y evadir antivirus."
+                }
+            ],
+            "malwareTypes": {
+                "trojans": [
+                    "Backdoor",
+                    "Keylogger",
+                    "Ransomware (WannaCry, Ryuk)"
+                ],
+                "virus": [
+                    "Boot Sector",
+                    "Polymórficos (cambian su código)",
+                    "Macro Virus"
+                ],
+                "worms": [
+                    "Se propagan solos consumiendo red (Stuxnet)."
+                ]
+            }
+        },
+        "phase3": {
+            "title": "Fase 3: Acceso Inicial (Exploitation)",
+            "subtitle": "El momento de la verdad: rompiendo el perímetro.",
+            "vectors": [
+                {
+                    "category": "Human-Based (Ingeniería Social)",
+                    "items": [
+                        "Phishing (Email)",
+                        "Vishing (Voz)",
+                        "Dumpster Diving (Basura)",
+                        "Shoulder Surfing"
+                    ]
+                },
+                {
+                    "category": "Network-Based",
+                    "items": [
+                        "ARP Poisoning",
+                        "Man-in-the-Middle",
+                        "Spoofing (IP/MAC)",
+                        "DoS/DDoS (Inundación)"
+                    ]
+                },
+                {
+                    "category": "Web & Cloud",
+                    "items": [
+                        "SQL Injection",
+                        "XSS",
+                        "Cloud Misconfiguration",
+                        "Rogue Access Points (WiFi)"
+                    ]
+                }
+            ]
+        },
+        "phase456": {
+            "title": "Fases 4-6: Consolidación y Control",
+            "subtitle": "Ya estamos dentro. Ahora toca quedarse y expandirse.",
+            "steps": [
+                {
+                    "name": "Escalada de Privilegios",
+                    "desc": "Pasar de usuario normal a Administrador/Root (Vertical) o saltar a otros usuarios (Horizontal).",
+                    "tools": [
+                        "John the Ripper (Cracking)",
+                        "Exploits de Kernel"
+                    ]
+                },
+                {
+                    "name": "Movimiento Lateral (Pivoting)",
+                    "desc": "Usar el equipo comprometido para saltar a otros servidores de la red interna.",
+                    "note": "El atacante busca el controlador de dominio o la base de datos."
+                },
+                {
+                    "name": "Persistencia",
+                    "desc": "Asegurar el regreso incluso si se reinicia el equipo.",
+                    "details": "Uso de <strong>Rootkits</strong> (Modo Kernel, Bootloader) o tareas programadas."
+                }
+            ]
+        },
+        "phase7": {
+            "title": "Fase 7: Acciones sobre el Objetivo",
+            "subtitle": "Misión cumplida: Impacto final.",
+            "actions": [
+                {
+                    "name": "Exfiltración",
+                    "desc": "Robo silencioso de datos sensibles (PII, Secretos industriales).",
+                    "icon": "Download"
+                },
+                {
+                    "name": "Destrucción / Sabotaje",
+                    "desc": "Borrado de backups, cifrado (Ransomware), manipulación de datos.",
+                    "icon": "Trash"
+                },
+                {
+                    "name": "Denegación de Servicio (DoS)",
+                    "desc": "Paralizar las operaciones del negocio (Botnets, Amplificación DNS).",
+                    "icon": "Activity"
+                }
+            ]
+        }
+    }
+}

@@ -10,7 +10,7 @@ import Title from '../../components/ui/Title';
 import QuoteBlock from '../../components/ui/QuoteBlock';
 import data from './data/panoramaData.json';
 import { useNavigate } from 'react-router-dom';
-import infographicImg from '../../assets/infografias/PANORAMA_CRIPTOGRAFIA.png';
+
 import { motion, AnimatePresence } from 'framer-motion';
 
 const iconMap = {
@@ -48,15 +48,7 @@ const cardVariants = {
 const Panorama = () => {
     const navigate = useNavigate();
 
-    const openInfographic = () => {
-        navigate('/cryptography/infografia', {
-            state: {
-                imageSrc: infographicImg,
-                title: 'Panorama Criptográfico',
-                description: 'Infografía resumen de los conceptos clave de criptografía.'
-            }
-        });
-    };
+
 
     return (
         <motion.div
@@ -65,22 +57,13 @@ const Panorama = () => {
             variants={containerVariants}
             className="space-y-16 pb-12 text-left"
         >
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8">
-                <PageHeader
-                    title={data.header.title}
-                    description={data.header.description}
-                    gradientFrom="primary"
-                    gradientTo="secondary"
-                    className="mb-0"
-                />
-                <button
-                    onClick={openInfographic}
-                    className="flex items-center gap-2 px-6 py-3 bg-(--bg-secondary) border border-primary/30 text-primary rounded-xl font-bold hover:bg-primary/10 transition-all shadow-lg hover:shadow-primary/20 shrink-0 cursor-pointer"
-                >
-                    <Map size={20} />
-                    Ver Infografía Completa
-                </button>
-            </div>
+            <PageHeader
+                title={data.header.title}
+                description={data.header.description}
+                gradientFrom="primary"
+                gradientTo="secondary"
+                className="mb-0"
+            />
 
             {/* 1. INTRODUCCIÓN HISTÓRICA */}
             <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
