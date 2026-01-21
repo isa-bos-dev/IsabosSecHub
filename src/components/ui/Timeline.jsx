@@ -88,8 +88,14 @@ const Timeline = ({ items, onExampleClick }) => {
                                             <p
                                                 key={i}
                                                 className="text-(--text-secondary) leading-relaxed mb-2 text-justify"
-                                                dangerouslySetInnerHTML={{ __html: block }}
-                                            />
+                                            >
+                                                {block.split(/(\*\*.*?\*\*)/g).map((part, idx) => {
+                                                    if (part.startsWith('**') && part.endsWith('**')) {
+                                                        return <strong key={idx} className={`${item.color} font-bold`}>{part.slice(2, -2)}</strong>;
+                                                    }
+                                                    return part;
+                                                })}
+                                            </p>
                                         );
                                     }
                                     if (block.type === 'etymology') {
@@ -105,10 +111,16 @@ const Timeline = ({ items, onExampleClick }) => {
                                     return null;
                                 })
                             ) : (
-                                <div
-                                    className="text-(--text-secondary) leading-relaxed mb-4"
-                                    dangerouslySetInnerHTML={{ __html: item.desc }}
-                                />
+                                <p
+                                    className="text-(--text-secondary) leading-relaxed mb-4 text-justify"
+                                >
+                                    {item.desc.split(/(\*\*.*?\*\*)/g).map((part, idx) => {
+                                        if (part.startsWith('**') && part.endsWith('**')) {
+                                            return <strong key={idx} className={`${item.color} font-bold`}>{part.slice(2, -2)}</strong>;
+                                        }
+                                        return part;
+                                    })}
+                                </p>
                             )}
                         </div>
 
